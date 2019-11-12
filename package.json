@@ -20,17 +20,15 @@
     "url": "https://github.com/denvash/gatsby-styled-tailwind-storybook-starter/issues"
   },
   "husky": {
-    "husky": {
-      "hooks": {
-        "pre-commit": "pretty-quick --staged && lint-staged"
-      }
-    },
-    "lint-staged": {
-      "*.js": [
-        "eslint --fix",
-        "git add"
-      ]
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "scripts": {
     "build": "gatsby build",
