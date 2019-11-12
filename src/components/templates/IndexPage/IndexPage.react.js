@@ -1,6 +1,6 @@
 import React from 'react';
 import tw from 'tailwind.macro';
-import SEO from '../seo';
+import SEO from '../../seo';
 import { NodesJSON } from '@components';
 
 const Wrapper = tw.div`flex items-center justify-center flex-col h-screen bg-gray-200`;
