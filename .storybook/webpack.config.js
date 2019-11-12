@@ -20,6 +20,8 @@ const postCSSConfig = {
   include: path.resolve(__dirname, '../'),
 };
 
+const SRC = '../src';
+
 module.exports = ({ config }) => {
   // https://www.gatsbyjs.org/docs/visual-testing-with-storybook/
 
@@ -49,5 +51,21 @@ module.exports = ({ config }) => {
 
   // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
   config.resolve.mainFields = ['browser', 'module', 'main'];
+
+  config.resolve.alias = {
+    '@components': path.resolve(__dirname, `${SRC}/components`),
+    '@config': path.resolve(__dirname, `${SRC}/config`),
+    '@content': path.resolve(__dirname, `${SRC}/content`),
+    '@fonts': path.resolve(__dirname, `${SRC}/fonts`),
+    '@images': path.resolve(__dirname, `${SRC}/images`),
+    '@pages': path.resolve(__dirname, `${SRC}/pages`),
+    '@styles': path.resolve(__dirname, `${SRC}/styles`),
+    '@utils': path.resolve(__dirname, `${SRC}/utils`),
+    '@hooks': path.resolve(__dirname, `${SRC}/hooks`),
+    '@constants': path.resolve(__dirname, `${SRC}/constants`),
+  };
+
+  config.resolve.extensions = ['.js'];
+
   return config;
 };
