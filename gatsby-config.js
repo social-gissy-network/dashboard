@@ -5,10 +5,21 @@ module.exports = {
     author: `@DennisVash`,
   },
   plugins: [
-    `gatsby-plugin-styled-components`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
-    'gatsby-plugin-resolve-src',
+    `gatsby-plugin-resolve-src`,
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Gissy Dashboard`,
+        short_name: `Gissy`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#F25192`,
+        display: `standalone`,
+        icon: `static/logo.png`,
+      },
+    },
     {
       resolve: `gatsby-source-graphql`,
       options: {
@@ -23,6 +34,7 @@ module.exports = {
         alias: {
           '@src': 'src',
           '@components': 'src/components',
+          '@icons': 'src/components/atoms/icons',
           '@hooks': 'src/hooks',
           '@config': 'src/config',
           '@styles': 'src/styles',
@@ -32,5 +44,7 @@ module.exports = {
         extensions: ['js'],
       },
     },
+    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-offline`,
   ],
 };

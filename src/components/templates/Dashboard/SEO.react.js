@@ -1,34 +1,30 @@
-// This is taken directly from the official gatsby-starter-default
-// https://github.com/gatsbyjs/gatsby-starter-default
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 
-const SEO = ({ description = '', lang = 'en', meta = [], title }) => {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
+const metaQuery = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+        description
+        author
       }
-    `,
-  );
+    }
+  }
+`;
+
+const SEO = ({ description = '', lang = 'en', meta = [], title }) => {
+  const { site } = useStaticQuery(metaQuery);
 
   const metaDescription = description || site.siteMetadata.description;
 
   return (
     <Helmet
-      htmlAttributes={{
-        lang,
-      }}
+      htmlAttributes={{ lang }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={site.siteMetadata.title}
       meta={[
         {
           name: `description`,

@@ -1,7 +1,6 @@
 import { SB_LABELS } from '@constants';
 import React from 'react';
-import Card from '../Card/Card.react';
-import Graph from './Graph.react';
+import { Graph, Card } from '@components';
 
 export default {
   title: `${SB_LABELS.ATOMS}|Graph`,

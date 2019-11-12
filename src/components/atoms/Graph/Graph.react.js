@@ -1,8 +1,9 @@
-import { graphConfig } from '@config';
+import { GRAPH } from '@config';
 import debounce from 'lodash.debounce';
 import React, { useEffect, useRef, useState } from 'react';
 import { Graph as D3Graph } from 'react-d3-graph';
 import tw from 'tailwind.macro';
+import styled from 'styled-components';
 
 const data = {
   nodes: [{ id: 'Harry' }, { id: 'Sally' }, { id: 'Alice' }],
@@ -13,7 +14,9 @@ const data = {
 };
 const ONE_SEC = 1000;
 
-const Container = tw.div`border-black border-2`;
+const Container = styled.div`
+  ${tw`border-black border-2`}
+`;
 
 const Graph = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -35,7 +38,7 @@ const Graph = () => {
 
   return (
     <Container ref={containerRef}>
-      {containerRef.current && <D3Graph id="gissy" data={data} config={graphConfig({ width })} />}
+      {containerRef.current && <D3Graph id="gissy" data={data} config={GRAPH({ width })} />}
     </Container>
   );
 };
