@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const Graph = () => {
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState();
   const containerRef = useRef();
 
   // First initial
