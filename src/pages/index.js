@@ -1,4 +1,6 @@
 import React from 'react';
-import { IndexPage } from '../components';
+import { Dashboard } from '@components';
 
-export default () => <IndexPage />;
+const IndexPage = () => <Dashboard />;
+
+export default IndexPage;
