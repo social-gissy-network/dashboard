@@ -1,15 +1,27 @@
 import { configure, addParameters } from '@storybook/react';
+import { create } from '@storybook/theming';
+
 import '../src/styles/globals.css';
+
+const theme = create({
+  base: 'light',
+  colorPrimary: 'hotpink',
+
+  brandTitle: 'Gissy Storybook',
+  brandUrl: 'https://docs.gissy.now.sh/README.html',
+  brandImage:
+    'https://user-images.githubusercontent.com/27515937/68681292-0f97f080-055b-11ea-86ba-6c791873dc9f.png',
+});
 
 addParameters({
   options: {
-    panelPosition: 'bottom',
+    showPanel: false,
     storySort: (a, b) => a[1].id.localeCompare(b[1].id),
+    theme,
   },
 });
 
-// automatically import all files ending in *.stories.jsx
-configure(require.context('../src', true, /\.stories\.js$/), module);
+configure(require.context('../src', true, /\.stories\.(js|mdx)$/), module);
 
 // Gatsby's Link overrides:
 // Gatsby defines a global called ___loader to prevent its method calls from creating console errors you override it here

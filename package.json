@@ -21,8 +21,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged && lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "scripts": {
     "build": "gatsby build",
@@ -35,31 +41,42 @@
     "build-storybook": "yarn build; NODE_PATH=src/ NODE_ENV=production build-storybook -s public --quiet"
   },
   "dependencies": {
-    "gatsby": "^2.17.0",
-    "gatsby-plugin-alias-imports": "^1.0.5",
-    "gatsby-plugin-postcss": "^2.1.13",
-    "gatsby-plugin-react-helmet": "^3.1.13",
-    "gatsby-plugin-resolve-src": "^2.0.0",
-    "gatsby-source-graphql": "^2.1.22",
+    "d3": "^5.12.0",
+    "gatsby": "^2.17.11",
+    "lodash.debounce": "^4.0.8",
     "postcss-import": "^12.0.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
+    "react": "^16.11.0",
+    "react-d3-graph": "^2.3.0",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
-    "styled-components": "^5.0.0-rc.1"
+    "styled-components": "^5.0.0-rc.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@storybook/react": "^5.2.5",
-    "babel-loader": "^8.0.6",
+    "@dennisvash/eslint-config": "1.1.0",
+    "@dennisvash/prettier-config": "^1.0.0",
+    "@storybook/react": "^5.2.6",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-remove-graphql-queries": "^2.7.15",
     "babel-plugin-styled-components": "^1.10.6",
-    "babel-preset-gatsby": "^0.2.20",
-    "gatsby-plugin-styled-components": "^3.1.11",
+    "babel-preset-gatsby": "^0.2.21",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "gatsby-plugin-manifest": "^2.2.27",
+    "gatsby-plugin-now": "^1.2.5",
+    "gatsby-plugin-offline": "^3.0.19",
+    "gatsby-plugin-postcss": "^2.1.14",
+    "gatsby-plugin-react-helmet": "^3.1.14",
+    "gatsby-plugin-resolve-src": "^2.0.0",
+    "gatsby-plugin-styled-components": "^3.1.12",
+    "gatsby-source-graphql": "^2.1.22",
     "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
     "postcss-preset-env": "^6.7.0",
     "pretty-quick": "^2.0.1",
     "tailwind.macro": "^1.0.0-alpha.10",
-    "tailwindcss": "^1.1.2"
+    "tailwindcss": "^1.1.3"
   }
 }
