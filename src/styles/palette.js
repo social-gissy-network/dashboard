@@ -1,7 +1,7 @@
 const PALETTE = {
-  PINK: '#F25192',
-  BLUE: '#72DDFA',
-  GREEN: '#96D180',
+  PRIMARY: '#F25192',
+  SECONDARY: '#72DDFA',
+  THIRD: '#96D180',
 };
 
 export default PALETTE;

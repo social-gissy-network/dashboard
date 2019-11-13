@@ -1,1 +1,1 @@
-export { default as useNodes } from './useNodes';
+export { default as useAllNodes } from './useAllNodes';

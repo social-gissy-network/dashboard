@@ -1,27 +1,32 @@
 import { PALETTE } from '@styles';
 
-const graphConfig = ({ width = window.innerWidth }) => ({
+const graphConfig = ({ width = window.innerWidth, height = 500 }) => ({
   automaticRearrangeAfterDropNode: true,
   nodeHighlightBehavior: true,
   panAndZoom: true,
   directed: true,
   width,
+  height,
   node: {
-    color: PALETTE.PINK,
+    color: PALETTE.PRIMARY,
     size: 2000,
-    highlightStrokeColor: PALETTE.BLUE,
+    highlightStrokeColor: PALETTE.SECONDARY,
+    highlightStrokeWidth: 4,
     fontSize: 20,
-    highlightFontSize: 25,
+    highlightFontSize: 20,
     strokeColor: 'black',
   },
   link: {
-    highlightColor: PALETTE.GREEN,
+    color: 'black',
+    highlightColor: PALETTE.SECONDARY,
     strokeWidth: 4,
     semanticStrokeWidth: true,
+    markerHeight: 2,
+    markerWidth: 2,
   },
   d3: {
     linkLength: 200,
-    gravity: -100,
+    gravity: -200,
   },
 });
 
