@@ -1,14 +1,14 @@
-import { graphql, useStaticQuery } from 'gatsby';
-const query = graphql`
-  {
-    gissy {
-      Node {
-        id
-        name
-      }
-    }
-  }
-`;
+// import { graphql, useStaticQuery } from 'gatsby';
+// const query = graphql`
+//   {
+//     gissy {
+//       Node {
+//         id
+//         name
+//       }
+//     }
+//   }
+// `;
 
 /*
 // Graph data Example
@@ -35,15 +35,25 @@ const data = {
 }
 */
 
-const useAllNodes = () => {
-  /* eslint-disable */
-  const {
-    gissy: { Node: nodesArray },
-  } = useStaticQuery(query);
+// const useAllNodes = () => {
+//   /* eslint-disable */
+//   const {
+//     gissy: { Node: nodesArray },
+//   } = useStaticQuery(query);
 
-  // const data = { nodes: nodesArray.map(({ name }) => ({ id: name })), links: [] };
+//   // const data = { nodes: nodesArray.map(({ name }) => ({ id: name })), links: [] };
 
-  return data;
+//   return data;
+// };
+
+const data = {
+  nodes: [{ id: 'Harry' }, { id: 'Sally' }, { id: 'Alice' }],
+  links: [
+    { source: 'Harry', target: 'Sally' },
+    { source: 'Harry', target: 'Alice' },
+  ],
 };
+
+const useAllNodes = () => data;
 
 export default useAllNodes;
