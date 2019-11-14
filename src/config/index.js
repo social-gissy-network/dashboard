@@ -1,2 +1,3 @@
-export { default as GRAPH } from './graph';
-export { default as SERVER } from './server';
+export { default as CONFIG_DAG_GRAPH } from './dagGraph';
+export { default as CONFIG_SERVER } from './server';
+export { default as CONFIG_MAP } from './map';

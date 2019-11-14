@@ -1,10 +1,10 @@
-import { GRAPH } from '@config';
+import { CONFIG_DAG_GRAPH } from '@config';
 import debounce from 'lodash.debounce';
 import React, { useEffect, useRef, useState } from 'react';
 import { Graph as D3Graph } from 'react-d3-graph';
 import tw from 'tailwind.macro';
 import styled from 'styled-components';
-import { useAllNodes } from '@hooks';
+import { useAllDagEdges } from '@hooks';
 
 const ONE_SEC = 1000;
 
@@ -12,8 +12,8 @@ const Container = styled.div`
   ${tw`border-black border-2 bg-pink-100`}
 `;
 
-const Graph = () => {
-  const data = useAllNodes();
+const DagGraph = () => {
+  const data = useAllDagEdges();
 
   const [width, setWidth] = useState();
   const containerRef = useRef();
@@ -34,9 +34,11 @@ const Graph = () => {
 
   return (
     <Container ref={containerRef}>
-      {containerRef.current && <D3Graph id="gissy" data={data} config={GRAPH({ width })} />}
+      {containerRef.current && (
+        <D3Graph id="gissy" data={data} config={CONFIG_DAG_GRAPH({ width })} />
+      )}
     </Container>
   );
 };
 
-export default Graph;
+export default DagGraph;
