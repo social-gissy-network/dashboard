@@ -1,9 +1,10 @@
 import { PALETTE } from '@styles';
 
-const graphConfig = ({ width = window.innerWidth, height = 500 }) => ({
+// https://goodguydaniel.com/react-d3-graph/sandbox/index.html
+
+const dagGraphConfig = ({ width = window.innerWidth, height = 1000 }) => ({
   automaticRearrangeAfterDropNode: true,
   nodeHighlightBehavior: true,
-  panAndZoom: true,
   directed: true,
   width,
   height,
@@ -15,6 +16,7 @@ const graphConfig = ({ width = window.innerWidth, height = 500 }) => ({
     fontSize: 20,
     highlightFontSize: 20,
     strokeColor: 'black',
+    labelProperty: 'name',
   },
   link: {
     color: 'black',
@@ -26,8 +28,8 @@ const graphConfig = ({ width = window.innerWidth, height = 500 }) => ({
   },
   d3: {
     linkLength: 200,
-    gravity: -200,
+    gravity: -500,
   },
 });
 
-export default graphConfig;
+export default dagGraphConfig;

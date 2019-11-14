@@ -7,6 +7,7 @@ const LABELS = {
   ORGANISMS: 'Organisms',
   TEMPLATES: 'Templates',
   PAGES: 'Pages',
+  GRAPHS: 'Atoms|Graphs/',
 };
 
 export default LABELS;

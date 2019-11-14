@@ -9,6 +9,7 @@ import { TripsLayer } from '@deck.gl/geo-layers';
 import { darken, lighten } from 'polished';
 import { PALETTE } from '@styles';
 import { toRgbArray } from '@utils';
+import { CONFIG_MAP } from '@config';
 
 // Public Token
 const MAPBOX_TOKEN =
@@ -100,7 +101,7 @@ const NetworkGraph = props => {
     theme = DEFAULT_THEME,
   } = props;
 
-  const renderLayers = useMemo(
+  const layers = useMemo(
     () => [
       // Shadow effects Layers
       new PolygonLayer({
@@ -140,10 +141,10 @@ const NetworkGraph = props => {
     [time],
   );
 
-  const { viewState, mapStyle = 'mapbox://styles/mapbox/light-v10' } = props;
+  const { viewState, mapStyle = CONFIG_MAP.MAP_STYLE } = props;
   return (
     <DeckGL
-      layers={renderLayers}
+      layers={layers}
       effects={theme.effects}
       initialViewState={INITIAL_VIEW_STATE}
       viewState={viewState}
