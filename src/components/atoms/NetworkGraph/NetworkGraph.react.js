@@ -1,13 +1,16 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { StaticMap } from 'react-map-gl';
 import { PhongMaterial } from '@luma.gl/core';
 import { AmbientLight, PointLight, LightingEffect } from '@deck.gl/core';
 import DeckGL from '@deck.gl/react';
 import { PolygonLayer } from '@deck.gl/layers';
 import { TripsLayer } from '@deck.gl/geo-layers';
+import { darken, lighten } from 'polished';
+import { PALETTE } from '@styles';
+import { toRgbArray } from '@utils';
 
-// Set your mapbox token here
+// Public Token
 const MAPBOX_TOKEN =
   'pk.eyJ1IjoiZGVudmFzaCIsImEiOiJjanR0MDM3bjgxMzl1NGRwY3R6NmRoYzFhIn0.QKn_CKoTbN0xkvOsxg7ceg'; // eslint-disable-line
 
@@ -20,13 +23,13 @@ const DATA_URL = {
 };
 
 const ambientLight = new AmbientLight({
-  color: [255, 255, 255],
-  intensity: 1.0,
+  color: toRgbArray(darken(0.3, PALETTE.SECONDARY)),
+  intensity: 2.0,
 });
 
 const pointLight = new PointLight({
-  color: [255, 255, 255],
-  intensity: 2.0,
+  color: toRgbArray(lighten(0.5, PALETTE.SECONDARY)),
+  intensity: 3.0,
   position: [-74.05, 40.7, 8000],
 });
 
@@ -40,9 +43,9 @@ const material = new PhongMaterial({
 });
 
 const DEFAULT_THEME = {
-  buildingColor: [74, 80, 87],
-  trailColor0: [253, 128, 93],
-  trailColor1: [23, 184, 190],
+  buildingColor: toRgbArray(PALETTE.SECONDARY),
+  trailColor0: toRgbArray(PALETTE.PRIMARY),
+  trailColor1: toRgbArray(darken(0.5, PALETTE.THIRD)),
   material,
   effects: [lightingEffect],
 };
@@ -64,48 +67,42 @@ const landCover = [
   ],
 ];
 
-export class NetworkGraph extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: 0,
+const NetworkGraph = props => {
+  const [time, setTime] = useState(0);
+  const animationFrameRef = useRef();
+
+  useEffect(() => {
+    const animate = () => {
+      const {
+        loopLength = 1800, // unit corresponds to the timestamp in source data
+        animationSpeed = 30, // unit time per second
+      } = props;
+      const timestamp = Date.now() / 1000;
+      const loopTime = loopLength / animationSpeed;
+
+      setTime(((timestamp % loopTime) / loopTime) * loopLength);
+      animationFrameRef.current = window.requestAnimationFrame(animate);
     };
-  }
 
-  componentDidMount() {
-    this._animate();
-  }
+    animate();
 
-  componentWillUnmount() {
-    if (this._animationFrame) {
-      window.cancelAnimationFrame(this._animationFrame);
-    }
-  }
+    return () => {
+      if (animationFrameRef.current) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
 
-  _animate() {
-    const {
-      loopLength = 1800, // unit corresponds to the timestamp in source data
-      animationSpeed = 30, // unit time per second
-    } = this.props;
-    const timestamp = Date.now() / 1000;
-    const loopTime = loopLength / animationSpeed;
+  const {
+    buildings = DATA_URL.BUILDINGS,
+    trips = DATA_URL.TRIPS,
+    trailLength = 180,
+    theme = DEFAULT_THEME,
+  } = props;
 
-    this.setState({
-      time: ((timestamp % loopTime) / loopTime) * loopLength,
-    });
-    this._animationFrame = window.requestAnimationFrame(this._animate.bind(this));
-  }
-
-  _renderLayers() {
-    const {
-      buildings = DATA_URL.BUILDINGS,
-      trips = DATA_URL.TRIPS,
-      trailLength = 180,
-      theme = DEFAULT_THEME,
-    } = this.props;
-
-    return [
-      // This is only needed when using shadow effects
+  const renderLayers = useMemo(
+    () => [
+      // Shadow effects Layers
       new PolygonLayer({
         id: 'ground',
         data: landCover,
@@ -113,6 +110,7 @@ export class NetworkGraph extends Component {
         stroked: false,
         getFillColor: [0, 0, 0, 0],
       }),
+      // Trips Layer
       new TripsLayer({
         id: 'trips',
         data: trips,
@@ -123,10 +121,10 @@ export class NetworkGraph extends Component {
         widthMinPixels: 2,
         rounded: true,
         trailLength,
-        currentTime: this.state.time,
-
+        currentTime: time,
         shadowEnabled: false,
       }),
+      // Buildings Layer
       new PolygonLayer({
         id: 'buildings',
         data: buildings,
@@ -138,32 +136,37 @@ export class NetworkGraph extends Component {
         getFillColor: theme.buildingColor,
         material: theme.material,
       }),
-    ];
-  }
+    ],
+    [time],
+  );
 
-  render() {
-    const {
-      viewState,
-      mapStyle = 'mapbox://styles/mapbox/dark-v9',
-      theme = DEFAULT_THEME,
-    } = this.props;
+  const { viewState, mapStyle = 'mapbox://styles/mapbox/light-v10' } = props;
+  return (
+    <DeckGL
+      layers={renderLayers}
+      effects={theme.effects}
+      initialViewState={INITIAL_VIEW_STATE}
+      viewState={viewState}
+      controller={true}>
+      <StaticMap
+        reuseMaps
+        mapStyle={mapStyle}
+        preventStyleDiffing={true}
+        mapboxApiAccessToken={MAPBOX_TOKEN}
+      />
+    </DeckGL>
+  );
+};
 
-    return (
-      <DeckGL
-        layers={this._renderLayers()}
-        effects={theme.effects}
-        initialViewState={INITIAL_VIEW_STATE}
-        viewState={viewState}
-        controller={true}>
-        <StaticMap
-          reuseMaps
-          mapStyle={mapStyle}
-          preventStyleDiffing={true}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
-        />
-      </DeckGL>
-    );
-  }
-}
+NetworkGraph.propTypes = {
+  buildings: PropTypes.string,
+  trips: PropTypes.string,
+  trailLength: PropTypes.number,
+  theme: PropTypes.object,
+  loopLength: PropTypes.number,
+  animationSpeed: PropTypes.number,
+  viewState: PropTypes.object,
+  mapStyle: PropTypes.string,
+};
 
 export default NetworkGraph;
