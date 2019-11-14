@@ -4,10 +4,6 @@ import { mixins } from '@styles';
 import styled from 'styled-components';
 
 const IconButton = styled.button`
-  svg {
-    margin-right: 10px;
-    width: 2em;
-  }
   ${mixins.button}
 `;
 
