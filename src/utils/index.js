@@ -1,1 +1,1 @@
-export { toRgbArray } from './colors';
+export { toRGB } from './colors';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import tw from 'tailwind.macro';
 
 const Container = tw.div`
-  p-6 bg-pink-200 rounded-lg shadow-2xl
+  p-2 rounded-lg shadow-2xl border-black bg-white
 `;
 
 const Card = ({ children, className }, ref) => (

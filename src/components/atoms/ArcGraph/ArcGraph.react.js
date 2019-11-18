@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import DeckGL from '@deck.gl/react';
-import { ArcLayer } from '@deck.gl/layers';
-import { EDGE } from '@constants';
-import { useArcs } from '@hooks';
-import { StaticMap } from 'react-map-gl';
+import { EdgeTooltip } from '@components';
 import { CONFIG_MAP } from '@config';
-import { toRgbArray } from '@utils';
+import { EDGE } from '@constants';
+import { ArcLayer, ScatterplotLayer } from '@deck.gl/layers';
+import DeckGL from '@deck.gl/react';
+import { useArcs } from '@hooks';
 import { PALETTE } from '@styles';
+import { toRGB } from '@utils';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { StaticMap } from 'react-map-gl';
+import { transparentize } from 'polished';
 
 // #region Helpers
 const MAPBOX_TOKEN =
@@ -32,44 +34,71 @@ const ArcGraph = ({ mapStyle = CONFIG_MAP.MAP_STYLE }) => {
 
   const onHover = info =>
     setTooltipInfo({
-      hoveredObject: info.object,
-      pointerX: info.x,
-      pointerY: info.y,
+      data: info.object,
+      x: info.x,
+      y: info.y,
     });
 
   const layers = [
     new ArcLayer({
       id: 'arc-layer',
-      data: data,
+      data,
       pickable: true,
       getSourcePosition: extractCoordinates(EDGE.SOURCE),
       getTargetPosition: extractCoordinates(EDGE.TARGET),
       widthMinPixels: 3,
-      getSourceColor: toRgbArray(PALETTE.PRIMARY),
-      getTargetColor: toRgbArray(PALETTE.SECONDARY),
+      getSourceColor: toRGB(PALETTE.PRIMARY),
+      getTargetColor: toRGB(PALETTE.SECONDARY),
       onHover,
+    }),
+    new ScatterplotLayer({
+      id: 'scatterplot-layer',
+      data,
+      pickable: true,
+      opacity: 0.8,
+      stroked: true,
+      filled: true,
+      radiusScale: 6,
+      radiusMinPixels: 1,
+      radiusMaxPixels: 100,
+      lineWidthMinPixels: 1,
+      getPosition: extractCoordinates(EDGE.SOURCE),
+      getRadius: 5,
+      getFillColor: toRGB(transparentize(0.2, PALETTE.PRIMARY)),
+      getLineColor: toRGB(transparentize(0.1, PALETTE.PRIMARY)),
+    }),
+    new ScatterplotLayer({
+      id: 'scatterplot-layer',
+      data,
+      pickable: true,
+      opacity: 0.8,
+      stroked: true,
+      filled: true,
+      radiusScale: 6,
+      radiusMinPixels: 1,
+      radiusMaxPixels: 100,
+      lineWidthMinPixels: 1,
+      getPosition: extractCoordinates(EDGE.TARGET),
+      getRadius: 5,
+      getFillColor: toRGB(transparentize(0.6, PALETTE.SECONDARY)),
+      getLineColor: toRGB(transparentize(0.2, PALETTE.SECONDARY)),
     }),
   ];
 
   return (
-    <DeckGL initialViewState={INITIAL_VIEW_STATE} controller={true} layers={layers}>
+    <DeckGL
+      initialViewState={INITIAL_VIEW_STATE}
+      controller={true}
+      layers={layers}
+      getCursor={() => 'crosshair'}>
       <StaticMap
         reuseMaps
         mapStyle={mapStyle}
         preventStyleDiffing={true}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       />
-      {tooltipInfo && (
-        <div
-          style={{
-            position: 'absolute',
-            zIndex: 2,
-            pointerEvents: 'none',
-            left: tooltipInfo.pointerX,
-            top: tooltipInfo.pointerY,
-          }}>
-          {<pre>{JSON.stringify(tooltipInfo.hoveredObject, null, 2)}</pre>}
-        </div>
+      {tooltipInfo && tooltipInfo.data && (
+        <EdgeTooltip data={tooltipInfo.data} pointer={{ x: tooltipInfo.x, y: tooltipInfo.y }} />
       )}
     </DeckGL>
   );

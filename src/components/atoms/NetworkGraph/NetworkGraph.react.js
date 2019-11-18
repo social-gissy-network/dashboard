@@ -8,7 +8,7 @@ import { PolygonLayer } from '@deck.gl/layers';
 import { TripsLayer } from '@deck.gl/geo-layers';
 import { darken, lighten } from 'polished';
 import { PALETTE } from '@styles';
-import { toRgbArray } from '@utils';
+import { toRGB } from '@utils';
 import { CONFIG_MAP } from '@config';
 
 // Public Token
@@ -24,12 +24,12 @@ const DATA_URL = {
 };
 
 const ambientLight = new AmbientLight({
-  color: toRgbArray(darken(0.3, PALETTE.SECONDARY)),
+  color: toRGB(darken(0.3, PALETTE.SECONDARY)),
   intensity: 2.0,
 });
 
 const pointLight = new PointLight({
-  color: toRgbArray(lighten(0.5, PALETTE.SECONDARY)),
+  color: toRGB(lighten(0.5, PALETTE.SECONDARY)),
   intensity: 3.0,
   position: [-74.05, 40.7, 8000],
 });
@@ -44,9 +44,9 @@ const material = new PhongMaterial({
 });
 
 const DEFAULT_THEME = {
-  buildingColor: toRgbArray(PALETTE.SECONDARY),
-  trailColor0: toRgbArray(PALETTE.PRIMARY),
-  trailColor1: toRgbArray(darken(0.5, PALETTE.THIRD)),
+  buildingColor: toRGB(PALETTE.SECONDARY),
+  trailColor0: toRGB(PALETTE.PRIMARY),
+  trailColor1: toRGB(darken(0.5, PALETTE.THIRD)),
   material,
   effects: [lightingEffect],
 };
