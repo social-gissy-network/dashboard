@@ -7,9 +7,8 @@ import { useArcs } from '@hooks';
 import { PALETTE } from '@styles';
 import { toRGB } from '@utils';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StaticMap } from 'react-map-gl';
-import { transparentize } from 'polished';
 
 // #region Helpers
 const MAPBOX_TOKEN =
@@ -30,14 +29,10 @@ const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
 const ArcGraph = ({ mapStyle = CONFIG_MAP.MAP_STYLE }) => {
   const [tooltipInfo, setTooltipInfo] = useState();
 
-  const data = useArcs();
+  const dataArcs = useArcs();
+  const data = dataArcs.slice(0, 10);
 
-  const onHover = info =>
-    setTooltipInfo({
-      data: info.object,
-      x: info.x,
-      y: info.y,
-    });
+  const onHover = useCallback(({ object: data, x, y }) => setTooltipInfo({ data, x, y }), []);
 
   const layers = [
     new ArcLayer({
@@ -52,36 +47,22 @@ const ArcGraph = ({ mapStyle = CONFIG_MAP.MAP_STYLE }) => {
       onHover,
     }),
     new ScatterplotLayer({
-      id: 'scatterplot-layer',
+      id: 'scatter-source',
       data,
-      pickable: true,
-      opacity: 0.8,
-      stroked: true,
-      filled: true,
-      radiusScale: 6,
-      radiusMinPixels: 1,
-      radiusMaxPixels: 100,
-      lineWidthMinPixels: 1,
       getPosition: extractCoordinates(EDGE.SOURCE),
-      getRadius: 5,
-      getFillColor: toRGB(transparentize(0.2, PALETTE.PRIMARY)),
-      getLineColor: toRGB(transparentize(0.1, PALETTE.PRIMARY)),
+      opacity: 0.1,
+      radiusScale: 5,
+      radiusMinPixels: 8,
+      getFillColor: toRGB(PALETTE.PRIMARY),
     }),
     new ScatterplotLayer({
-      id: 'scatterplot-layer',
+      id: 'scatter-target',
       data,
-      pickable: true,
-      opacity: 0.8,
-      stroked: true,
-      filled: true,
-      radiusScale: 6,
-      radiusMinPixels: 1,
-      radiusMaxPixels: 100,
-      lineWidthMinPixels: 1,
       getPosition: extractCoordinates(EDGE.TARGET),
-      getRadius: 5,
-      getFillColor: toRGB(transparentize(0.6, PALETTE.SECONDARY)),
-      getLineColor: toRGB(transparentize(0.2, PALETTE.SECONDARY)),
+      opacity: 0.1,
+      radiusScale: 5,
+      radiusMinPixels: 8,
+      getFillColor: toRGB(PALETTE.SECONDARY),
     }),
   ];
 

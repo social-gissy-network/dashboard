@@ -24,7 +24,6 @@ const useArcs = () => {
   const {
     gissy: { Edge: edges },
   } = useStaticQuery(query);
-
   return edges;
 };
 
