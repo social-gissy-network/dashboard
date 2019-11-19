@@ -6,15 +6,15 @@ const Container = tw.div`
   p-2 rounded-lg shadow-2xl border-black bg-white
 `;
 
-const Card = ({ children, className }, ref) => (
+const Menu = ({ children, className }, ref) => (
   <Container ref={ref} className={className}>
     {children}
   </Container>
 );
 
-Card.propTypes = {
+Menu.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-export default forwardRef(Card);
+export default forwardRef(Menu);

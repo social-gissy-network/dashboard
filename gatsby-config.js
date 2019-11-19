@@ -25,7 +25,7 @@ module.exports = {
       options: {
         typeName: `Gissy`,
         fieldName: `gissy`,
-        url: 'https://core.gissy.now.sh/graphql',
+        url: 'https://gissy-graphql.herokuapp.com/',
       },
     },
     {

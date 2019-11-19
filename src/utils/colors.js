@@ -1,3 +1,3 @@
 import { parseToRgb } from 'polished';
 
-export const toRgbArray = color => Object.values(parseToRgb(color));
+export const toRGB = color => Object.values(parseToRgb(color));
