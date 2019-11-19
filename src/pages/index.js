@@ -1,6 +1,3 @@
-import React from 'react';
-import { Dashboard } from '@components';
-
-const IndexPage = () => <Dashboard />;
+import { IndexPage } from '@components';
 
 export default IndexPage;
