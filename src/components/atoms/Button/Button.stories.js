@@ -4,7 +4,7 @@ import IconButton from './Button.react';
 import { IconLogo } from '../icons';
 
 export default {
-  title: `${SB_LABELS.ATOMS}|Button`,
+  title: `${SB_LABELS.ATOMS}Button`,
 };
 
 export const Default = () => <IconButton>Some Text</IconButton>;

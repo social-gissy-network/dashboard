@@ -5,7 +5,7 @@ import Tooltip from './Tooltip.react';
 import { PALETTE, Text } from '@styles';
 
 export default {
-  title: `${SB_LABELS.ATOMS}|Tooltip`,
+  title: `${SB_LABELS.ATOMS}Tooltip`,
 };
 
 // TODO: query only the first

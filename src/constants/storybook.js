@@ -1,7 +1,7 @@
 // https://bradfrost.com/blog/post/atomic-web-design/
 
 const LABELS = {
-  ATOMS: 'Atoms',
+  ATOMS: 'Atoms|',
   ICONS: 'Atoms|Icons',
   MOLECULES: 'Molecules|',
   ORGANISMS: 'Organisms|',

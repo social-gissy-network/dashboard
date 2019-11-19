@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 const query = graphql`
   query AllEdges {
     gissy {
-      Edge {
+      Edges {
         startNode {
           id
           name
@@ -22,7 +22,7 @@ const query = graphql`
 
 const useArcs = () => {
   const {
-    gissy: { Edge: edges },
+    gissy: { Edges: edges },
   } = useStaticQuery(query);
   return edges;
 };
