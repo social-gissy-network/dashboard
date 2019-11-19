@@ -1,3 +1,5 @@
+const DEFAULT_PUBLIC_TOKEN = `pk.eyJ1IjoiZGVudmFzaCIsImEiOiJjanR0MDM3bjgxMzl1NGRwY3R6NmRoYzFhIn0.QKn_CKoTbN0xkvOsxg7ceg`;
+
 const mapConfig = {
   MAP_STYLE: [
     `mapbox://styles/mapbox/light-v10`,
@@ -19,8 +21,7 @@ const mapConfig = {
     pitch: 45,
     bearing: 0,
   },
-  MAPBOX_TOKEN:
-    'pk.eyJ1IjoiZGVudmFzaCIsImEiOiJjanR0MDM3bjgxMzl1NGRwY3R6NmRoYzFhIn0.QKn_CKoTbN0xkvOsxg7ceg',
+  MAPBOX_TOKEN: process.env.MAPBOX_TOKEN || DEFAULT_PUBLIC_TOKEN,
 };
 
 export default mapConfig;
