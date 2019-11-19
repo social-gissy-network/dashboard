@@ -1,38 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getTrackBackground } from 'react-range';
-import { PALETTE } from '@styles';
+import { PALETTE, mixins } from '@styles';
 import { grayscale } from 'polished';
+import tw from 'tailwind.macro';
+import styled from 'styled-components';
 
 const MIN = 0;
 const MAX = 100;
 
-const renderTrack = values => ({ props, children }) => (
-  <div
-    style={{
-      ...props.style,
-      height: '36px',
-      display: 'flex',
-      width: '100%',
-    }}>
-    <div
-      ref={props.ref}
-      style={{
-        height: '5px',
-        width: '100%',
-        borderRadius: '2px',
-        background: getTrackBackground({
-          values,
-          colors: [grayscale(PALETTE.PRIMARY), PALETTE.PRIMARY, grayscale(PALETTE.PRIMARY)],
-          min: MIN,
-          max: MAX,
-        }),
-        alignSelf: 'center',
-      }}>
-      {children}
-    </div>
-  </div>
-);
+const Container = styled.div`
+  ${mixins.flexCenter}
+`;
+
+const Track = styled.div`
+  ${tw`h-1 w-full`};
+  background: ${({ background }) => background};
+`;
+
+const renderTrack = values => ({ props, children }) => {
+  const background = getTrackBackground({
+    values,
+    colors: [grayscale(PALETTE.PRIMARY), PALETTE.PRIMARY, grayscale(PALETTE.PRIMARY)],
+    min: MIN,
+    max: MAX,
+  });
+  return (
+    <Container>
+      <Track ref={props.ref} background={background}>
+        {children}
+      </Track>
+    </Container>
+  );
+};
 
 renderTrack.propTypes = {
   children: PropTypes.node.isRequired,
