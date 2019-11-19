@@ -1,86 +1,76 @@
-import { EdgeTooltip } from '@components';
-import { CONFIG_MAP } from '@config';
+import { EdgeTooltip, NodeTooltip } from '@components';
+import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { EDGE } from '@constants';
-import { ArcLayer, ScatterplotLayer } from '@deck.gl/layers';
 import DeckGL from '@deck.gl/react';
 import { useArcs } from '@hooks';
 import { PALETTE } from '@styles';
 import { toRGB } from '@utils';
 import PropTypes from 'prop-types';
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StaticMap } from 'react-map-gl';
 
 // #region Helpers
-const MAPBOX_TOKEN =
-  'pk.eyJ1IjoiZGVudmFzaCIsImEiOiJjanR0MDM3bjgxMzl1NGRwY3R6NmRoYzFhIn0.QKn_CKoTbN0xkvOsxg7ceg';
-
-const INITIAL_VIEW_STATE = {
-  latitude: 42.37250864997261,
-  longitude: -71.11305356025696,
-  zoom: 13,
-  pitch: 45,
-  bearing: 0,
-};
-
 const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
   [longitude, latitude].map(Number);
+
+const [defaultMapStyle] = CONFIG_MAP.MAP_STYLE;
+
+const getCursor = () => 'crosshair';
 // #endregion
 
-const ArcGraph = ({ mapStyle = CONFIG_MAP.MAP_STYLE }) => {
-  const [tooltipInfo, setTooltipInfo] = useState();
+const ArcGraph = ({ mapStyle = defaultMapStyle }) => {
+  const [edgeInfo, setEdgeInfo] = useState();
+  const [nodeInfo, setNodeInfo] = useState();
 
   const dataArcs = useArcs();
-  const data = dataArcs.slice(0, 10);
+  const data = dataArcs.slice(0, 50);
 
-  const onHover = useCallback(({ object: data, x, y }) => setTooltipInfo({ data, x, y }), []);
+  const onHoverEdge = useCallback(({ object: data, x, y }) => setEdgeInfo({ data, x, y }), []);
+  const onHoverNode = useCallback(
+    ({ isSource }) => ({ object: data, x, y }) => setNodeInfo({ isSource, data, x, y }),
+    [],
+  );
 
   const layers = [
-    new ArcLayer({
+    CONFIG_GRAPH.ARC_LAYER({
       id: 'arc-layer',
       data,
-      pickable: true,
+      onHover: onHoverEdge,
       getSourcePosition: extractCoordinates(EDGE.SOURCE),
       getTargetPosition: extractCoordinates(EDGE.TARGET),
-      widthMinPixels: 3,
       getSourceColor: toRGB(PALETTE.PRIMARY),
       getTargetColor: toRGB(PALETTE.SECONDARY),
-      onHover,
     }),
-    new ScatterplotLayer({
-      id: 'scatter-source',
+    CONFIG_GRAPH.SCATTER_LAYER({
+      id: 'scatter-source-layer',
       data,
+      onHover: onHoverNode({ isSource: true }),
       getPosition: extractCoordinates(EDGE.SOURCE),
-      opacity: 0.1,
-      radiusScale: 5,
-      radiusMinPixels: 8,
       getFillColor: toRGB(PALETTE.PRIMARY),
     }),
-    new ScatterplotLayer({
-      id: 'scatter-target',
+    CONFIG_GRAPH.SCATTER_LAYER({
+      id: 'scatter-target-layer',
       data,
+      onHover: onHoverNode({ isSource: false }),
       getPosition: extractCoordinates(EDGE.TARGET),
-      opacity: 0.1,
-      radiusScale: 5,
-      radiusMinPixels: 8,
       getFillColor: toRGB(PALETTE.SECONDARY),
     }),
   ];
 
   return (
     <DeckGL
-      initialViewState={INITIAL_VIEW_STATE}
+      initialViewState={CONFIG_MAP.VIEW_STATE}
       controller={true}
       layers={layers}
-      getCursor={() => 'crosshair'}>
+      getCursor={getCursor}>
       <StaticMap
         reuseMaps
         mapStyle={mapStyle}
         preventStyleDiffing={true}
-        mapboxApiAccessToken={MAPBOX_TOKEN}
+        mapboxApiAccessToken={CONFIG_MAP.MAPBOX_TOKEN}
       />
-      {tooltipInfo && tooltipInfo.data && (
-        <EdgeTooltip data={tooltipInfo.data} pointer={{ x: tooltipInfo.x, y: tooltipInfo.y }} />
-      )}
+      {edgeInfo && edgeInfo.data && <EdgeTooltip info={edgeInfo} />}
+      {nodeInfo && nodeInfo.data && <NodeTooltip info={nodeInfo} />}
     </DeckGL>
   );
 };

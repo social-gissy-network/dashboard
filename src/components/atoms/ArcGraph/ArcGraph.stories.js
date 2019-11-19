@@ -3,7 +3,7 @@ import React from 'react';
 import ArcGraph from './ArcGraph.react';
 
 export default {
-  title: `${SB_LABELS.GRAPHS}Arc Graph`,
+  title: `${SB_LABELS.ORGANISMS}Arc Graph`,
 };
 
-export const InCard = () => <ArcGraph />;
+export const Default = () => <ArcGraph />;
