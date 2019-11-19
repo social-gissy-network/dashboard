@@ -1,7 +1,17 @@
-import { configure, addParameters } from '@storybook/react';
+import React from 'react';
+
+import { configure, addParameters, addDecorator } from '@storybook/react';
 import { create } from '@storybook/theming';
 
 import '../src/styles/globals.css';
+import GlobalStyle from '../src/styles/GlobalStyle.styles';
+
+addDecorator(S => (
+  <>
+    <GlobalStyle />
+    <S />
+  </>
+));
 
 const theme = create({
   base: 'light',
