@@ -13,7 +13,7 @@ import { StaticMap } from 'react-map-gl';
 const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
   [longitude, latitude].map(Number);
 
-const [defaultMapStyle] = CONFIG_MAP.MAP_STYLE;
+const [{ url: defaultMapStyle }] = CONFIG_MAP.MAP_STYLES;
 
 const getCursor = () => 'crosshair';
 // #endregion
@@ -23,7 +23,7 @@ const ArcGraph = ({ mapStyle = defaultMapStyle }) => {
   const [nodeInfo, setNodeInfo] = useState();
 
   const dataArcs = useArcs();
-  const data = dataArcs ? dataArcs.slice(0, 50) : [];
+  const data = dataArcs ? dataArcs.slice(0, 200) : [];
 
   const onHoverEdge = useCallback(({ object: data, x, y }) => setEdgeInfo({ data, x, y }), []);
   const onHoverNode = useCallback(

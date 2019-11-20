@@ -45,8 +45,8 @@ Option.propTypes = {
 
 Select.propTypes = {
   children: PropTypes.node.isRequired,
+  registerRef: PropTypes.func.isRequired,
   name: PropTypes.string,
-  registerRef: PropTypes.object,
 };
 
 export default Select;

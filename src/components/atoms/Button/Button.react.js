@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { mixins } from '@styles';
 import styled from 'styled-components';
@@ -7,10 +7,8 @@ const IconButton = styled.button`
   ${mixins.button}
 `;
 
-const Button = ({ children, className }, ref) => (
-  <IconButton ref={ref} className={className}>
-    {children}
-  </IconButton>
+const Button = ({ children, className }) => (
+  <IconButton className={className}>{children}</IconButton>
 );
 
 Button.propTypes = {
@@ -18,4 +16,4 @@ Button.propTypes = {
   className: PropTypes.string,
 };
 
-export default forwardRef(Button);
+export default Button;

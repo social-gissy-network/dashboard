@@ -20,18 +20,17 @@ const Button = styled.a`
   ${mixins.button}
 `;
 
-const [defaultMapStyle] = CONFIG_MAP.MAP_STYLE;
+const [{ url: defaultMapStyle }] = CONFIG_MAP.MAP_STYLES;
 
 const Dashboard = () => {
   const [mapStyle, setMapStyle] = useState(defaultMapStyle);
-  const onMenuSubmit = ({ mapStyle }) => setMapStyle(mapStyle);
 
   return (
     <>
       <ArcGraph mapStyle={mapStyle} />
 
       <FixedLeft>
-        <Menu mapStyle={mapStyle} onSubmit={onMenuSubmit} />
+        <Menu onSubmit={setMapStyle} />
       </FixedLeft>
 
       <FixedRight>

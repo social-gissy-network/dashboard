@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   siteMetadata: {
     title: `Gissy Dashboard`,
@@ -25,7 +27,7 @@ module.exports = {
       options: {
         typeName: `Gissy`,
         fieldName: `gissy`,
-        url: 'https://gissy-graphql.herokuapp.com/',
+        url: process.env.SERVER_URL,
       },
     },
     {

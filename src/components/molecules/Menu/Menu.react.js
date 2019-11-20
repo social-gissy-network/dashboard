@@ -15,22 +15,20 @@ const Form = styled.form`
   }
 `;
 
-const noop = () => {};
-
-const Menu = ({ onSubmit = noop }) => {
+const Menu = ({ onSubmit }) => {
   const { register, handleSubmit } = useForm();
 
-  const onFormSubmit = data => {
-    onSubmit(data);
+  const onFormSubmit = ({ mapStyle }) => {
+    onSubmit(mapStyle);
   };
 
   return (
     <Card>
       <Form onSubmit={handleSubmit(onFormSubmit)}>
         <Select name="mapStyle" registerRef={register}>
-          {CONFIG_MAP.MAP_STYLE.map(mapStyle => (
-            <Select.Option key={mapStyle} value={mapStyle}>
-              {mapStyle}
+          {CONFIG_MAP.MAP_STYLES.map(({ name, url }) => (
+            <Select.Option key={name} value={url}>
+              {name}
             </Select.Option>
           ))}
         </Select>
@@ -41,9 +39,7 @@ const Menu = ({ onSubmit = noop }) => {
 };
 
 Menu.propTypes = {
-  children: PropTypes.node.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  className: PropTypes.string,
 };
 
 export default Menu;
