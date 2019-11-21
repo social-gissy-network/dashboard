@@ -3,6 +3,7 @@ import { grayscale, lighten } from 'polished';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import moment from 'moment';
 
 const { PRIMARY } = PALETTE;
 const grayColor = grayscale(PRIMARY);
@@ -17,6 +18,7 @@ const Tag = styled.div`
   background-color: ${PRIMARY};
   color: ${lighten(0.5, PRIMARY)};
   top: -35px;
+  width: max-content;
 `;
 
 const Thumb = styled.div`
@@ -26,7 +28,7 @@ const Thumb = styled.div`
 
 const renderThumb = values => ({ index, props, isDragged }) => (
   <Container {...props}>
-    <Tag>{values[index].toFixed(1)}</Tag>
+    <Tag>{moment(values[index]).format('DD-MM-YYYY')}</Tag>
     <Thumb isDragged={isDragged} />
   </Container>
 );

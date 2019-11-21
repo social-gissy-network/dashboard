@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
-import tw from 'tailwind.macro';
-import { Range as ReactRange } from 'react-range';
-
-import renderTrack from './renderTrack.react';
-import renderThumb from './renderThumb.react';
-import styled from 'styled-components';
 import { useTimeRange } from '@hooks';
+import React, { useState } from 'react';
+import { Range as ReactRange } from 'react-range';
+import tw from 'tailwind.macro';
+import renderThumb from './renderThumb.react';
+import renderTrack from './renderTrack.react';
 
-const Container = styled.div`
-  ${tw`m-10`};
-`;
+const Container = tw.div`m-10`;
 
 const STEP = 0.1;
 

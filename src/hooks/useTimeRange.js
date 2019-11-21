@@ -1,4 +1,5 @@
 import { graphql, useStaticQuery } from 'gatsby';
+import moment from 'moment';
 
 const query = graphql`
   query TimesRange {
@@ -13,7 +14,7 @@ const query = graphql`
   }
 `;
 
-const toUnixTime = dateStr => new Date(dateStr).valueOf();
+const toUnixTime = dateStr => moment(dateStr, 'YYYY-MM-DD HH:mm:ss.SSSS').valueOf();
 
 const useTimeRange = () => {
   const {
