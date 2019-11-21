@@ -22,8 +22,7 @@ const ArcGraph = ({ mapStyle = defaultMapStyle }) => {
   const [edgeInfo, setEdgeInfo] = useState();
   const [nodeInfo, setNodeInfo] = useState();
 
-  const dataArcs = useArcs();
-  const data = dataArcs ? dataArcs.slice(0, 200) : [];
+  const data = useArcs();
 
   const onHoverEdge = useCallback(({ object: data, x, y }) => setEdgeInfo({ data, x, y }), []);
   const onHoverNode = useCallback(

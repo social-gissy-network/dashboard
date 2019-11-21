@@ -3,14 +3,14 @@ import { grayscale, lighten } from 'polished';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import moment from 'moment';
 
 const { PRIMARY } = PALETTE;
 const grayColor = grayscale(PRIMARY);
 
 const Container = styled.div`
   ${mixins.flexCenter}
-  ${tw`h-10 w-10 bg-white`}
-  box-shadow: 0px 2px 6px ${grayColor};
+  ${tw`shadow-md`}
 `;
 
 const Tag = styled.div`
@@ -18,16 +18,17 @@ const Tag = styled.div`
   background-color: ${PRIMARY};
   color: ${lighten(0.5, PRIMARY)};
   top: -35px;
+  width: max-content;
 `;
 
 const Thumb = styled.div`
-  ${tw`h-5 w-1`};
-  background-color: ${({ isDragged }) => (isDragged ? PRIMARY : grayColor)};
+  ${tw`h-6 w-2`};
+  background-color: ${({ isDragged }) => (isDragged ? grayColor : PRIMARY)};
 `;
 
 const renderThumb = values => ({ index, props, isDragged }) => (
   <Container {...props}>
-    <Tag>{values[index].toFixed(1)}</Tag>
+    <Tag>{moment(values[index]).format('DD-MM-YYYY')}</Tag>
     <Thumb isDragged={isDragged} />
   </Container>
 );
