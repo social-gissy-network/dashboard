@@ -12,7 +12,8 @@
       "@pages": ["src/pages"],
       "@utils": ["src/utils/index"],
       "@hooks": ["src/hooks/index"],
-      "@constants": ["src/constants/index"]
+      "@constants": ["src/constants/index"],
+      "@queries": ["src/apollo/queries/index"]
     }
   }
 }

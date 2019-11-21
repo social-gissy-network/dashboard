@@ -9,8 +9,7 @@ const grayColor = grayscale(PRIMARY);
 
 const Container = styled.div`
   ${mixins.flexCenter}
-  ${tw`h-10 w-10 bg-white`}
-  box-shadow: 0px 2px 6px ${grayColor};
+  ${tw`shadow-md`}
 `;
 
 const Tag = styled.div`
@@ -21,8 +20,8 @@ const Tag = styled.div`
 `;
 
 const Thumb = styled.div`
-  ${tw`h-5 w-1`};
-  background-color: ${({ isDragged }) => (isDragged ? PRIMARY : grayColor)};
+  ${tw`h-6 w-2`};
+  background-color: ${({ isDragged }) => (isDragged ? grayColor : PRIMARY)};
 `;
 
 const renderThumb = values => ({ index, props, isDragged }) => (

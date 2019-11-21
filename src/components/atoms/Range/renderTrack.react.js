@@ -6,9 +6,6 @@ import { grayscale } from 'polished';
 import tw from 'tailwind.macro';
 import styled from 'styled-components';
 
-const MIN = 0;
-const MAX = 100;
-
 const Container = styled.div`
   ${mixins.flexCenter}
 `;
@@ -18,7 +15,7 @@ const Track = styled.div`
   background: ${({ background }) => background};
 `;
 
-const renderTrack = values => ({ props, children }) => {
+const renderTrack = ({ values, MIN, MAX }) => ({ children, props }) => {
   const background = getTrackBackground({
     values,
     colors: [grayscale(PALETTE.PRIMARY), PALETTE.PRIMARY, grayscale(PALETTE.PRIMARY)],

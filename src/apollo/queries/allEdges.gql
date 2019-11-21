@@ -1,0 +1,16 @@
+query AllEdges {
+  Edges(limit: 10) {
+    startNode {
+      id
+      name
+      latitude
+      longitude
+    }
+    stopNode {
+      id
+      name
+      latitude
+      longitude
+    }
+  }
+}

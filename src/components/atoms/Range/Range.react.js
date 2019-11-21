@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import tw from 'tailwind.macro';
 import { Range as ReactRange } from 'react-range';
 
 import renderTrack from './renderTrack.react';
 import renderThumb from './renderThumb.react';
 import styled from 'styled-components';
+import { useTimeRange } from '@hooks';
 
 const Container = styled.div`
   ${tw`m-10`};
 `;
 
 const STEP = 0.1;
-const MIN = 0;
-const MAX = 100;
 
-const Range = ({ values: initialValues = [MIN, MAX] }) => {
-  const [values, setValues] = useState(initialValues);
+const Range = () => {
+  const [MIN, MAX] = useTimeRange();
+  const [values, setValues] = useState([MIN, MAX]);
+
   return (
     <Container>
       <ReactRange
@@ -25,15 +25,11 @@ const Range = ({ values: initialValues = [MIN, MAX] }) => {
         max={MAX}
         values={values}
         onChange={setValues}
-        renderTrack={renderTrack(values)}
+        renderTrack={renderTrack({ values, MIN, MAX })}
         renderThumb={renderThumb(values)}
       />
     </Container>
   );
-};
-
-Range.propTypes = {
-  values: PropTypes.array.isRequired,
 };
 
 export default Range;
