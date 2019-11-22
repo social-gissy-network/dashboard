@@ -1,7 +1,8 @@
 const DEFAULT_PUBLIC_TOKEN = `pk.eyJ1IjoiZGVudmFzaCIsImEiOiJjanR0MDM3bjgxMzl1NGRwY3R6NmRoYzFhIn0.QKn_CKoTbN0xkvOsxg7ceg`;
 
 const mapConfig = {
-  MAP_STYLES: [
+  DEFAULT_MAP_STYLE: `mapbox://styles/mapbox/light-v10`,
+  mapStyles: [
     {
       name: `Light`,
       url: `mapbox://styles/mapbox/light-v10`,

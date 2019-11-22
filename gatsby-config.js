@@ -46,6 +46,7 @@ module.exports = {
           '@utils': 'src/utils',
           '@constants': 'src/constants',
           '@queries': 'src/queries',
+          '@store': 'src/store',
         },
         extensions: ['js'],
       },

@@ -1,21 +1,25 @@
-import { graphql, useStaticQuery } from 'gatsby';
+import { useQuery } from '@apollo/react-hooks';
+import { GissyContext } from '@store';
+import { unixToDbTime } from '@utils';
+import gql from 'graphql-tag';
+import { useContext } from 'react';
 
-const query = graphql`
-  query AllEdges {
-    gissy {
-      Edges(limit: 50) {
-        startNode {
-          id
-          name
-          latitude
-          longitude
-        }
-        stopNode {
-          id
-          name
-          latitude
-          longitude
-        }
+const DEFAULT = { Edges: [] };
+
+const GET_EDGES_IN_TIME_RANGE = gql`
+  query getEdgesInTimeRange($min: String!, $max: String!) {
+    Edges(filter: { startTime: { gt: $min, lt: $max } }, limit: 50) {
+      startNode {
+        id
+        name
+        latitude
+        longitude
+      }
+      stopNode {
+        id
+        name
+        latitude
+        longitude
       }
     }
   }
@@ -23,22 +27,17 @@ const query = graphql`
 
 const useArcs = () => {
   const {
-    gissy: { Edges: edges },
-  } = useStaticQuery(query);
+    TIME: { timeRange },
+  } = useContext(GissyContext);
 
-  return edges;
-};
+  const [min, max] = timeRange.map(unixToDbTime);
 
-export default useArcs;
+  const { data: fetchedData = DEFAULT, loading } = useQuery(GET_EDGES_IN_TIME_RANGE, {
+    variables: { min, max },
+  });
 
-/* Apollo client example
-import { useQuery } from '@apollo/react-hooks';
-import allEdgesQuery from '../apollo/queries/allEdges.gql';
-
-const useArcs = () => {
-  const { data, loading } = useQuery(allEdgesQuery);
+  const { Edges: data } = fetchedData;
   return { data, loading };
 };
 
 export default useArcs;
-*/

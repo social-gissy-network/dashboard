@@ -1,5 +1,5 @@
-query AllEdges {
-  Edges(limit: 10) {
+query getEdgesInTimeRange {
+  Edges(limit: 50) {
     startNode {
       id
       name

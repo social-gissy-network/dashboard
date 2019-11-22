@@ -1,9 +1,9 @@
 import { mixins, PALETTE } from '@styles';
+import { unixTimeToDate } from '@utils';
 import { grayscale, lighten } from 'polished';
 import React from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import moment from 'moment';
 
 const { PRIMARY } = PALETTE;
 const grayColor = grayscale(PRIMARY);
@@ -28,7 +28,7 @@ const Thumb = styled.div`
 
 const renderThumb = values => ({ index, props, isDragged }) => (
   <Container {...props}>
-    <Tag>{moment(values[index]).format('DD-MM-YYYY')}</Tag>
+    <Tag>{unixTimeToDate(values[index])}</Tag>
     <Thumb isDragged={isDragged} />
   </Container>
 );
