@@ -1,5 +1,4 @@
 import { useTimeRange } from '@hooks';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Range as ReactRange } from 'react-range';
 import tw from 'tailwind.macro';
@@ -34,10 +33,6 @@ const Range = () => {
       />
     </Container>
   );
-};
-
-Range.propTypes = {
-  onFinalChange: PropTypes.func.isRequired,
 };
 
 export default Range;

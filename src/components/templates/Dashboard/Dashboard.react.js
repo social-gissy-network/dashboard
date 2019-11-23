@@ -1,12 +1,13 @@
 import { ArcGraph, Menu, Range } from '@components';
-import { CONFIG_SERVER, CONFIG_MAP } from '@config';
+import { CONFIG_MAP, CONFIG_SERVER } from '@config';
+import { LOCAL_STORAGE_KEYS } from '@constants';
 import { IconGraphql } from '@icons';
+import { GissyContext } from '@store';
 import { mixins } from '@styles';
-import React, { useState, useEffect } from 'react';
+import { getLSItem, setLSItem } from '@utils';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import { GissyContext } from '@store';
-import { getLSItem, LOCAL_STORAGE_KEYS, setLSItem } from '@utils';
 
 const FixedRight = tw.div`fixed z-10 top-0 right-0 m-5`;
 const FixedLeft = tw.div`fixed z-10 top-0 left-0 m-5`;
@@ -27,6 +28,7 @@ const defaultMapStyle = getLSItem(LOCAL_STORAGE_KEYS.MAP_STYLE) || CONFIG_MAP.DE
 const Dashboard = () => {
   const [mapStyle, setMapStyle] = useState(defaultMapStyle);
   const [timeRange, setTimeRange] = useState([0, 100]);
+  const [limit, setLimit] = useState(50);
 
   useEffect(() => {
     setLSItem(LOCAL_STORAGE_KEYS.MAP_STYLE, mapStyle);
@@ -35,6 +37,7 @@ const Dashboard = () => {
   const store = {
     TIME: { timeRange, setTimeRange },
     STYLE: { mapStyle, setMapStyle },
+    LIMIT: { limit, setLimit },
   };
 
   return (
@@ -42,7 +45,7 @@ const Dashboard = () => {
       <ArcGraph />
 
       <FixedLeft>
-        <Menu onSubmit={setMapStyle} />
+        <Menu />
       </FixedLeft>
 
       <FixedRight>
@@ -53,10 +56,11 @@ const Dashboard = () => {
       </FixedRight>
       <FixedBottom>
         <RangeSize>
-          <Range onFinalChange={setTimeRange} />
+          <Range />
         </RangeSize>
       </FixedBottom>
     </GissyContext.Provider>
   );
 };
+
 export default Dashboard;

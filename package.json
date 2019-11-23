@@ -72,7 +72,6 @@
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "gatsby-plugin-alias-imports": "^1.0.5",
-    "gatsby-plugin-graphql-loader": "^1.0.2",
     "gatsby-plugin-manifest": "^2.2.27",
     "gatsby-plugin-now": "^1.2.5",
     "gatsby-plugin-offline": "^3.0.20",

@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { configure, addParameters, addDecorator } from '@storybook/react';
 import { create } from '@storybook/theming';
 
 import '../src/styles/globals.css';
 import GlobalStyle from '../src/styles/GlobalStyle.styles';
+import GissyContext from '../src/store/GissyContext';
+import CONFIG_MAP from '../src/config/map';
+import LOCAL_STORAGE_KEYS from '../src/constants/localStorage';
+import { getLSItem } from '../src/utils/localStorage';
 
-addDecorator(S => (
-  <>
-    <GlobalStyle />
-    <S />
-  </>
-));
+const defaultMapStyle = getLSItem(LOCAL_STORAGE_KEYS.MAP_STYLE) || CONFIG_MAP.DEFAULT_MAP_STYLE;
+
+addDecorator(S => {
+  const [mapStyle, setMapStyle] = useState(defaultMapStyle);
+  const [timeRange, setTimeRange] = useState([0, 100]);
+  const store = { STYLE: { mapStyle, setMapStyle }, TIME: { timeRange, setTimeRange } };
+  return (
+    <>
+      <GissyContext.Provider value={store}>
+        <GlobalStyle />
+        <S />
+      </GissyContext.Provider>
+    </>
+  );
+});
 
 const theme = create({
   base: 'light',

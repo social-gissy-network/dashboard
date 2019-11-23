@@ -1,7 +1,6 @@
-import { Card, IconButton, Select } from '@components';
+import { Card, IconButton, Select, Input } from '@components';
 import { CONFIG_MAP } from '@config';
 import { mixins } from '@styles';
-import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import useForm from 'react-hook-form';
 import styled from 'styled-components';
@@ -21,30 +20,29 @@ const Menu = () => {
 
   const {
     STYLE: { setMapStyle },
+    LIMIT: { setLimit },
   } = useContext(GissyContext);
 
-  const onFormSubmit = ({ mapStyle }) => {
+  const onFormSubmit = ({ mapStyle, limit }) => {
     setMapStyle(mapStyle);
+    setLimit(Number(limit));
   };
 
   return (
     <Card>
       <Form onSubmit={handleSubmit(onFormSubmit)}>
-        <Select name="mapStyle" registerRef={register}>
+        <Select name="mapStyle" register={register}>
           {CONFIG_MAP.mapStyles.map(({ name, url }) => (
             <Select.Option key={name} value={url}>
               {name}
             </Select.Option>
           ))}
         </Select>
+        <Input name="limit" type="number" register={register} placeholder="Limit" />
         <IconButton type="submit">Apply</IconButton>
       </Form>
     </Card>
   );
-};
-
-Menu.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Menu;
