@@ -24,7 +24,6 @@ module.exports = {
         icon: `static/logo.png`,
       },
     },
-    `gatsby-plugin-graphql-loader`,
     {
       resolve: `gatsby-source-graphql`,
       options: {
@@ -46,6 +45,7 @@ module.exports = {
           '@utils': 'src/utils',
           '@constants': 'src/constants',
           '@queries': 'src/queries',
+          '@store': 'src/store',
         },
         extensions: ['js'],
       },

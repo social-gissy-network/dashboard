@@ -5,6 +5,7 @@ export { default as IconButton } from './atoms/Button/Button.react';
 export { default as Tooltip } from './atoms/Tooltip/Tooltip.react';
 export { default as Range } from './atoms/Range/Range.react';
 export { default as Select } from './atoms/Select/Select.react';
+export { default as Input } from './atoms/Input/Input.react';
 
 // molecules
 export { default as EdgeTooltip } from './molecules/EdgeTooltip/EdgeTooltip.react';

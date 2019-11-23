@@ -1,8 +1,10 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import moment from 'moment';
+import { useContext } from 'react';
+import { GissyContext } from '@store';
+import { toUnixTime } from '@utils';
 
-const query = graphql`
-  query TimesRange {
+const GET_TIME_RANGE = graphql`
+  query getTimeRange {
     gissy {
       first: Edges(limit: 1, sort: { startTime: ASC }) {
         startTime
@@ -14,17 +16,19 @@ const query = graphql`
   }
 `;
 
-const toUnixTime = dateStr => moment(dateStr, 'YYYY-MM-DD HH:mm:ss.SSSS').valueOf();
-
 const useTimeRange = () => {
   const {
     gissy: {
       first: [{ startTime: MIN }],
       last: [{ startTime: MAX }],
     },
-  } = useStaticQuery(query);
+  } = useStaticQuery(GET_TIME_RANGE);
 
-  return [MIN, MAX].map(toUnixTime);
+  const {
+    TIME: { setTimeRange },
+  } = useContext(GissyContext);
+
+  return [[MIN, MAX].map(toUnixTime), setTimeRange];
 };
 
 export default useTimeRange;

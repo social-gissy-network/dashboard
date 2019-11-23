@@ -5,13 +5,19 @@ import tw from 'tailwind.macro';
 import renderThumb from './renderThumb.react';
 import renderTrack from './renderTrack.react';
 
-const Container = tw.div`m-10`;
-
 const STEP = 0.1;
 
+const Container = tw.div`pb-10`;
+
 const Range = () => {
-  const [MIN, MAX] = useTimeRange();
-  const [values, setValues] = useState([MIN, MAX]);
+  const [initial, onFinalChange] = useTimeRange();
+  const [values, setValues] = useState(initial);
+
+  useState(() => {
+    onFinalChange(values);
+  }, []);
+
+  const [MIN, MAX] = initial;
 
   return (
     <Container>
@@ -21,6 +27,7 @@ const Range = () => {
         max={MAX}
         values={values}
         onChange={setValues}
+        onFinalChange={onFinalChange}
         renderTrack={renderTrack({ values, MIN, MAX })}
         renderThumb={renderThumb(values)}
       />

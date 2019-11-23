@@ -13,7 +13,8 @@
       "@utils": ["src/utils/index"],
       "@hooks": ["src/hooks/index"],
       "@constants": ["src/constants/index"],
-      "@queries": ["src/apollo/queries/index"]
+      "@queries": ["src/queries/index"],
+      "@store": ["src/store/index"]
     }
   }
 }

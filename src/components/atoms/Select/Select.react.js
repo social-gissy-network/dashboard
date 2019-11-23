@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import { IconSelectArrow } from '@icons';
 
+const Container = tw.div`inline-block relative`;
+
 const SelectStyled = styled.select`
-  ${tw`block appearance-none w-full bg-white border
+  ${tw`appearance-none w-full bg-white border
     border-gray-400 hover:border-gray-500 px-4 py-2 pr-8
     rounded shadow leading-tight focus:outline-none focus:shadow-outline`}
 `;
-
-const Container = tw.div`inline-block relative`;
 
 const IconContainer = styled.div`
   ${tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}
@@ -19,9 +19,9 @@ const IconContainer = styled.div`
   }
 `;
 
-const Select = ({ children, name, registerRef }) => (
+const Select = ({ children, name, register }) => (
   <Container>
-    <SelectStyled ref={registerRef} name={name}>
+    <SelectStyled ref={register} name={name}>
       {children}
     </SelectStyled>
     <IconContainer>
@@ -45,7 +45,7 @@ Option.propTypes = {
 
 Select.propTypes = {
   children: PropTypes.node.isRequired,
-  registerRef: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
   name: PropTypes.string,
 };
 

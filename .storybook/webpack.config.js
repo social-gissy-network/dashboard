@@ -66,7 +66,8 @@ module.exports = ({ config }) => {
     '@utils': path.resolve(__dirname, `${SRC}/utils`),
     '@hooks': path.resolve(__dirname, `${SRC}/hooks`),
     '@constants': path.resolve(__dirname, `${SRC}/constants`),
-    '@queries': path.resolve(__dirname, `${SRC}/queries'`),
+    '@queries': path.resolve(__dirname, `${SRC}/queries`),
+    '@store': path.resolve(__dirname, `${SRC}/store`),
   };
 
   config.resolve.extensions = ['.js'];

@@ -6544,11 +6544,6 @@ gatsby-plugin-alias-imports@^1.0.5:
   dependencies:
     "@babel/runtime" "^7.2.0"
 
-gatsby-plugin-graphql-loader@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-graphql-loader/-/gatsby-plugin-graphql-loader-1.0.2.tgz#5efc4fd511fd62fb1b2e52df3b00e1e6c18b9852"
-  integrity sha512-IX5DKZCVxB3Z6D5A4rGLuadNZKKmoRDVYPGaA8l2IKlShsr0ajgQli6ezJ18CJd1cdgolC0ONVHWcOoITpLUFQ==
-
 gatsby-plugin-manifest@^2.2.27:
   version "2.2.27"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-manifest/-/gatsby-plugin-manifest-2.2.27.tgz#19848ad1876362ac3a76981f77dca857b878ac68"
