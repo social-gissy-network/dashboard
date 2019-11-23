@@ -29,7 +29,7 @@ module.exports = {
       options: {
         typeName: `Gissy`,
         fieldName: `gissy`,
-        url: process.env.SERVER_URL,
+        url: `https://gissy-graphql.herokuapp.com/`,
       },
     },
     {

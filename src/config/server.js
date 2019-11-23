@@ -1,5 +1,5 @@
 const SERVER = {
-  url: process.env.GRAPHQL_URI || `https://gissy-graphql.herokuapp.com/`,
+  url: process.env.SERVER_URL || `https://gissy-graphql.herokuapp.com/`,
 };
 
 export default SERVER;
