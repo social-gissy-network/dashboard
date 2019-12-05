@@ -9,7 +9,7 @@ export default {
 
 // TODO: query only the first
 export const Default = () => {
-  const data = useArcs();
+  const { data, loading } = useArcs();
   const [first] = data;
-  return <NodeTooltip info={{ data: first }} />;
+  return !loading && <NodeTooltip info={{ data: first }} />;
 };

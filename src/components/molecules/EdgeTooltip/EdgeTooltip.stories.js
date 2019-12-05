@@ -9,9 +9,7 @@ export default {
 
 // TODO: query only the first
 export const Default = () => {
-  const data = useArcs();
+  const { data, loading } = useArcs();
   const [first] = data;
-
-  // &#10230; ⟶
-  return <EdgeTooltip info={{ data: first }} />;
+  return !loading && <EdgeTooltip info={{ data: first }} loading={loading} />;
 };

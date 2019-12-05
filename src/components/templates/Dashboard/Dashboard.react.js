@@ -43,11 +43,9 @@ const Dashboard = () => {
   return (
     <GissyContext.Provider value={store}>
       <ArcGraph />
-
       <FixedLeft>
         <Menu />
       </FixedLeft>
-
       <FixedRight>
         <Button href={CONFIG_SERVER.url} target="_blank">
           <IconGraphql />

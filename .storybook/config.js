@@ -9,27 +9,49 @@ import GissyContext from '../src/store/GissyContext';
 import CONFIG_MAP from '../src/config/map';
 import LOCAL_STORAGE_KEYS from '../src/constants/localStorage';
 import { getLSItem } from '../src/utils/localStorage';
+import { useTimeRange } from '../src/hooks/index';
+import { unixToDbTime } from '../src/utils/index';
+
+import { ApolloProvider } from '@apollo/react-hooks';
+import ApolloClient from 'apollo-boost';
+import fetch from 'isomorphic-fetch';
+
+const client = new ApolloClient({
+  uri: `https://gissy-graphql.herokuapp.com/`,
+  fetch,
+});
 
 const defaultMapStyle = getLSItem(LOCAL_STORAGE_KEYS.MAP_STYLE) || CONFIG_MAP.DEFAULT_MAP_STYLE;
 
-addDecorator(S => {
+const Wrapper = ({ children }) => {
   const [mapStyle, setMapStyle] = useState(defaultMapStyle);
-  const [timeRange, setTimeRange] = useState([0, 100]);
-  const store = { STYLE: { mapStyle, setMapStyle }, TIME: { timeRange, setTimeRange } };
+  const [timeRange, setTimeRange] = useState([0, Infinity]);
+
+  const [limit, setLimit] = useState(50);
+  const store = {
+    TIME: { timeRange, setTimeRange },
+    STYLE: { mapStyle, setMapStyle },
+    LIMIT: { limit, setLimit },
+  };
+
   return (
-    <>
+    <ApolloProvider client={client}>
       <GissyContext.Provider value={store}>
         <GlobalStyle />
-        <S />
+        {children}
       </GissyContext.Provider>
-    </>
+    </ApolloProvider>
   );
-});
+};
+addDecorator(S => (
+  <Wrapper>
+    <S />
+  </Wrapper>
+));
 
 const theme = create({
   base: 'light',
   colorPrimary: 'hotpink',
-
   brandTitle: 'Gissy Storybook',
   brandUrl: 'https://docs.gissy.now.sh/README.html',
   brandImage:
