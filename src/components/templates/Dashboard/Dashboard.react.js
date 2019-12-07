@@ -1,5 +1,5 @@
-import { ArcGraph, Menu, Range } from '@components';
-import { CONFIG_SERVER } from '@config';
+import { ArcGraph, Menu, Range, NetworkGraph } from '@components';
+import { CONFIG_SERVER, CONFIG_GRAPH } from '@config';
 import { IconGraphql } from '@icons';
 import { GissyContext } from '@store';
 import { mixins } from '@styles';
@@ -22,11 +22,18 @@ const Button = styled.a`
   ${mixins.button}
 `;
 
+const { TYPES } = CONFIG_GRAPH;
+
+const GRAPHS = {
+  [TYPES.ARC]: <ArcGraph />,
+  [TYPES.NETWORK]: <NetworkGraph />,
+};
+
 const Dashboard = () => {
   const store = useDashboard();
   return (
     <GissyContext.Provider value={store}>
-      <ArcGraph />
+      {GRAPHS[store.GRAPH_TYPE.value]}
       <FixedLeft>
         <Menu />
       </FixedLeft>

@@ -6,6 +6,7 @@ export { default as Tooltip } from './atoms/Tooltip/Tooltip.react';
 export { default as Range } from './atoms/Range/Range.react';
 export { default as Select } from './atoms/Select/Select.react';
 export { default as Input } from './atoms/Input/Input.react';
+export { default as NetworkGraph } from './atoms/NetworkGraph/NetworkGraph.react';
 
 // molecules
 export { default as EdgeTooltip } from './molecules/EdgeTooltip/EdgeTooltip.react';

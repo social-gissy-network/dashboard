@@ -13,7 +13,7 @@ const useDashboard = () => {
   useLocalStorage({ graphType, mapStyle });
 
   const config = {
-    GRAPH_TYPE: { graphType, setGraphType },
+    GRAPH_TYPE: { value: graphType, set: setGraphType },
     TIME: { timeRange, setTimeRange },
     STYLE: { mapStyle, setMapStyle },
     LIMIT: { limit, setLimit },
