@@ -2,11 +2,12 @@ import { ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
 import { PALETTE } from '@styles';
 
 const graphConfig = {
+  DEFAULT_GRAPH_TYPE: 'Arc',
   TYPES: {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ width = window.innerWidth, height = 500 }) => ({
+  NETWORK: ({ width = window.innerWidth, height = window.innerHeight }) => ({
     automaticRearrangeAfterDropNode: true,
     nodeHighlightBehavior: true,
     panAndZoom: true,
@@ -37,7 +38,6 @@ const graphConfig = {
     },
     d3: {
       linkLength: 400,
-      gravity: -400,
     },
   }),
   ARC_LAYER: ({

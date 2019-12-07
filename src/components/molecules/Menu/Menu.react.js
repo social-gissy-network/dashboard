@@ -21,11 +21,13 @@ const Menu = () => {
   const {
     STYLE: { setMapStyle },
     LIMIT: { setLimit },
+    GRAPH_TYPE: { setGraphType },
   } = useContext(GissyContext);
 
-  const onFormSubmit = ({ mapStyle, limit }) => {
+  const onFormSubmit = ({ mapStyle, limit, graphType }) => {
     setMapStyle(mapStyle);
     setLimit(Number(limit));
+    setGraphType(graphType);
   };
 
   return (

@@ -9,13 +9,13 @@ import { useNetwork } from '@hooks';
 const ONE_SEC = 1000;
 
 const Container = styled.div`
-  ${tw`border-black border-2 bg-pink-100`}
+  ${tw`min-h-screen`}
 `;
 
 const { NETWORK } = CONFIG_GRAPH;
 
 const NetworkGraph = () => {
-  const data = useNetwork();
+  const { data, loading } = useNetwork();
 
   const [width, setWidth] = useState();
   const containerRef = useRef();
@@ -36,7 +36,13 @@ const NetworkGraph = () => {
 
   return (
     <Container ref={containerRef}>
-      {containerRef.current && <D3Graph id="gissy" data={data} config={NETWORK({ width })} />}
+      {loading ? (
+        <div>Loading</div>
+      ) : data.nodes.length ? (
+        <D3Graph id="gissy" data={data} config={NETWORK({ width })} />
+      ) : (
+        <div>Empty Data</div>
+      )}
     </Container>
   );
 };
