@@ -1,5 +1,5 @@
 import { Card, IconButton, Select, Input } from '@components';
-import { CONFIG_MAP } from '@config';
+import { CONFIG_MAP, CONFIG_GRAPH } from '@config';
 import { mixins } from '@styles';
 import React, { useContext } from 'react';
 import useForm from 'react-hook-form';
@@ -31,6 +31,13 @@ const Menu = () => {
   return (
     <Card>
       <Form onSubmit={handleSubmit(onFormSubmit)}>
+        <Select name="graphType" register={register}>
+          {Object.values(CONFIG_GRAPH.TYPES).map(type => (
+            <Select.Option key={type} value={type}>
+              {type}
+            </Select.Option>
+          ))}
+        </Select>
         <Select name="mapStyle" register={register}>
           {CONFIG_MAP.mapStyles.map(({ name, url }) => (
             <Select.Option key={name} value={url}>
