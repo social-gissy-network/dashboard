@@ -22,7 +22,7 @@ const ArcGraph = () => {
   const [nodeInfo, setNodeInfo] = useState();
 
   const {
-    STYLE: { mapStyle },
+    STYLE: { value: mapStyle },
   } = useContext(GissyContext);
 
   const { data } = useArcs();

@@ -15,9 +15,21 @@ const flexCenter = css`
   ${tw`flex justify-center items-center`}
 `;
 
+const flexStart = css`
+  ${flexCenter}
+  ${tw`items-baseline`}
+`;
+
+const flexBetween = css`
+  ${flexCenter}
+  ${tw`justify-between`}
+`;
+
 const mixins = {
   button,
   flexCenter,
+  flexStart,
+  flexBetween,
 };
 
 export default mixins;

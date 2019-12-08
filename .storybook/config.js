@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { configure, addParameters, addDecorator } from '@storybook/react';
 import { create } from '@storybook/theming';
@@ -6,35 +6,19 @@ import { create } from '@storybook/theming';
 import '../src/styles/globals.css';
 import GlobalStyle from '../src/styles/GlobalStyle.styles';
 import GissyContext from '../src/store/GissyContext';
-import { CONFIG_GRAPH, CONFIG_MAP } from '../src/config';
-import LOCAL_STORAGE_KEYS from '../src/constants/localStorage';
-import { getLSItem } from '../src/utils/localStorage';
 
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
+import { useDashboard } from '../src/hooks';
 
 const client = new ApolloClient({
   uri: `https://gissy-graphql.herokuapp.com/`,
   fetch,
 });
 
-const defaultMapStyle = getLSItem(LOCAL_STORAGE_KEYS.MAP_STYLE) || CONFIG_MAP.DEFAULT_MAP_STYLE;
-const defaultGraphType =
-  getLSItem(LOCAL_STORAGE_KEYS.GRAPH_TYPE) || CONFIG_GRAPH.DEFAULT_GRAPH_TYPE;
-
 const Wrapper = ({ children }) => {
-  const [mapStyle, setMapStyle] = useState(defaultMapStyle);
-  const [timeRange, setTimeRange] = useState([0, Infinity]);
-  const [graphType, setGraphType] = useState(defaultGraphType);
-
-  const [limit, setLimit] = useState(50);
-  const store = {
-    GRAPH_TYPE: { graphType, setGraphType },
-    TIME: { timeRange, setTimeRange },
-    STYLE: { mapStyle, setMapStyle },
-    LIMIT: { limit, setLimit },
-  };
+  const store = useDashboard();
 
   return (
     <ApolloProvider client={client}>

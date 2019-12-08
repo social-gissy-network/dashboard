@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { CONFIG_DEFAULT } from '@config';
 import useLocalStorage from './useLocalStorage';
 
@@ -12,11 +12,18 @@ const useDashboard = () => {
 
   useLocalStorage({ limit, graphType, mapStyle });
 
+  const dispatch = useCallback(({ graphType, mapStyle, limit }) => {
+    setGraphType(graphType);
+    setMapStyle(mapStyle);
+    setLimit(Number(limit));
+  }, []);
+
   const config = {
+    dispatch,
     GRAPH_TYPE: { value: graphType, set: setGraphType },
-    TIME: { timeRange, setTimeRange },
-    STYLE: { mapStyle, setMapStyle },
-    LIMIT: { limit, setLimit },
+    TIME: { value: timeRange, set: setTimeRange },
+    STYLE: { value: mapStyle, set: setMapStyle },
+    LIMIT: { value: limit, set: setLimit },
   };
 
   return config;

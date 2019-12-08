@@ -28,8 +28,8 @@ const GET_EDGES_IN_TIME_RANGE = gql`
 
 const useArcs = () => {
   const {
-    TIME: { timeRange },
-    LIMIT: { limit },
+    TIME: { value: timeRange },
+    LIMIT: { value: limit },
   } = useContext(GissyContext);
 
   const [min, max] = timeRange.map(unixToDbTime);
