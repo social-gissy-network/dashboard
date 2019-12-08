@@ -25,7 +25,7 @@ const useTimeRange = () => {
   } = useStaticQuery(GET_TIME_RANGE);
 
   const {
-    TIME: { setTimeRange },
+    TIME: { set: setTimeRange },
   } = useContext(GissyContext);
 
   return [[MIN, MAX].map(toUnixTime), setTimeRange];

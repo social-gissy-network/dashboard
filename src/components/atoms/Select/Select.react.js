@@ -19,9 +19,9 @@ const IconContainer = styled.div`
   }
 `;
 
-const Select = ({ children, name, register }) => (
+const Select = ({ children, name, register, defaultValue }) => (
   <Container>
-    <SelectStyled ref={register} name={name}>
+    <SelectStyled defaultValue={defaultValue} ref={register} name={name}>
       {children}
     </SelectStyled>
     <IconContainer>
@@ -47,6 +47,7 @@ Select.propTypes = {
   children: PropTypes.node.isRequired,
   register: PropTypes.func.isRequired,
   name: PropTypes.string,
+  defaultValue: PropTypes.string,
 };
 
 export default Select;

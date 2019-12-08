@@ -9,6 +9,7 @@ const DEFAULT = { Edges: [] };
 const GET_EDGES_IN_TIME_RANGE = gql`
   query getEdgesInTimeRange($min: String!, $max: String!, $limit: Int!) {
     Edges(filter: { startTime: { gt: $min, lt: $max } }, limit: $limit) {
+      id
       startNode {
         id
         name
@@ -27,8 +28,8 @@ const GET_EDGES_IN_TIME_RANGE = gql`
 
 const useArcs = () => {
   const {
-    TIME: { timeRange },
-    LIMIT: { limit },
+    TIME: { value: timeRange },
+    LIMIT: { value: limit },
   } = useContext(GissyContext);
 
   const [min, max] = timeRange.map(unixToDbTime);

@@ -11,6 +11,8 @@ const Button = ({ children, className }) => (
   <IconButton className={className}>{children}</IconButton>
 );
 
+Button.Style = IconButton;
+
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,

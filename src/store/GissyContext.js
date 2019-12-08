@@ -2,6 +2,8 @@ import { createContext } from 'react';
 
 const GissyContext = createContext();
 
-export const store = { STYLE: {}, TIME: {}, LIMIT: {} };
+const dispatch = () => {};
+
+export const store = { dispatch, STYLE: {}, TIME: {}, LIMIT: {} };
 
 export default GissyContext;

@@ -15,9 +15,34 @@ const flexCenter = css`
   ${tw`flex justify-center items-center`}
 `;
 
+const flexStart = css`
+  ${flexCenter}
+  ${tw`items-baseline`}
+`;
+
+const flexBetween = css`
+  ${flexCenter}
+  ${tw`justify-between`}
+`;
+
+const reveal = css`
+  animation: show 5s ease-in normal;
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
 const mixins = {
   button,
   flexCenter,
+  flexStart,
+  flexBetween,
+  reveal,
 };
 
 export default mixins;

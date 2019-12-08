@@ -1,20 +1,31 @@
-import { EdgeTooltip, NodeTooltip } from '@components';
+import { EdgeTooltip, NodeTooltip, Loading } from '@components';
 import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { EDGE } from '@constants';
 import DeckGL from '@deck.gl/react';
 import { useArcs } from '@hooks';
 import { GissyContext } from '@store';
-import { PALETTE } from '@styles';
+import { PALETTE, mixins } from '@styles';
 import { toRGB } from '@utils';
 import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { StaticMap } from 'react-map-gl';
+import styled from 'styled-components';
+import tw from 'tailwind.macro';
 
 // #region Helpers
 const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
   [longitude, latitude].map(Number);
 
 const getCursor = () => 'crosshair';
+
+const LogoWrapper = styled.div`
+  ${mixins.flexCenter}
+  ${tw`min-h-screen`}
+`;
+
+const Reveal = styled.div`
+  ${mixins.reveal}
+`;
 // #endregion
 
 const ArcGraph = () => {
@@ -22,10 +33,10 @@ const ArcGraph = () => {
   const [nodeInfo, setNodeInfo] = useState();
 
   const {
-    STYLE: { mapStyle },
+    STYLE: { value: mapStyle },
   } = useContext(GissyContext);
 
-  const { data } = useArcs();
+  const { data, loading } = useArcs();
 
   const onHoverEdge = useCallback(({ object: data, x, y }) => setEdgeInfo({ data, x, y }), []);
   const onHoverNode = useCallback(
@@ -63,20 +74,27 @@ const ArcGraph = () => {
   );
 
   return (
-    <DeckGL
-      initialViewState={CONFIG_MAP.VIEW_STATE}
-      controller={true}
-      layers={layers}
-      getCursor={getCursor}>
-      <StaticMap
-        reuseMaps
-        mapStyle={mapStyle}
-        preventStyleDiffing={true}
-        mapboxApiAccessToken={CONFIG_MAP.MAPBOX_TOKEN}
-      />
-      {edgeInfo && edgeInfo.data && <EdgeTooltip info={edgeInfo} />}
-      {nodeInfo && nodeInfo.data && <NodeTooltip info={nodeInfo} />}
-    </DeckGL>
+    <Reveal>
+      <DeckGL
+        initialViewState={CONFIG_MAP.VIEW_STATE}
+        controller={true}
+        layers={layers}
+        getCursor={getCursor}>
+        <StaticMap
+          reuseMaps
+          mapStyle={mapStyle}
+          preventStyleDiffing={true}
+          mapboxApiAccessToken={CONFIG_MAP.MAPBOX_TOKEN}
+        />
+        {loading && (
+          <LogoWrapper>
+            <Loading />
+          </LogoWrapper>
+        )}
+        {edgeInfo && edgeInfo.data && <EdgeTooltip info={edgeInfo} />}
+        {nodeInfo && nodeInfo.data && <NodeTooltip info={nodeInfo} />}
+      </DeckGL>
+    </Reveal>
   );
 };
 
