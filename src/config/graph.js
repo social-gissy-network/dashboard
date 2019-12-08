@@ -3,41 +3,53 @@ import { PALETTE } from '@styles';
 
 const graphConfig = {
   DEFAULT_GRAPH_TYPE: 'Arc',
+  DEFAULT_LIMIT: 50,
   TYPES: {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
   NETWORK: ({ width = window.innerWidth, height = window.innerHeight }) => ({
-    automaticRearrangeAfterDropNode: true,
+    // https://goodguydaniel.com/react-d3-graph/docs
+    // Global Config
+    automaticRearrangeAfterDropNode: false,
     nodeHighlightBehavior: true,
+    collapsible: true,
     panAndZoom: true,
     directed: true,
+    focusZoom: 1,
     width,
     height,
+    // D3 Level
+    d3: {
+      linkLength: 1000,
+      gravity: -1000,
+      linkStrength: 2,
+    },
+    // Node Level
     node: {
+      labelProperty: 'name',
       color: PALETTE.PRIMARY,
       size: 2000,
       highlightStrokeColor: PALETTE.SECONDARY,
-      highlightStrokeWidth: 4,
-      fontSize: 20,
+      highlightStrokeWidth: 2,
+      fontSize: 15,
       highlightFontSize: 20,
+      highlightFontWeight: 'bold',
       strokeColor: 'black',
-      labelProperty: 'name',
+      symbolType: 'circle',
+      // viewGenerator: () => <NetworkNode/>,
     },
+    // Link Level
     link: {
+      labelProperty: 'name',
       color: 'black',
-      labelProperty: 'label',
-      renderLabel: true,
+      renderLabel: false,
       highlightColor: PALETTE.SECONDARY,
       highlightFontSize: 10,
       fontSize: 15,
-      strokeWidth: 2,
       semanticStrokeWidth: true,
       markerHeight: 2,
       markerWidth: 2,
-    },
-    d3: {
-      linkLength: 400,
     },
   }),
   ARC_LAYER: ({

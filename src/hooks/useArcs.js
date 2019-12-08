@@ -9,6 +9,7 @@ const DEFAULT = { Edges: [] };
 const GET_EDGES_IN_TIME_RANGE = gql`
   query getEdgesInTimeRange($min: String!, $max: String!, $limit: Int!) {
     Edges(filter: { startTime: { gt: $min, lt: $max } }, limit: $limit) {
+      id
       startNode {
         id
         name
