@@ -5,11 +5,15 @@ import { Graph as D3Graph } from 'react-d3-graph';
 import tw from 'tailwind.macro';
 import styled from 'styled-components';
 import { useNetwork } from '@hooks';
+import { Loading } from '@components';
+import { mixins } from '@styles';
 
 const ONE_SEC = 1000;
 
 const Container = styled.div`
+  ${mixins.flexCenter}
   ${tw`min-h-screen`}
+  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
 `;
 
 const { NETWORK } = CONFIG_GRAPH;
@@ -37,7 +41,7 @@ const NetworkGraph = () => {
   return (
     <Container ref={containerRef}>
       {loading ? (
-        <div>Loading</div>
+        <Loading />
       ) : data.nodes.length ? (
         <D3Graph id="gissy" data={data} config={NETWORK({ width })} />
       ) : (

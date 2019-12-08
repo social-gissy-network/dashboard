@@ -25,11 +25,24 @@ const flexBetween = css`
   ${tw`justify-between`}
 `;
 
+const reveal = css`
+  animation: show 5s ease-in normal;
+  @keyframes show {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
 const mixins = {
   button,
   flexCenter,
   flexStart,
   flexBetween,
+  reveal,
 };
 
 export default mixins;

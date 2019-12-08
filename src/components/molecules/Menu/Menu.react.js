@@ -1,5 +1,5 @@
 import { Card, IconButton, Input, Select } from '@components';
-import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
+import { CONFIG_GRAPH, CONFIG_MAP, CONFIG_DEFAULT } from '@config';
 import { GissyContext } from '@store';
 import { mixins } from '@styles';
 import React, { useContext } from 'react';
@@ -24,6 +24,10 @@ const Item = styled.div`
   ${tw`w-full px-1 m-1`}
 `;
 
+const InputNumber = styled(Input)`
+  ${tw`w-1/2`}
+`;
+
 const ITEMS = {
   GRAPH_TYPE: 'graphType',
   MAP_STYLE: 'mapStyle',
@@ -42,7 +46,10 @@ const Menu = () => {
       <Form>
         <Item>
           <label htmlFor={ITEMS.GRAPH_TYPE}>Graph Type</label>
-          <Select name={ITEMS.GRAPH_TYPE} register={register}>
+          <Select
+            defaultValue={CONFIG_DEFAULT.GRAPH_TYPE}
+            name={ITEMS.GRAPH_TYPE}
+            register={register}>
             {Object.values(CONFIG_GRAPH.TYPES).map(type => (
               <Select.Option key={type} value={type}>
                 {type}
@@ -52,7 +59,10 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={ITEMS.MAP_STYLE}>Map Style</label>
-          <Select name={ITEMS.MAP_STYLE} register={register}>
+          <Select
+            defaultValue={CONFIG_DEFAULT.MAP_STYLE}
+            name={ITEMS.MAP_STYLE}
+            register={register}>
             {CONFIG_MAP.mapStyles.map(({ name, url }) => (
               <Select.Option key={name} value={url}>
                 {name}
@@ -62,7 +72,7 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={ITEMS.LIMIT}>Entries Limit</label>
-          <Input
+          <InputNumber
             defaultValue={CONFIG_GRAPH.DEFAULT_LIMIT}
             name={ITEMS.LIMIT}
             type="number"

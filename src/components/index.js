@@ -12,6 +12,7 @@ export { default as NetworkGraph } from './atoms/NetworkGraph/NetworkGraph.react
 export { default as EdgeTooltip } from './molecules/EdgeTooltip/EdgeTooltip.react';
 export { default as NodeTooltip } from './molecules/NodeTooltip/NodeTooltip.react';
 export { default as Menu } from './molecules/Menu/Menu.react';
+export { default as Loading } from './molecules/Loading/Loading.react';
 
 // template
 export { default as Dashboard } from './templates/Dashboard/Dashboard.react';

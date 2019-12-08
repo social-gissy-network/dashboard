@@ -11,8 +11,9 @@ const Container = styled.input`
   `}
 `;
 
-const Input = ({ name, register, placeholder, type, defaultValue }) => (
+const Input = ({ name, register, placeholder, type, defaultValue, className }) => (
   <Container
+    className={className}
     type={type}
     ref={register}
     name={name}
@@ -22,6 +23,7 @@ const Input = ({ name, register, placeholder, type, defaultValue }) => (
 );
 
 Input.propTypes = {
+  className: PropTypes.string,
   name: PropTypes.string,
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.string,
