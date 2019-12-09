@@ -55,7 +55,6 @@ module.exports = ({ config }) => {
   config.resolve.mainFields = ['browser', 'module', 'main'];
 
   config.resolve.alias = {
-    '@components': path.resolve(__dirname, `${SRC}/components`),
     '@icons': path.resolve(__dirname, `${SRC}/components/atoms/icons`),
     '@config': path.resolve(__dirname, `${SRC}/config`),
     '@content': path.resolve(__dirname, `${SRC}/content`),
@@ -68,6 +67,7 @@ module.exports = ({ config }) => {
     '@constants': path.resolve(__dirname, `${SRC}/constants`),
     '@queries': path.resolve(__dirname, `${SRC}/queries`),
     '@store': path.resolve(__dirname, `${SRC}/store`),
+    '@components': path.resolve(__dirname, `${SRC}/components`),
   };
 
   config.resolve.extensions = ['.js'];
