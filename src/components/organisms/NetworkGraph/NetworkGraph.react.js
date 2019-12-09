@@ -1,12 +1,12 @@
+import { Loading } from '@components';
 import { CONFIG_GRAPH } from '@config';
+import { useNetwork } from '@hooks';
+import { mixins } from '@styles';
 import debounce from 'lodash.debounce';
 import React, { useEffect, useRef, useState } from 'react';
 import { Graph as D3Graph } from 'react-d3-graph';
-import tw from 'tailwind.macro';
 import styled from 'styled-components';
-import { useNetwork } from '@hooks';
-import { Loading } from '@components';
-import { mixins } from '@styles';
+import tw from 'tailwind.macro';
 
 const ONE_SEC = 1000;
 
