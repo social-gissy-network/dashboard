@@ -26,7 +26,7 @@ const flexBetween = css`
 `;
 
 const reveal = css`
-  animation: show 5s ease-in normal;
+  animation: show 2s ease-in normal;
   @keyframes show {
     0% {
       opacity: 0;

@@ -1,3 +1,6 @@
+// utils
+export { default as SEO } from './SEO.react';
+
 // atoms
 export { default as IconButton } from './atoms/Button/Button.react';
 export { default as Range } from './atoms/Range/Range.react';

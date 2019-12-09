@@ -21,9 +21,9 @@ const graphConfig = {
     height,
     // D3 Level
     d3: {
-      linkLength: 1000,
-      gravity: -1000,
-      linkStrength: 2,
+      linkLength: 500,
+      gravity: -800,
+      linkStrength: 4,
     },
     // Node Level
     node: {
