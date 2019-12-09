@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import tw from 'tailwind.macro';
-import { Card } from '@components';
+// import { Card } from '@components';
 import styled from 'styled-components';
+import Card from '../Card/Card.react';
 
 const CardAbsolute = styled(Card)`
   ${tw`absolute z-20 pointer-events-none`}
