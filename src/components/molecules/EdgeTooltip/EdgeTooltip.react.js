@@ -1,6 +1,6 @@
+import { Tooltip } from '@components';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip } from '@components';
 import { Text, PALETTE } from '@styles';
 
 const DEFAULT = {

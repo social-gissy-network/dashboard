@@ -1,16 +1,16 @@
-import { EdgeTooltip, NodeTooltip, Loading } from '@components';
 import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { EDGE } from '@constants';
 import DeckGL from '@deck.gl/react';
 import { useArcs } from '@hooks';
 import { GissyContext } from '@store';
-import { PALETTE, mixins } from '@styles';
+import { mixins, PALETTE } from '@styles';
 import { toRGB } from '@utils';
 import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { StaticMap } from 'react-map-gl';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import { EdgeTooltip, Loading, NodeTooltip } from '@components';
 
 // #region Helpers
 const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
@@ -28,7 +28,7 @@ const Reveal = styled.div`
 `;
 // #endregion
 
-const ArcGraph = () => {
+const Check = () => {
   const [edgeInfo, setEdgeInfo] = useState();
   const [nodeInfo, setNodeInfo] = useState();
 
@@ -98,8 +98,8 @@ const ArcGraph = () => {
   );
 };
 
-ArcGraph.propTypes = {
+Check.propTypes = {
   mapStyle: PropTypes.string,
 };
 
-export default ArcGraph;
+export default Check;

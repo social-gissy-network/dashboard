@@ -1,4 +1,4 @@
-import { ArcGraph, Menu, Range, NetworkGraph } from '@components';
+import { Menu, Range, NetworkGraph, ArcGraph } from '@components';
 import { CONFIG_SERVER, CONFIG_GRAPH } from '@config';
 import { IconGraphql } from '@icons';
 import { GissyContext } from '@store';

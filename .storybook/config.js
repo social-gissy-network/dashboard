@@ -11,6 +11,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
 import { useDashboard } from '../src/hooks';
+import {} from '../src/components';
 
 const client = new ApolloClient({
   uri: `https://gissy-graphql.herokuapp.com/`,
