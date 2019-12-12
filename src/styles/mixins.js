@@ -37,12 +37,17 @@ const reveal = css`
   }
 `;
 
+const fixed = css`
+  ${tw`fixed z-10 m-5`}
+`;
+
 const mixins = {
   button,
   flexCenter,
   flexStart,
   flexBetween,
   reveal,
+  fixed,
 };
 
 export default mixins;

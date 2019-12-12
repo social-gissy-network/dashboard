@@ -12,6 +12,7 @@ export { default as Card } from './atoms/Card/Card.react';
 // molecules
 export { default as EdgeTooltip } from './molecules/EdgeTooltip/EdgeTooltip.react';
 export { default as NodeTooltip } from './molecules/NodeTooltip/NodeTooltip.react';
+export { default as NodeInfo } from './molecules/NodeInfo/NodeInfo.react';
 export { default as Menu } from './molecules/Menu/Menu.react';
 export { default as Loading } from './molecules/Loading/Loading.react';
 

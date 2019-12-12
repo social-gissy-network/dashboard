@@ -9,6 +9,7 @@ const useDashboard = () => {
   const [mapStyle, setMapStyle] = useState(MAP_STYLE);
   const [timeRange, setTimeRange] = useState([0, Infinity]);
   const [limit, setLimit] = useState(LIMIT);
+  const [nodeInfo, setNodeInfo] = useState({ info: undefined });
 
   useLocalStorage({ limit, graphType, mapStyle });
 
@@ -24,6 +25,7 @@ const useDashboard = () => {
     TIME: { value: timeRange, set: setTimeRange },
     STYLE: { value: mapStyle, set: setMapStyle },
     LIMIT: { value: limit, set: setLimit },
+    NODE: { value: nodeInfo, set: setNodeInfo },
   };
 
   return config;

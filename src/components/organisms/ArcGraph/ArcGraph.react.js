@@ -16,6 +16,8 @@ import { EdgeTooltip, Loading, NodeTooltip } from '@components';
 const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
   [longitude, latitude].map(Number);
 
+const extractData = ({ isSource = true, object }) => object[isSource ? 'startNode' : 'stopNode'];
+
 const getCursor = () => 'crosshair';
 
 const LogoWrapper = styled.div`
@@ -31,16 +33,28 @@ const Reveal = styled.div`
 const Check = () => {
   const [edgeInfo, setEdgeInfo] = useState();
   const [nodeInfo, setNodeInfo] = useState();
+  const [index, setIndex] = useState(-1);
 
   const {
     STYLE: { value: mapStyle },
+    NODE: { set: setNode },
   } = useContext(GissyContext);
 
   const { data, loading } = useArcs();
 
   const onHoverEdge = useCallback(({ object: data, x, y }) => setEdgeInfo({ data, x, y }), []);
   const onHoverNode = useCallback(
-    ({ isSource }) => ({ object: data, x, y }) => setNodeInfo({ isSource, data, x, y }),
+    ({ isSource = true }) => ({ object: data, x, y, index }) => {
+      setNodeInfo({ isSource, data, x, y });
+      setIndex(index);
+    },
+    [],
+  );
+  const onClickNode = useCallback(
+    ({ isSource = true }) => ({ object, index }) => {
+      setNode({ info: extractData({ isSource, object }) });
+      setIndex(index);
+    },
     [],
   );
 
@@ -59,18 +73,22 @@ const Check = () => {
         id: 'scatter-source-layer',
         data,
         onHover: onHoverNode({ isSource: true }),
+        onClick: onClickNode({ isSource: true }),
         getPosition: extractCoordinates(EDGE.SOURCE),
         getFillColor: toRGB(PALETTE.PRIMARY),
+        highlightedObjectIndex: index,
       }),
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-target-layer',
         data,
+        onClick: onClickNode({ isSource: false }),
         onHover: onHoverNode({ isSource: false }),
         getPosition: extractCoordinates(EDGE.TARGET),
         getFillColor: toRGB(PALETTE.SECONDARY),
+        highlightedObjectIndex: index,
       }),
     ],
-    [data],
+    [data, index],
   );
 
   return (

@@ -1,4 +1,4 @@
-import { Menu, Range, NetworkGraph, ArcGraph } from '@components';
+import { Menu, Range, NetworkGraph, ArcGraph, NodeInfo } from '@components';
 import { CONFIG_SERVER, CONFIG_GRAPH } from '@config';
 import { IconGraphql } from '@icons';
 import { GissyContext } from '@store';
@@ -8,8 +8,23 @@ import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import { useDashboard } from '@hooks';
 
-const FixedRight = tw.div`fixed z-10 top-0 right-0 m-5`;
-const FixedLeft = tw.div`fixed z-10 top-0 left-0 m-5`;
+const FixedTop = styled.div`
+  ${mixins.fixed}
+  ${tw`top-0`}
+`;
+
+const FixedLeftTop = styled(FixedTop)`
+  ${tw`left-0`}
+`;
+const FixedTopRight = styled(FixedTop)`
+  ${tw`right-0`}
+`;
+
+const FixedBottomLeft = styled.div`
+  ${mixins.fixed}
+  ${tw`left-0`}
+  bottom: 100px;
+`;
 
 const FixedBottom = styled.div`
   ${mixins.flexCenter};
@@ -34,15 +49,18 @@ const Dashboard = () => {
   return (
     <GissyContext.Provider value={store}>
       {GRAPHS[store.GRAPH_TYPE.value]}
-      <FixedLeft>
+      <FixedLeftTop>
         <Menu />
-      </FixedLeft>
-      <FixedRight>
+      </FixedLeftTop>
+      <FixedBottomLeft>
+        <NodeInfo />
+      </FixedBottomLeft>
+      <FixedTopRight>
         <Button href={CONFIG_SERVER.url} target="_blank">
           <IconGraphql />
           <span>Server</span>
         </Button>
-      </FixedRight>
+      </FixedTopRight>
       <FixedBottom>
         <RangeSize>
           <Range />
