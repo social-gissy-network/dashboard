@@ -37,18 +37,22 @@ const Button = styled.a`
   ${mixins.button}
 `;
 
-const { TYPES } = CONFIG_GRAPH;
+const Display = styled.div`
+  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+`;
 
-const GRAPHS = {
-  [TYPES.ARC]: <ArcGraph />,
-  [TYPES.NETWORK]: <NetworkGraph />,
-};
+const { TYPES } = CONFIG_GRAPH;
 
 const Dashboard = () => {
   const store = useDashboard();
   return (
     <GissyContext.Provider value={store}>
-      {GRAPHS[store.GRAPH_TYPE.value]}
+      <Display visible={store.GRAPH_TYPE.value === TYPES.ARC}>
+        <ArcGraph />
+      </Display>
+      <Display visible={store.GRAPH_TYPE.value === TYPES.NETWORK}>
+        <NetworkGraph />
+      </Display>
       <FixedLeftTop>
         <Menu />
       </FixedLeftTop>

@@ -8,50 +8,53 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ width = window.innerWidth, height = window.innerHeight }) => ({
-    // https://goodguydaniel.com/react-d3-graph/docs
-    // Global Config
-    automaticRearrangeAfterDropNode: false,
-    nodeHighlightBehavior: true,
-    collapsible: true,
-    panAndZoom: true,
-    directed: true,
-    focusZoom: 1,
-    width,
-    height,
-    // D3 Level
-    d3: {
-      linkLength: 500,
-      gravity: -800,
-      linkStrength: 4,
-    },
-    // Node Level
-    node: {
-      labelProperty: 'name',
-      color: PALETTE.PRIMARY,
-      size: 2000,
-      highlightStrokeColor: PALETTE.SECONDARY,
-      highlightStrokeWidth: 2,
-      fontSize: 15,
-      highlightFontSize: 20,
-      highlightFontWeight: 'bold',
-      strokeColor: 'black',
-      symbolType: 'circle',
-      // viewGenerator: () => <NetworkNode/>,
-    },
-    // Link Level
-    link: {
-      labelProperty: 'name',
-      color: 'black',
-      renderLabel: false,
-      highlightColor: PALETTE.SECONDARY,
-      highlightFontSize: 10,
-      fontSize: 15,
-      semanticStrokeWidth: true,
-      markerHeight: 2,
-      markerWidth: 2,
-    },
-  }),
+  NETWORK: {
+    ID: 'network-graph',
+    CONFIG_GENERATOR: ({ width = window.innerWidth, height = window.innerHeight }) => ({
+      // https://goodguydaniel.com/react-d3-graph/docs
+      // Global Config
+      nodeHighlightBehavior: true,
+      collapsible: true,
+      directed: true,
+      panAndZoom: true,
+      // staticGraphWithDragAndDrop: true,
+      width,
+      height,
+      // D3 Level
+      d3: {
+        alphaTarget: 1,
+        linkLength: 500,
+        gravity: -1000,
+        linkStrength: 2,
+      },
+      // Node Level
+      node: {
+        labelProperty: 'name',
+        color: PALETTE.PRIMARY,
+        size: 2000,
+        highlightStrokeColor: PALETTE.SECONDARY,
+        highlightStrokeWidth: 2,
+        fontSize: 15,
+        highlightFontSize: 20,
+        highlightFontWeight: 'bold',
+        strokeColor: 'black',
+        symbolType: 'circle',
+        semanticStrokeWidth: true,
+        // viewGenerator: () => <NetworkNode/>,
+      },
+      // Link Level
+      link: {
+        labelProperty: 'name',
+        color: 'black',
+        renderLabel: false,
+        highlightColor: PALETTE.SECONDARY,
+        highlightFontSize: 10,
+        fontSize: 15,
+        markerHeight: 2,
+        markerWidth: 2,
+      },
+    }),
+  },
   ARC_LAYER: ({
     id,
     data,

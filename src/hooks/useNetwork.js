@@ -1,7 +1,15 @@
 import { useArcs } from '@hooks';
+import { GissyContext } from '@store';
+import { useCallback, useContext } from 'react';
 
 const useNetwork = () => {
   const { data, loading } = useArcs();
+
+  const {
+    NODE: { set: setNode },
+  } = useContext(GissyContext);
+
+  const setOnClickNode = useCallback(map => id => setNode(map[id]), [setNode]);
 
   if (!loading) {
     const nodesMap = data.reduce((acc, { startNode, stopNode }) => {
@@ -23,7 +31,7 @@ const useNetwork = () => {
 
     const nodes = Object.values(nodesMap);
     const links = Object.values(linksMap);
-    return { data: { nodes, links }, loading };
+    return { data: { nodes, links }, loading, onClickNode: setOnClickNode(nodesMap) };
   }
   return { loading };
 };

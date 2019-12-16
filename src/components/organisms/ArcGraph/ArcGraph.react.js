@@ -30,7 +30,7 @@ const Reveal = styled.div`
 `;
 // #endregion
 
-const Check = () => {
+const ArcGraph = () => {
   const [edgeInfo, setEdgeInfo] = useState();
   const [nodeInfo, setNodeInfo] = useState();
   const [index, setIndex] = useState(-1);
@@ -52,7 +52,7 @@ const Check = () => {
   );
   const onClickNode = useCallback(
     ({ isSource = true }) => ({ object, index }) => {
-      setNode({ info: extractData({ isSource, object }) });
+      setNode(extractData({ isSource, object }));
       setIndex(index);
     },
     [],
@@ -116,8 +116,8 @@ const Check = () => {
   );
 };
 
-Check.propTypes = {
+ArcGraph.propTypes = {
   mapStyle: PropTypes.string,
 };
 
-export default Check;
+export default ArcGraph;
