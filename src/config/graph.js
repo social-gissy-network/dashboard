@@ -7,7 +7,33 @@ const graphConfig = {
   TYPES: {
     ARC: 'Arc',
     NETWORK: 'Network',
+    DAG: 'DAG',
   },
+  DAG: ({ height = window.innerHeight }) => ({
+    layout: {
+      clusterThreshold: 10000,
+    },
+    nodes: {
+      color: PALETTE.PRIMARY,
+      shape: `box`,
+      size: 50,
+      font: {
+        size: 20,
+      },
+      margin: 10,
+      mass: 1,
+    },
+    edges: {
+      color: 'black',
+      length: 500,
+      width: 2,
+    },
+    height,
+    interaction: {
+      multiselect: false,
+      hover: true,
+    },
+  }),
   NETWORK: {
     ID: 'network-graph',
     CONFIG_GENERATOR: ({ width = window.innerWidth, height = window.innerHeight }) => ({
@@ -29,7 +55,7 @@ const graphConfig = {
       },
       // Node Level
       node: {
-        labelProperty: 'name',
+        labelProperty: 'label',
         color: PALETTE.PRIMARY,
         size: 2000,
         highlightStrokeColor: PALETTE.SECONDARY,
@@ -44,7 +70,6 @@ const graphConfig = {
       },
       // Link Level
       link: {
-        labelProperty: 'name',
         color: 'black',
         renderLabel: false,
         highlightColor: PALETTE.SECONDARY,

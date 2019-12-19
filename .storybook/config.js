@@ -12,6 +12,7 @@ import ApolloClient from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
 import { useDashboard } from '../src/hooks';
 import {} from '../src/components';
+import { ReusableProvider } from 'reusable';
 
 const client = new ApolloClient({
   uri: `https://gissy-graphql.herokuapp.com/`,
@@ -24,8 +25,10 @@ const Wrapper = ({ children }) => {
   return (
     <ApolloProvider client={client}>
       <GissyContext.Provider value={store}>
-        <GlobalStyle />
-        {children}
+        <ReusableProvider>
+          <GlobalStyle />
+          {children}
+        </ReusableProvider>
       </GissyContext.Provider>
     </ApolloProvider>
   );

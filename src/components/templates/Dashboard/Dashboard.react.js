@@ -7,6 +7,7 @@ import React from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import { useDashboard } from '@hooks';
+import { ReusableProvider } from 'reusable';
 
 const FixedTop = styled.div`
   ${mixins.fixed}
@@ -47,29 +48,31 @@ const Dashboard = () => {
   const store = useDashboard();
   return (
     <GissyContext.Provider value={store}>
-      <Display visible={store.GRAPH_TYPE.value === TYPES.ARC}>
-        <ArcGraph />
-      </Display>
-      <Display visible={store.GRAPH_TYPE.value === TYPES.NETWORK}>
-        <NetworkGraph />
-      </Display>
-      <FixedLeftTop>
-        <Menu />
-      </FixedLeftTop>
-      <FixedBottomLeft>
-        <NodeInfo />
-      </FixedBottomLeft>
-      <FixedTopRight>
-        <Button href={CONFIG_SERVER.url} target="_blank">
-          <IconGraphql />
-          <span>Server</span>
-        </Button>
-      </FixedTopRight>
-      <FixedBottom>
-        <RangeSize>
-          <Range />
-        </RangeSize>
-      </FixedBottom>
+      <ReusableProvider>
+        <Display visible={store.GRAPH_TYPE.value === TYPES.ARC}>
+          <ArcGraph />
+        </Display>
+        <Display visible={store.GRAPH_TYPE.value === TYPES.NETWORK}>
+          <NetworkGraph />
+        </Display>
+        <FixedLeftTop>
+          <Menu />
+        </FixedLeftTop>
+        <FixedBottomLeft>
+          <NodeInfo />
+        </FixedBottomLeft>
+        <FixedTopRight>
+          <Button href={CONFIG_SERVER.url} target="_blank">
+            <IconGraphql />
+            <span>Server</span>
+          </Button>
+        </FixedTopRight>
+        <FixedBottom>
+          <RangeSize>
+            <Range />
+          </RangeSize>
+        </FixedBottom>
+      </ReusableProvider>
     </GissyContext.Provider>
   );
 };
