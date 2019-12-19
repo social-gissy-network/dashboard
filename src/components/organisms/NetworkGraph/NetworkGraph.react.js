@@ -13,9 +13,9 @@ const Container = styled.div`
   background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
 `;
 
-const { DAG } = CONFIG_GRAPH;
+const { NETWORK } = CONFIG_GRAPH;
 
-const DagGraph = () => {
+const NetworkGraph = () => {
   const { data, loading, onClickNode } = useNetwork();
 
   const events = {
@@ -33,7 +33,7 @@ const DagGraph = () => {
       ) : data.nodes.length ? (
         <VisNetwork
           graph={data}
-          options={DAG({ height: `${window.innerHeight}px` })}
+          options={NETWORK({ height: `${window.innerHeight}px` })}
           events={events}
         />
       ) : (
@@ -43,4 +43,4 @@ const DagGraph = () => {
   );
 };
 
-export default memo(DagGraph);
+export default memo(NetworkGraph);
