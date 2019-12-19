@@ -3,6 +3,7 @@ import { GissyContext } from '@store';
 import { unixToDbTime } from '@utils';
 import gql from 'graphql-tag';
 import { useContext } from 'react';
+import { createStore } from 'reusable';
 
 const DEFAULT = { Edges: [] };
 
@@ -42,4 +43,4 @@ const useArcs = () => {
   return { data, loading };
 };
 
-export default useArcs;
+export default createStore(useArcs);

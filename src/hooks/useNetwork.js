@@ -13,25 +13,23 @@ const useNetwork = () => {
 
   if (!loading) {
     const nodesMap = data.reduce((acc, { startNode, stopNode }) => {
-      acc[startNode.id] = startNode;
-      acc[stopNode.id] = stopNode;
+      const { name: nameStart } = startNode;
+      const { name: nameStop } = stopNode;
+
+      acc[startNode.id] = { label: nameStart, ...startNode };
+      acc[stopNode.id] = { label: nameStop, ...stopNode };
       return acc;
     }, {});
 
-    const linksMap = data.reduce(
-      (
-        acc,
-        { startNode: { id: source, name: sourceName }, stopNode: { id: target, name: targetName } },
-      ) => {
-        acc[`${source}.${target}`] = { source, target, name: `${sourceName} -> ${targetName}` };
-        return acc;
-      },
-      {},
-    );
+    const edgesMap = data.reduce((acc, { startNode: { id: from }, stopNode: { id: to } }) => {
+      acc[`${from}.${to}`] = { from, to };
+      return acc;
+    }, {});
 
     const nodes = Object.values(nodesMap);
-    const links = Object.values(linksMap);
-    return { data: { nodes, links }, loading, onClickNode: setOnClickNode(nodesMap) };
+    const edges = Object.values(edgesMap);
+
+    return { data: { nodes, edges }, loading, onClickNode: setOnClickNode(nodesMap) };
   }
   return { loading };
 };

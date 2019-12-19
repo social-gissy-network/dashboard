@@ -8,53 +8,31 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: {
-    ID: 'network-graph',
-    CONFIG_GENERATOR: ({ width = window.innerWidth, height = window.innerHeight }) => ({
-      // https://goodguydaniel.com/react-d3-graph/docs
-      // Global Config
-      nodeHighlightBehavior: true,
-      collapsible: true,
-      directed: true,
-      panAndZoom: true,
-      // staticGraphWithDragAndDrop: true,
-      width,
-      height,
-      // D3 Level
-      d3: {
-        alphaTarget: 1,
-        linkLength: 500,
-        gravity: -1000,
-        linkStrength: 2,
+  NETWORK: ({ height = window.innerHeight }) => ({
+    layout: {
+      clusterThreshold: 10000,
+    },
+    nodes: {
+      color: PALETTE.PRIMARY,
+      shape: `box`,
+      size: 50,
+      font: {
+        size: 20,
       },
-      // Node Level
-      node: {
-        labelProperty: 'name',
-        color: PALETTE.PRIMARY,
-        size: 2000,
-        highlightStrokeColor: PALETTE.SECONDARY,
-        highlightStrokeWidth: 2,
-        fontSize: 15,
-        highlightFontSize: 20,
-        highlightFontWeight: 'bold',
-        strokeColor: 'black',
-        symbolType: 'circle',
-        semanticStrokeWidth: true,
-        // viewGenerator: () => <NetworkNode/>,
-      },
-      // Link Level
-      link: {
-        labelProperty: 'name',
-        color: 'black',
-        renderLabel: false,
-        highlightColor: PALETTE.SECONDARY,
-        highlightFontSize: 10,
-        fontSize: 15,
-        markerHeight: 2,
-        markerWidth: 2,
-      },
-    }),
-  },
+      margin: 10,
+      mass: 1,
+    },
+    edges: {
+      color: 'black',
+      length: 500,
+      width: 2,
+    },
+    height,
+    interaction: {
+      multiselect: false,
+      hover: true,
+    },
+  }),
   ARC_LAYER: ({
     id,
     data,
