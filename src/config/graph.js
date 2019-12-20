@@ -8,9 +8,11 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ height = window.innerHeight }) => ({
+  NETWORK: ({ height = window.innerHeight, hierarchical = false }) => ({
     layout: {
-      clusterThreshold: 10000,
+      hierarchical: {
+        enabled: hierarchical,
+      },
     },
     nodes: {
       color: PALETTE.PRIMARY,

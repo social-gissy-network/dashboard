@@ -3,3 +3,4 @@ export { unixTimeToDate, unixToDbTime, toUnixTime } from './time';
 
 export { getLSItem, getNumberLSItem, setLSItem } from './localStorage';
 export { default as debounce } from './debounce';
+export { toBoolean } from './string';

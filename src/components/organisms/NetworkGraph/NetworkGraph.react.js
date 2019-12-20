@@ -1,5 +1,5 @@
 import { Loading } from '@components';
-import { useNetwork } from '@hooks';
+import { useNetwork, useStore } from '@hooks';
 import { mixins } from '@styles';
 import { CONFIG_GRAPH } from '@config';
 import React, { memo } from 'react';
@@ -26,6 +26,10 @@ const NetworkGraph = () => {
     },
   };
 
+  const {
+    NETWORK_OPTIONS: { value: hierarchical },
+  } = useStore();
+
   return (
     <Container>
       {loading ? (
@@ -33,7 +37,7 @@ const NetworkGraph = () => {
       ) : data.nodes.length ? (
         <VisNetwork
           graph={data}
-          options={NETWORK({ height: `${window.innerHeight}px` })}
+          options={NETWORK({ height: `${window.innerHeight}px`, hierarchical })}
           events={events}
         />
       ) : (
