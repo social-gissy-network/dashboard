@@ -1,16 +1,14 @@
-import { useTimeRange } from '@hooks';
-import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { Range as ReactRange } from 'react-range';
-import tw from 'tailwind.macro';
-import renderThumb from './renderThumb.react';
+import Thumb from './Thumb.react';
 import renderTrack from './renderTrack.react';
 
 const STEP = 0.1;
+const INITIAL = [0, 100];
+const NOOP = () => {};
 
-const Container = tw.div`pb-10`;
-
-const Range = () => {
-  const [initial, onFinalChange] = useTimeRange();
+const Range = ({ initial = INITIAL, onChange: controlledChange = NOOP, onFinalChange = NOOP }) => {
   const [values, setValues] = useState(initial);
 
   useState(() => {
@@ -19,20 +17,28 @@ const Range = () => {
 
   const [MIN, MAX] = initial;
 
+  useEffect(() => {
+    controlledChange(values);
+  }, [values]);
+
   return (
-    <Container>
-      <ReactRange
-        step={STEP}
-        min={MIN}
-        max={MAX}
-        values={values}
-        onChange={setValues}
-        onFinalChange={onFinalChange}
-        renderTrack={renderTrack({ values, MIN, MAX })}
-        renderThumb={renderThumb(values)}
-      />
-    </Container>
+    <ReactRange
+      step={STEP}
+      min={MIN}
+      max={MAX}
+      values={values}
+      onChange={setValues}
+      onFinalChange={onFinalChange}
+      renderTrack={renderTrack({ values, MIN, MAX })}
+      renderThumb={Thumb}
+    />
   );
+};
+
+Range.propTypes = {
+  initial: PropTypes.array,
+  onChange: PropTypes.func,
+  onFinalChange: PropTypes.func,
 };
 
 export default Range;

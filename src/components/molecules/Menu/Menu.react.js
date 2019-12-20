@@ -1,4 +1,4 @@
-import { Card, IconButton, Input, Select } from '@components';
+import { Card, IconButton, Input, Select, DateRange } from '@components';
 import { CONFIG_GRAPH, CONFIG_MAP, CONFIG_DEFAULT } from '@config';
 import { GissyContext } from '@store';
 import { mixins } from '@styles';
@@ -21,6 +21,7 @@ const Container = styled(Card)`
 
 const Item = styled.div`
   ${mixins.flexBetween}
+  display: ${({ visible = true }) => (visible ? 'flex' : 'none')};
   ${tw`w-full px-1 m-1`}
 `;
 
@@ -32,14 +33,19 @@ const ITEMS = {
   GRAPH_TYPE: 'graphType',
   MAP_STYLE: 'mapStyle',
   LIMIT: 'limit',
+  DATES_RANGE: 'datesRange',
+  NETWORK_OPTIONS: 'networkOptions',
 };
 
 const Menu = () => {
   const { register, watch } = useForm();
 
-  const { dispatch } = useContext(GissyContext);
+  const {
+    MENU: { set },
+    GRAPH_TYPE: { value: graphType },
+  } = useContext(GissyContext);
 
-  dispatch(watch());
+  set(watch());
 
   return (
     <Container>
@@ -57,7 +63,7 @@ const Menu = () => {
             ))}
           </Select>
         </Item>
-        <Item>
+        <Item visible={graphType === CONFIG_GRAPH.TYPES.ARC}>
           <label htmlFor={ITEMS.MAP_STYLE}>Map Style</label>
           <Select
             defaultValue={CONFIG_DEFAULT.MAP_STYLE}
@@ -79,6 +85,19 @@ const Menu = () => {
             register={register}
             placeholder="Limit"
           />
+        </Item>
+        <Item visible={graphType === CONFIG_GRAPH.TYPES.NETWORK}>
+          <label htmlFor={ITEMS.NETWORK_OPTIONS}>Hierarchical View</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.NETWORK_OPTIONS}
+            ref={register}
+            name={ITEMS.NETWORK_OPTIONS}
+            type="checkbox"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={ITEMS.DATES_RANGE}>Dates Range</label>
+          <DateRange />
         </Item>
       </Form>
     </Container>

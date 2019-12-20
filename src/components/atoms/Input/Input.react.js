@@ -1,14 +1,10 @@
-import React from 'react';
+import { mixins } from '@styles';
 import PropTypes from 'prop-types';
-import tw from 'tailwind.macro';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.input`
-  ${tw`
-    block appearance-none bg-white border leading-tight
-    border-gray-400 hover:border-gray-500 px-4 py-2
-    rounded shadow focus:outline-none focus:shadow-outline
-  `}
+  ${mixins.box}
 `;
 
 const Input = ({ name, register, placeholder, type, defaultValue, className }) => (

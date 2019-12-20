@@ -8,9 +8,12 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ height = window.innerHeight }) => ({
+  NETWORK: ({ height = window.innerHeight, hierarchical = true }) => ({
+    height,
     layout: {
-      clusterThreshold: 10000,
+      hierarchical: {
+        enabled: hierarchical,
+      },
     },
     nodes: {
       color: PALETTE.PRIMARY,
@@ -21,16 +24,23 @@ const graphConfig = {
       },
       margin: 10,
       mass: 1,
+      title: 'title',
     },
     edges: {
       color: 'black',
       length: 500,
       width: 2,
     },
-    height,
     interaction: {
       multiselect: false,
       hover: true,
+      tooltipDelay: 0,
+    },
+    physics: {
+      enabled: true,
+      barnesHut: {
+        avoidOverlap: 0,
+      },
     },
   }),
   ARC_LAYER: ({

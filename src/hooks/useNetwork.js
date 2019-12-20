@@ -1,6 +1,7 @@
 import { useArcs } from '@hooks';
 import { GissyContext } from '@store';
 import { useCallback, useContext } from 'react';
+import { PALETTE } from '@styles';
 
 const useNetwork = () => {
   const { data, loading } = useArcs();
@@ -17,7 +18,7 @@ const useNetwork = () => {
       const { name: nameStop } = stopNode;
 
       acc[startNode.id] = { label: nameStart, ...startNode };
-      acc[stopNode.id] = { label: nameStop, ...stopNode };
+      acc[stopNode.id] = { label: nameStop, ...stopNode, color: PALETTE.SECONDARY };
       return acc;
     }, {});
 

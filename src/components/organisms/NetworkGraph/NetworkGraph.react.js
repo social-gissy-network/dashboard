@@ -1,8 +1,8 @@
 import { Loading } from '@components';
-import { useNetwork } from '@hooks';
+import { useNetwork, useStore } from '@hooks';
 import { mixins } from '@styles';
 import { CONFIG_GRAPH } from '@config';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import VisNetwork from 'react-graph-vis';
@@ -18,13 +18,20 @@ const { NETWORK } = CONFIG_GRAPH;
 const NetworkGraph = () => {
   const { data, loading, onClickNode } = useNetwork();
 
-  const events = {
-    select: event => {
-      const { nodes } = event;
-      const [node] = nodes;
-      onClickNode(node);
-    },
-  };
+  const events = useMemo(
+    () => ({
+      select: event => {
+        const { nodes } = event;
+        const [node] = nodes;
+        onClickNode(node);
+      },
+    }),
+    [onClickNode],
+  );
+
+  const {
+    NETWORK_OPTIONS: { value: hierarchical },
+  } = useStore();
 
   return (
     <Container>
@@ -33,7 +40,7 @@ const NetworkGraph = () => {
       ) : data.nodes.length ? (
         <VisNetwork
           graph={data}
-          options={NETWORK({ height: `${window.innerHeight}px` })}
+          options={NETWORK({ height: `${window.innerHeight}px`, hierarchical })}
           events={events}
         />
       ) : (
