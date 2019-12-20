@@ -17,7 +17,7 @@ const Container = styled.div`
 `;
 
 const RangeWrapper = styled.div`
-  ${tw`px-2`}
+  ${tw`px-1`}
 `;
 
 const Tags = styled.div`
