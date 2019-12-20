@@ -1,4 +1,4 @@
-import { Menu, Range, NetworkGraph, ArcGraph, NodeInfo } from '@components';
+import { Menu, NetworkGraph, ArcGraph, NodeInfo } from '@components';
 import { CONFIG_SERVER, CONFIG_GRAPH } from '@config';
 import { IconGraphql } from '@icons';
 import { GissyContext } from '@store';
@@ -26,13 +26,6 @@ const FixedBottomLeft = styled.div`
   ${tw`left-0`}
   bottom: 100px;
 `;
-
-const FixedBottom = styled.div`
-  ${mixins.flexCenter};
-  ${tw`w-full fixed z-10 bottom-0`}
-`;
-
-const RangeSize = tw.div`w-1/3`;
 
 const Button = styled.a`
   ${mixins.button}
@@ -67,11 +60,6 @@ const Dashboard = () => {
             <span>Server</span>
           </Button>
         </FixedTopRight>
-        <FixedBottom>
-          <RangeSize>
-            <Range />
-          </RangeSize>
-        </FixedBottom>
       </ReusableProvider>
     </GissyContext.Provider>
   );

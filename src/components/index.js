@@ -15,6 +15,7 @@ export { default as NodeTooltip } from './molecules/NodeTooltip/NodeTooltip.reac
 export { default as NodeInfo } from './molecules/NodeInfo/NodeInfo.react';
 export { default as Menu } from './molecules/Menu/Menu.react';
 export { default as Loading } from './molecules/Loading/Loading.react';
+export { default as DateRange } from './molecules/DateRange/DateRange.react';
 
 // organisms
 export { default as ArcGraph } from './organisms/ArcGraph/ArcGraph.react';

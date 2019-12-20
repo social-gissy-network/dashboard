@@ -1,14 +1,16 @@
-import React from 'react';
+import { COLORS, mixins } from '@styles';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { getTrackBackground } from 'react-range';
-import { PALETTE, mixins } from '@styles';
-import { grayscale } from 'polished';
-import tw from 'tailwind.macro';
 import styled from 'styled-components';
+import tw from 'tailwind.macro';
+import { lighten } from 'polished';
 
 const Container = styled.div`
   ${mixins.flexCenter}
 `;
+
+const { GREY } = COLORS;
 
 const Track = styled.div`
   ${tw`h-1 w-full`};
@@ -18,7 +20,7 @@ const Track = styled.div`
 const renderTrack = ({ values, MIN, MAX }) => ({ children, props }) => {
   const background = getTrackBackground({
     values,
-    colors: [grayscale(PALETTE.PRIMARY), PALETTE.PRIMARY, grayscale(PALETTE.PRIMARY)],
+    colors: [lighten(0.1, GREY), GREY, lighten(0.1, GREY)],
     min: MIN,
     max: MAX,
   });

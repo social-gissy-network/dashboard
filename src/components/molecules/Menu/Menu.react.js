@@ -1,4 +1,4 @@
-import { Card, IconButton, Input, Select } from '@components';
+import { Card, IconButton, Input, Select, DateRange } from '@components';
 import { CONFIG_GRAPH, CONFIG_MAP, CONFIG_DEFAULT } from '@config';
 import { GissyContext } from '@store';
 import { mixins } from '@styles';
@@ -32,14 +32,18 @@ const ITEMS = {
   GRAPH_TYPE: 'graphType',
   MAP_STYLE: 'mapStyle',
   LIMIT: 'limit',
+  DATES_RANGE: 'datesRange',
 };
 
 const Menu = () => {
   const { register, watch } = useForm();
 
-  const { dispatch } = useContext(GissyContext);
+  const {
+    MENU: { set },
+    GRAPH_TYPE: { value },
+  } = useContext(GissyContext);
 
-  dispatch(watch());
+  set(watch());
 
   return (
     <Container>
@@ -57,19 +61,21 @@ const Menu = () => {
             ))}
           </Select>
         </Item>
-        <Item>
-          <label htmlFor={ITEMS.MAP_STYLE}>Map Style</label>
-          <Select
-            defaultValue={CONFIG_DEFAULT.MAP_STYLE}
-            name={ITEMS.MAP_STYLE}
-            register={register}>
-            {CONFIG_MAP.mapStyles.map(({ name, url }) => (
-              <Select.Option key={name} value={url}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Item>
+        {value === CONFIG_GRAPH.TYPES.ARC && (
+          <Item>
+            <label htmlFor={ITEMS.MAP_STYLE}>Map Style</label>
+            <Select
+              defaultValue={CONFIG_DEFAULT.MAP_STYLE}
+              name={ITEMS.MAP_STYLE}
+              register={register}>
+              {CONFIG_MAP.mapStyles.map(({ name, url }) => (
+                <Select.Option key={name} value={url}>
+                  {name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Item>
+        )}
         <Item>
           <label htmlFor={ITEMS.LIMIT}>Entries Limit</label>
           <InputNumber
@@ -79,6 +85,10 @@ const Menu = () => {
             register={register}
             placeholder="Limit"
           />
+        </Item>
+        <Item>
+          <label htmlFor={ITEMS.DATES_RANGE}>Dates Range</label>
+          <DateRange />
         </Item>
       </Form>
     </Container>

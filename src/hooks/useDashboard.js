@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { CONFIG_DEFAULT } from '@config';
-import useLocalStorage from './useLocalStorage';
-import { useDebounce } from '@hooks';
+import { useDebounce, useLocalStorage } from '@hooks';
 
 const { MAP_STYLE, GRAPH_TYPE, LIMIT } = CONFIG_DEFAULT;
 
@@ -18,14 +17,14 @@ const useDashboard = () => {
 
   useLocalStorage({ limit, graphType, mapStyle });
 
-  const dispatch = useCallback(({ graphType, mapStyle, limit }) => {
+  const setMenu = useCallback(({ graphType, mapStyle, limit }) => {
     setGraphType(graphType);
     setMapStyle(mapStyle);
     setLimit(Number(limit));
   }, []);
 
   const config = {
-    dispatch,
+    MENU: { set: setMenu },
     GRAPH_TYPE: { value: graphType, set: setGraphType },
     TIME: { value: timeRange, set: setTimeRange },
     STYLE: { value: mapStyle, set: setMapStyle },

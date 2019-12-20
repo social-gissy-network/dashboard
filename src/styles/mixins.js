@@ -41,6 +41,14 @@ const fixed = css`
   ${tw`fixed z-10 m-5`}
 `;
 
+const box = css`
+  ${tw`
+    block appearance-none bg-white border leading-tight
+    border-gray-400 hover:border-gray-500 px-4 py-2
+    rounded shadow focus:outline-none focus:shadow-outline
+    `}
+`;
+
 const mixins = {
   button,
   flexCenter,
@@ -48,6 +56,7 @@ const mixins = {
   flexBetween,
   reveal,
   fixed,
+  box,
 };
 
 export default mixins;
