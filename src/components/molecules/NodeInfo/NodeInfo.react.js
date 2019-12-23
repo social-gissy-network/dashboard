@@ -1,15 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Card } from '@components';
-import { GissyContext } from '@store';
+import { STORE } from '@constants';
+import { useStore } from '@hooks';
 
 const NodeInfo = () => {
   const {
-    NODE: { value },
-  } = useContext(GissyContext);
+    [STORE.SELECTED_NODES]: { value: nodes },
+  } = useStore();
 
   return (
     <Card>
-      <pre>{JSON.stringify(value, null, 2)}</pre>
+      Selected Nodes:
+      {nodes.map(node => (
+        <div key={node.id}>
+          <span>{node.id}</span>
+          <br />
+        </div>
+      ))}
     </Card>
   );
 };

@@ -1,16 +1,19 @@
-import { useArcs } from '@hooks';
-import { GissyContext } from '@store';
-import { useCallback, useContext } from 'react';
+import { useArcs, useStore } from '@hooks';
+import { useCallback } from 'react';
 import { PALETTE } from '@styles';
+import { STORE } from '@constants';
 
 const useNetwork = () => {
   const { data, loading } = useArcs();
 
   const {
-    NODE: { set: setNode },
-  } = useContext(GissyContext);
+    [STORE.SELECTED_NODES]: { set: setSelectedNodes },
+  } = useStore();
 
-  const setOnClickNode = useCallback(map => id => setNode(map[id]), [setNode]);
+  const setOnClickNode = useCallback(
+    nodesMap => ids => setSelectedNodes(ids.map(id => nodesMap[id])),
+    [setSelectedNodes],
+  );
 
   if (!loading) {
     const nodesMap = data.reduce((acc, { startNode, stopNode }) => {

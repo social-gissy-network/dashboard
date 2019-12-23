@@ -23,8 +23,7 @@ const NetworkGraph = () => {
     () => ({
       select: event => {
         const { nodes } = event;
-        const [node] = nodes;
-        onClickNode(node);
+        onClickNode(nodes);
       },
     }),
     [onClickNode],

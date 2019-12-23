@@ -36,7 +36,7 @@ const ArcGraph = () => {
 
   const {
     [STORE.STYLE]: { value: mapStyle },
-    [STORE.NODE]: { set: setNode },
+    [STORE.SELECTED_NODES]: { set: setSelectedNode },
     [STORE.IS_EDGES_VISIBLE]: { value: visible },
   } = useStore();
 
@@ -52,7 +52,7 @@ const ArcGraph = () => {
   );
   const onClickNode = useCallback(
     ({ isSource = true }) => ({ object, index }) => {
-      setNode(extractData({ isSource, object }));
+      setSelectedNode([extractData({ isSource, object })]);
       setIndex(index);
     },
     [],

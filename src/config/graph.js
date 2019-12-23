@@ -33,7 +33,7 @@ const graphConfig = {
       hidden: !visible,
     },
     interaction: {
-      multiselect: false,
+      multiselect: true,
       hover: true,
       tooltipDelay: 0,
     },
