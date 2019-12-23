@@ -1,9 +1,23 @@
+import { STORE } from '@constants';
+
+const {
+  MAP_STYLE,
+  GRAPH_TYPE,
+  LIMIT,
+  NETWORK_OPTIONS,
+  IS_EDGES_VISIBLE,
+  IS_PATH_CALCULATION,
+  PATH_LENGTH,
+} = STORE;
+
 const LOCAL_STORAGE_KEYS = {
-  MAP_STYLE: 'mapStyle',
-  GRAPH_TYPE: 'graphType',
-  LIMIT: 'limit',
-  NETWORK_OPTIONS: 'networkOptions',
-  IS_EDGES_VISIBLE: 'isEdgesVisible',
+  MAP_STYLE,
+  GRAPH_TYPE,
+  LIMIT,
+  NETWORK_OPTIONS,
+  IS_EDGES_VISIBLE,
+  IS_PATH_CALCULATION,
+  PATH_LENGTH,
 };
 
 export default LOCAL_STORAGE_KEYS;

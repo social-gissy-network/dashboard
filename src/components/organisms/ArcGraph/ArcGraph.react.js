@@ -35,7 +35,7 @@ const ArcGraph = () => {
   const [index, setIndex] = useState(-1);
 
   const {
-    [STORE.STYLE]: { value: mapStyle },
+    [STORE.MAP_STYLE]: { value: mapStyle },
     [STORE.SELECTED_NODES]: { set: setSelectedNode },
     [STORE.IS_EDGES_VISIBLE]: { value: visible },
   } = useStore();

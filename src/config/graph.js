@@ -4,6 +4,7 @@ import { PALETTE } from '@styles';
 const graphConfig = {
   DEFAULT_GRAPH_TYPE: 'Arc',
   DEFAULT_LIMIT: 50,
+  PATH_LENGTH: 10,
   TYPES: {
     ARC: 'Arc',
     NETWORK: 'Network',

@@ -2,6 +2,7 @@ import { useArcs, useStore } from '@hooks';
 import { useCallback } from 'react';
 import { PALETTE } from '@styles';
 import { STORE } from '@constants';
+import { createStore } from 'reusable';
 
 const useNetwork = () => {
   const { data, loading } = useArcs();
@@ -38,4 +39,4 @@ const useNetwork = () => {
   return { loading };
 };
 
-export default useNetwork;
+export default createStore(useNetwork);

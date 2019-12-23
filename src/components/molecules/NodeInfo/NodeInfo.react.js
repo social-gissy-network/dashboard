@@ -10,7 +10,6 @@ const NodeInfo = () => {
 
   return (
     <Card>
-      Selected Nodes:
       {nodes.map(node => (
         <div key={node.id}>
           <span>{node.id}</span>

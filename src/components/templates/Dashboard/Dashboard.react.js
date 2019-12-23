@@ -1,4 +1,4 @@
-import { Menu, NetworkGraph, ArcGraph, NodeInfo } from '@components';
+import { Menu, NetworkGraph, ArcGraph } from '@components';
 import { CONFIG_SERVER, CONFIG_GRAPH } from '@config';
 import { IconGraphql } from '@icons';
 import { GissyContext } from '@store';
@@ -19,12 +19,6 @@ const FixedLeftTop = styled(FixedTop)`
 `;
 const FixedTopRight = styled(FixedTop)`
   ${tw`right-0`}
-`;
-
-const FixedBottomLeft = styled.div`
-  ${mixins.fixed}
-  ${tw`left-0`}
-  bottom: 100px;
 `;
 
 const Button = styled.a`
@@ -52,9 +46,6 @@ const Dashboard = () => {
         <FixedLeftTop>
           <Menu />
         </FixedLeftTop>
-        <FixedBottomLeft>
-          <NodeInfo />
-        </FixedBottomLeft>
         <FixedTopRight>
           <Button href={CONFIG_SERVER.url} target="_blank">
             <IconGraphql />

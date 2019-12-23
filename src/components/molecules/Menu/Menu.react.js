@@ -1,9 +1,9 @@
-import { Card, DateRange, IconButton, Input, Select } from '@components';
+import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
-import { GissyContext } from '@store';
+import { useStore } from '@hooks';
 import { mixins } from '@styles';
-import React, { useContext } from 'react';
+import React from 'react';
 import useForm from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -38,9 +38,9 @@ const Menu = () => {
   const { register, watch } = useForm();
 
   const {
-    MENU: { set },
-    GRAPH_TYPE: { value: graphType },
-  } = useContext(GissyContext);
+    [STORE.MENU]: { set },
+    [STORE.GRAPH_TYPE]: { value: graphType },
+  } = useStore();
 
   set(watch());
 
@@ -104,6 +104,29 @@ const Menu = () => {
         <Item>
           <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Dates Range</label>
           <DateRange />
+        </Item>
+        <Item>
+          <label htmlFor={STORE.IS_PATH_CALCULATION}>Calculate Node Paths</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
+            ref={register}
+            name={STORE.IS_PATH_CALCULATION}
+            type="checkbox"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
+          <InputNumber
+            defaultValue={CONFIG_GRAPH.PATH_LENGTH}
+            name={STORE.PATH_LENGTH}
+            type="number"
+            register={register}
+            placeholder="Length"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
+          <NodeInfo />
         </Item>
       </Form>
     </Container>
