@@ -8,7 +8,7 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ height = window.innerHeight, hierarchical = true }) => ({
+  NETWORK: ({ height = window.innerHeight, hierarchical = true, visible = true }) => ({
     height,
     layout: {
       hierarchical: {
@@ -30,6 +30,7 @@ const graphConfig = {
       color: 'black',
       length: 500,
       width: 2,
+      hidden: !visible,
     },
     interaction: {
       multiselect: false,
@@ -51,6 +52,7 @@ const graphConfig = {
     getSourceColor,
     getTargetColor,
     onHover,
+    visible,
   }) =>
     new ArcLayer({
       id,
@@ -60,6 +62,7 @@ const graphConfig = {
       getSourceColor,
       getTargetColor,
       onHover,
+      visible,
       autoHighlight: true,
       widthMinPixels: 3,
       pickable: true,

@@ -1,12 +1,11 @@
 import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
-import { EDGE } from '@constants';
+import { EDGE, STORE } from '@constants';
 import DeckGL from '@deck.gl/react';
-import { useArcs } from '@hooks';
-import { GissyContext } from '@store';
+import { useArcs, useStore } from '@hooks';
 import { mixins, PALETTE } from '@styles';
 import { toRGB } from '@utils';
 import PropTypes from 'prop-types';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { StaticMap } from 'react-map-gl';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -36,9 +35,10 @@ const ArcGraph = () => {
   const [index, setIndex] = useState(-1);
 
   const {
-    STYLE: { value: mapStyle },
-    NODE: { set: setNode },
-  } = useContext(GissyContext);
+    [STORE.STYLE]: { value: mapStyle },
+    [STORE.NODE]: { set: setNode },
+    [STORE.IS_EDGES_VISIBLE]: { value: visible },
+  } = useStore();
 
   const { data, loading } = useArcs();
 
@@ -63,6 +63,7 @@ const ArcGraph = () => {
       CONFIG_GRAPH.ARC_LAYER({
         id: 'arc-layer',
         data,
+        visible,
         onHover: onHoverEdge,
         getSourcePosition: extractCoordinates(EDGE.SOURCE),
         getTargetPosition: extractCoordinates(EDGE.TARGET),
@@ -88,7 +89,7 @@ const ArcGraph = () => {
         highlightedObjectIndex: index,
       }),
     ],
-    [data, index],
+    [data, index, visible],
   );
 
   return (

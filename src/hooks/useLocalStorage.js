@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { LOCAL_STORAGE_KEYS } from '@constants';
 import { setLSItem } from '@utils';
 
-const useLocalStorage = ({ mapStyle, graphType, limit, networkOptions }) => {
+const useLocalStorage = ({ mapStyle, graphType, limit, networkOptions, isEdgesVisible }) => {
   useEffect(() => {
     setLSItem(LOCAL_STORAGE_KEYS.MAP_STYLE, mapStyle);
   }, [mapStyle]);
@@ -18,6 +18,10 @@ const useLocalStorage = ({ mapStyle, graphType, limit, networkOptions }) => {
   useEffect(() => {
     setLSItem(LOCAL_STORAGE_KEYS.NETWORK_OPTIONS, networkOptions);
   }, [networkOptions]);
+
+  useEffect(() => {
+    setLSItem(LOCAL_STORAGE_KEYS.IS_EDGES_VISIBLE, isEdgesVisible);
+  }, [isEdgesVisible]);
 };
 
 export default useLocalStorage;

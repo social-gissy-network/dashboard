@@ -6,6 +6,7 @@ import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import VisNetwork from 'react-graph-vis';
+import { STORE } from '@constants';
 
 const Container = styled.div`
   ${mixins.flexCenter}
@@ -30,7 +31,8 @@ const NetworkGraph = () => {
   );
 
   const {
-    NETWORK_OPTIONS: { value: hierarchical },
+    [STORE.NETWORK_OPTIONS]: { value: hierarchical },
+    [STORE.IS_EDGES_VISIBLE]: { value: visible },
   } = useStore();
 
   return (
@@ -40,7 +42,7 @@ const NetworkGraph = () => {
       ) : data.nodes.length ? (
         <VisNetwork
           graph={data}
-          options={NETWORK({ height: `${window.innerHeight}px`, hierarchical })}
+          options={NETWORK({ height: `${window.innerHeight}px`, hierarchical, visible })}
           events={events}
         />
       ) : (

@@ -31,23 +31,24 @@ const Button = styled.a`
   ${mixins.button}
 `;
 
-const Display = styled.div`
-  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
-`;
-
 const { TYPES } = CONFIG_GRAPH;
+
+const GRAPH = {
+  [TYPES.ARC]: <ArcGraph />,
+  [TYPES.NETWORK]: <NetworkGraph />,
+};
 
 const Dashboard = () => {
   const store = useDashboard();
+
+  const {
+    GRAPH_TYPE: { value },
+  } = store;
+
   return (
     <GissyContext.Provider value={store}>
       <ReusableProvider>
-        <Display visible={store.GRAPH_TYPE.value === TYPES.ARC}>
-          <ArcGraph />
-        </Display>
-        <Display visible={store.GRAPH_TYPE.value === TYPES.NETWORK}>
-          <NetworkGraph />
-        </Display>
+        {GRAPH[value]}
         <FixedLeftTop>
           <Menu />
         </FixedLeftTop>

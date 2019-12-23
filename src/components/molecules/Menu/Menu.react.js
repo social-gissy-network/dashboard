@@ -1,5 +1,6 @@
-import { Card, IconButton, Input, Select, DateRange } from '@components';
-import { CONFIG_GRAPH, CONFIG_MAP, CONFIG_DEFAULT } from '@config';
+import { Card, DateRange, IconButton, Input, Select } from '@components';
+import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
+import { STORE } from '@constants';
 import { GissyContext } from '@store';
 import { mixins } from '@styles';
 import React, { useContext } from 'react';
@@ -29,12 +30,8 @@ const InputNumber = styled(Input)`
   ${tw`w-1/2`}
 `;
 
-const ITEMS = {
-  GRAPH_TYPE: 'graphType',
-  MAP_STYLE: 'mapStyle',
-  LIMIT: 'limit',
+const ADDITIONAL_ITEMS = {
   DATES_RANGE: 'datesRange',
-  NETWORK_OPTIONS: 'networkOptions',
 };
 
 const Menu = () => {
@@ -51,10 +48,10 @@ const Menu = () => {
     <Container>
       <Form>
         <Item>
-          <label htmlFor={ITEMS.GRAPH_TYPE}>Graph Type</label>
+          <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
           <Select
             defaultValue={CONFIG_DEFAULT.GRAPH_TYPE}
-            name={ITEMS.GRAPH_TYPE}
+            name={STORE.GRAPH_TYPE}
             register={register}>
             {Object.values(CONFIG_GRAPH.TYPES).map(type => (
               <Select.Option key={type} value={type}>
@@ -64,10 +61,10 @@ const Menu = () => {
           </Select>
         </Item>
         <Item visible={graphType === CONFIG_GRAPH.TYPES.ARC}>
-          <label htmlFor={ITEMS.MAP_STYLE}>Map Style</label>
+          <label htmlFor={STORE.MAP_STYLE}>Map Style</label>
           <Select
             defaultValue={CONFIG_DEFAULT.MAP_STYLE}
-            name={ITEMS.MAP_STYLE}
+            name={STORE.MAP_STYLE}
             register={register}>
             {CONFIG_MAP.mapStyles.map(({ name, url }) => (
               <Select.Option key={name} value={url}>
@@ -77,26 +74,35 @@ const Menu = () => {
           </Select>
         </Item>
         <Item>
-          <label htmlFor={ITEMS.LIMIT}>Entries Limit</label>
+          <label htmlFor={STORE.LIMIT}>Entries Limit</label>
           <InputNumber
             defaultValue={CONFIG_GRAPH.DEFAULT_LIMIT}
-            name={ITEMS.LIMIT}
+            name={STORE.LIMIT}
             type="number"
             register={register}
             placeholder="Limit"
           />
         </Item>
         <Item visible={graphType === CONFIG_GRAPH.TYPES.NETWORK}>
-          <label htmlFor={ITEMS.NETWORK_OPTIONS}>Hierarchical View</label>
+          <label htmlFor={STORE.NETWORK_OPTIONS}>Hierarchical View</label>
           <input
             defaultChecked={CONFIG_DEFAULT.NETWORK_OPTIONS}
             ref={register}
-            name={ITEMS.NETWORK_OPTIONS}
+            name={STORE.NETWORK_OPTIONS}
             type="checkbox"
           />
         </Item>
         <Item>
-          <label htmlFor={ITEMS.DATES_RANGE}>Dates Range</label>
+          <label htmlFor={STORE.IS_EDGES_VISIBLE}>Show Edges</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.IS_EDGES_VISIBLE}
+            ref={register}
+            name={STORE.IS_EDGES_VISIBLE}
+            type="checkbox"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Dates Range</label>
           <DateRange />
         </Item>
       </Form>

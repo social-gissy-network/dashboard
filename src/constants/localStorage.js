@@ -3,6 +3,7 @@ const LOCAL_STORAGE_KEYS = {
   GRAPH_TYPE: 'graphType',
   LIMIT: 'limit',
   NETWORK_OPTIONS: 'networkOptions',
+  IS_EDGES_VISIBLE: 'isEdgesVisible',
 };
 
 export default LOCAL_STORAGE_KEYS;
