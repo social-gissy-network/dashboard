@@ -68,12 +68,12 @@ const graphConfig = {
       widthMinPixels: 3,
       pickable: true,
     }),
-  SCATTER_LAYER: ({ ...props }) =>
+  SCATTER_LAYER: ({ opacity = 0.1, ...props }) =>
     new ScatterplotLayer({
       autoHighlight: true,
       radiusMinPixels: 10,
       pickable: true,
-      opacity: 0.1,
+      opacity,
       ...props,
     }),
 };

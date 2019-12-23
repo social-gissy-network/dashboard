@@ -10,10 +10,12 @@ import { StaticMap } from 'react-map-gl';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 import { EdgeTooltip, Loading, NodeTooltip } from '@components';
+import { darken } from 'polished';
 
 // #region Helpers
+const toCoordinatesArray = ({ latitude, longitude }) => [longitude, latitude].map(Number);
 const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
-  [longitude, latitude].map(Number);
+  toCoordinatesArray({ latitude, longitude });
 
 const extractData = ({ isSource = true, object }) => object[isSource ? 'startNode' : 'stopNode'];
 
@@ -27,6 +29,9 @@ const LogoWrapper = styled.div`
 const Reveal = styled.div`
   ${mixins.reveal}
 `;
+
+const find = target => ({ id }) => id === target;
+const remove = target => ({ id }) => id !== target;
 // #endregion
 
 const ArcGraph = () => {
@@ -36,7 +41,7 @@ const ArcGraph = () => {
 
   const {
     [STORE.MAP_STYLE]: { value: mapStyle },
-    [STORE.SELECTED_NODES]: { set: setSelectedNode },
+    [STORE.SELECTED_NODES]: { value: selectedNodes, set: setSelectedNode },
     [STORE.IS_EDGES_VISIBLE]: { value: visible },
   } = useStore();
 
@@ -52,7 +57,11 @@ const ArcGraph = () => {
   );
   const onClickNode = useCallback(
     ({ isSource = true }) => ({ object, index }) => {
-      setSelectedNode([extractData({ isSource, object })]);
+      setSelectedNode(selected => {
+        const node = extractData({ isSource, object });
+        const { id: target } = node;
+        return selected.find(find(target)) ? selected.filter(remove(target)) : [...selected, node];
+      });
       setIndex(index);
     },
     [],
@@ -60,6 +69,16 @@ const ArcGraph = () => {
 
   const layers = useMemo(
     () => [
+      CONFIG_GRAPH.SCATTER_LAYER({
+        id: 'scatter-selected-nodes',
+        data: selectedNodes,
+        getPosition: toCoordinatesArray,
+        getFillColor: toRGB(darken(0.2, PALETTE.PRIMARY)),
+        opacity: 1,
+        stroked: true,
+        lineWidthMinPixels: 2,
+        lineWidthScale: 2,
+      }),
       CONFIG_GRAPH.ARC_LAYER({
         id: 'arc-layer',
         data,
@@ -77,7 +96,6 @@ const ArcGraph = () => {
         onClick: onClickNode({ isSource: true }),
         getPosition: extractCoordinates(EDGE.SOURCE),
         getFillColor: toRGB(PALETTE.PRIMARY),
-        highlightedObjectIndex: index,
       }),
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-target-layer',
@@ -86,10 +104,9 @@ const ArcGraph = () => {
         onHover: onHoverNode({ isSource: false }),
         getPosition: extractCoordinates(EDGE.TARGET),
         getFillColor: toRGB(PALETTE.SECONDARY),
-        highlightedObjectIndex: index,
       }),
     ],
-    [data, index, visible],
+    [data, index, visible, selectedNodes],
   );
 
   return (
