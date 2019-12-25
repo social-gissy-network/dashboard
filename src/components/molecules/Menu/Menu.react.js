@@ -3,7 +3,7 @@ import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
 import { useStore } from '@hooks';
 import { mixins } from '@styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useForm from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -35,12 +35,14 @@ const ADDITIONAL_ITEMS = {
 };
 
 const Menu = () => {
-  const { register, watch } = useForm();
+  const { register, watch, getValues } = useForm();
 
   const {
     [STORE.MENU]: { set },
-    [STORE.GRAPH_TYPE]: { value: graphType },
+    [STORE.CONTROLLER]: { value: controller, set: setController },
   } = useStore();
+
+  const { [STORE.GRAPH_TYPE]: graphType } = controller;
 
   set(watch());
 
@@ -105,7 +107,7 @@ const Menu = () => {
           <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Dates Range</label>
           <DateRange />
         </Item>
-        <Item>
+        {/* <Item>
           <label htmlFor={STORE.IS_PATH_CALCULATION}>Calculate Node Paths</label>
           <input
             defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
@@ -113,7 +115,7 @@ const Menu = () => {
             name={STORE.IS_PATH_CALCULATION}
             type="checkbox"
           />
-        </Item>
+        </Item> */}
         <Item>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
           <InputNumber
@@ -133,4 +135,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default React.memo(Menu);

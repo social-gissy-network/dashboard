@@ -1,13 +1,13 @@
-import { Menu, NetworkGraph, ArcGraph } from '@components';
-import { CONFIG_SERVER, CONFIG_GRAPH } from '@config';
+import { Graph, Menu } from '@components';
+import { CONFIG_SERVER } from '@config';
+import { useDashboard } from '@hooks';
 import { IconGraphql } from '@icons';
 import { GissyContext } from '@store';
 import { mixins } from '@styles';
 import React from 'react';
+import { ReusableProvider } from 'reusable';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import { useDashboard } from '@hooks';
-import { ReusableProvider } from 'reusable';
 
 const FixedTop = styled.div`
   ${mixins.fixed}
@@ -25,24 +25,13 @@ const Button = styled.a`
   ${mixins.button}
 `;
 
-const { TYPES } = CONFIG_GRAPH;
-
-const GRAPH = {
-  [TYPES.ARC]: <ArcGraph />,
-  [TYPES.NETWORK]: <NetworkGraph />,
-};
-
 const Dashboard = () => {
   const store = useDashboard();
-
-  const {
-    GRAPH_TYPE: { value },
-  } = store;
 
   return (
     <GissyContext.Provider value={store}>
       <ReusableProvider>
-        {GRAPH[value]}
+        <Graph />
         <FixedLeftTop>
           <Menu />
         </FixedLeftTop>

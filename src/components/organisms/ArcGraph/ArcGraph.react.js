@@ -1,7 +1,7 @@
 import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { EDGE, STORE } from '@constants';
 import DeckGL from '@deck.gl/react';
-import { useArcs, useStore } from '@hooks';
+import { useArcs, useStore, useController } from '@hooks';
 import { mixins, PALETTE } from '@styles';
 import { toRGB } from '@utils';
 import PropTypes from 'prop-types';
@@ -40,10 +40,15 @@ const ArcGraph = () => {
   const [index, setIndex] = useState(-1);
 
   const {
-    [STORE.MAP_STYLE]: { value: mapStyle },
     [STORE.SELECTED_NODES]: { value: selectedNodes, set: setSelectedNode },
-    [STORE.IS_EDGES_VISIBLE]: { value: visible },
   } = useStore();
+
+  const {
+    controller: {
+      [STORE.MAP_STYLE]: { value: mapStyle },
+      [STORE.IS_EDGES_VISIBLE]: { value: visible },
+    },
+  } = useController();
 
   const { data, loading } = useArcs();
 

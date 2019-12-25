@@ -9,6 +9,7 @@ const storeConstants = {
   IS_EDGES_VISIBLE: 'IS_EDGES_VISIBLE',
   IS_PATH_CALCULATION: 'IS_PATH_CALCULATION',
   PATH_LENGTH: 'PATH_LENGTH',
+  CONTROLLER: 'CONTROLLER',
 };
 
 export default storeConstants;
