@@ -1,7 +1,7 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import { useContext } from 'react';
-import { GissyContext } from '@store';
 import { toUnixTime } from '@utils';
+import { useController } from '@hooks';
+import { STORE } from '@constants';
 
 const GET_TIME_RANGE = graphql`
   query getTimeRange {
@@ -25,10 +25,12 @@ const useTimeRange = () => {
   } = useStaticQuery(GET_TIME_RANGE);
 
   const {
-    TIME: { set: setTimeRange },
-  } = useContext(GissyContext);
+    controller: {
+      [STORE.TIME_RANGE]: { set },
+    },
+  } = useController();
 
-  return [[MIN, MAX].map(toUnixTime), setTimeRange];
+  return [[MIN, MAX].map(toUnixTime), set];
 };
 
 export default useTimeRange;

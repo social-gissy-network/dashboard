@@ -1,23 +1,18 @@
-import { useArcs, useStore, useController } from '@hooks';
+import { useData, useController } from '@hooks';
 import { useCallback } from 'react';
 import { PALETTE } from '@styles';
 import { STORE } from '@constants';
 import { createStore } from 'reusable';
 
 const useNetwork = () => {
-  const { data, loading } = useArcs();
+  const { data, loading } = useData();
 
   const {
-    [STORE.NETWORK_OPTIONS]: { value: hierarchical },
-    [STORE.IS_EDGES_VISIBLE]: { value: visible },
-  } = useStore();
-
-  const {
-    [STORE.SELECTED_NODES]: { set: setSelectedNodes },
-  } = useStore();
-
-  const {
-    controller: {},
+    controller: {
+      [STORE.SELECTED_NODES]: { set: setSelectedNodes },
+      [STORE.IS_EDGES_VISIBLE]: visible,
+      [STORE.IS_HIERARCHICAL_VIEW]: hierarchical,
+    },
   } = useController();
 
   const setOnClickNode = useCallback(
@@ -43,7 +38,15 @@ const useNetwork = () => {
     const nodes = Object.values(nodesMap);
     const edges = Object.values(edgesMap);
 
-    return { data: { nodes, edges }, loading, onClickNode: setOnClickNode(nodesMap) };
+    return {
+      data: { nodes, edges },
+      loading,
+      onClickNode: setOnClickNode(nodesMap),
+      options: {
+        hierarchical,
+        visible,
+      },
+    };
   }
   return { loading };
 };

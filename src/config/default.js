@@ -1,30 +1,19 @@
-import { LOCAL_STORAGE_KEYS } from '@constants';
-import { CONFIG_MAP, CONFIG_GRAPH } from '@config';
-import { getLSItem, getNumberLSItem, toBoolean } from '@utils';
+import { LOCAL_STORAGE_KEYS, STORE } from '@constants';
+import { CONFIG_GRAPH } from '@config';
+import { getLsItem } from '@utils';
 
-const {
-  GRAPH_TYPE,
-  LIMIT,
-  MAP_STYLE,
-  NETWORK_OPTIONS,
-  IS_EDGES_VISIBLE,
-  IS_PATH_CALCULATION,
-  PATH_LENGTH,
-} = LOCAL_STORAGE_KEYS;
+const controller = getLsItem(LOCAL_STORAGE_KEYS.CONTROLLER);
 
-const edges = getLSItem(IS_EDGES_VISIBLE);
-const network = getLSItem(NETWORK_OPTIONS);
-const path = getLSItem(IS_PATH_CALCULATION);
-
-const defaultOptions = {
-  GRAPH_TYPE: getLSItem(GRAPH_TYPE) || CONFIG_GRAPH.DEFAULT_GRAPH_TYPE,
-  MAP_STYLE: getLSItem(MAP_STYLE) || CONFIG_MAP.DEFAULT_MAP_STYLE,
-  LIMIT: getNumberLSItem(LIMIT) || CONFIG_GRAPH.DEFAULT_LIMIT,
-  NETWORK_OPTIONS: network ? toBoolean(network) : false,
-  IS_EDGES_VISIBLE: edges ? toBoolean(edges) : true,
-  IS_PATH_CALCULATION: path ? toBoolean(path) : false,
-  PATH_LENGTH: getNumberLSItem(PATH_LENGTH) || CONFIG_GRAPH.PATH_LENGTH,
-  SELECTED_NODES: [],
+const DEFAULT = {
+  [STORE.GRAPH_TYPE]: CONFIG_GRAPH.DEFAULT_GRAPH_TYPE,
+  [STORE.LIMIT]: CONFIG_GRAPH.DEFAULT_LIMIT,
+  [STORE.TIME_RANGE]: [0, Date.now()],
 };
 
-export default defaultOptions;
+const { CONTROLLER } = controller;
+
+const defaultController = {
+  CONTROLLER: CONTROLLER || DEFAULT,
+};
+
+export default defaultController;

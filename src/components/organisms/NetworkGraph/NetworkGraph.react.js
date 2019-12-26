@@ -1,12 +1,11 @@
 import { Loading } from '@components';
-import { useNetwork, useStore } from '@hooks';
-import { mixins } from '@styles';
 import { CONFIG_GRAPH } from '@config';
+import { useNetwork } from '@hooks';
+import { mixins } from '@styles';
 import React, { memo, useMemo } from 'react';
+import VisNetwork from 'react-graph-vis';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import VisNetwork from 'react-graph-vis';
-import { STORE } from '@constants';
 
 const Container = styled.div`
   ${mixins.flexCenter}
@@ -17,7 +16,7 @@ const Container = styled.div`
 const { NETWORK } = CONFIG_GRAPH;
 
 const NetworkGraph = () => {
-  const { data, loading, onClickNode } = useNetwork();
+  const { data, loading, onClickNode, options } = useNetwork();
 
   const events = useMemo(
     () => ({
@@ -29,23 +28,16 @@ const NetworkGraph = () => {
     [onClickNode],
   );
 
-  const {
-    [STORE.NETWORK_OPTIONS]: { value: hierarchical },
-    [STORE.IS_EDGES_VISIBLE]: { value: visible },
-  } = useStore();
-
   return (
     <Container>
       {loading ? (
         <Loading />
-      ) : data.nodes.length ? (
+      ) : (
         <VisNetwork
           graph={data}
-          options={NETWORK({ height: `${window.innerHeight}px`, hierarchical, visible })}
+          options={NETWORK({ height: `${window.innerHeight}px`, ...options })}
           events={events}
         />
-      ) : (
-        <div>Empty Data</div>
       )}
     </Container>
   );

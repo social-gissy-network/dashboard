@@ -1,9 +1,9 @@
 import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
-import { useStore } from '@hooks';
+import { useController } from '@hooks';
 import { mixins } from '@styles';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useForm from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -35,16 +35,16 @@ const ADDITIONAL_ITEMS = {
 };
 
 const Menu = () => {
-  const { register, watch, getValues } = useForm();
-
-  const {
-    [STORE.MENU]: { set },
-    [STORE.CONTROLLER]: { value: controller, set: setController },
-  } = useStore();
-
-  const { [STORE.GRAPH_TYPE]: graphType } = controller;
+  const { register, watch } = useForm({
+    defaultValues: CONFIG_DEFAULT.CONTROLLER,
+    reValidateMode: 'onChange',
+    mode: 'onChange',
+  });
+  const { controller, set } = useController();
 
   set(watch());
+
+  const { [STORE.GRAPH_TYPE]: graphType } = controller;
 
   return (
     <Container>
@@ -78,7 +78,7 @@ const Menu = () => {
         <Item>
           <label htmlFor={STORE.LIMIT}>Entries Limit</label>
           <InputNumber
-            defaultValue={CONFIG_GRAPH.DEFAULT_LIMIT}
+            defaultValue={50}
             name={STORE.LIMIT}
             type="number"
             register={register}
@@ -86,11 +86,11 @@ const Menu = () => {
           />
         </Item>
         <Item visible={graphType === CONFIG_GRAPH.TYPES.NETWORK}>
-          <label htmlFor={STORE.NETWORK_OPTIONS}>Hierarchical View</label>
+          <label htmlFor={STORE.IS_HIERARCHICAL_VIEW}>Hierarchical View</label>
           <input
             defaultChecked={CONFIG_DEFAULT.NETWORK_OPTIONS}
             ref={register}
-            name={STORE.NETWORK_OPTIONS}
+            name={STORE.IS_HIERARCHICAL_VIEW}
             type="checkbox"
           />
         </Item>
@@ -135,4 +135,4 @@ const Menu = () => {
   );
 };
 
-export default React.memo(Menu);
+export default Menu;
