@@ -1,4 +1,4 @@
-import { useArcs, useStore } from '@hooks';
+import { useArcs, useStore, useController } from '@hooks';
 import { useCallback } from 'react';
 import { PALETTE } from '@styles';
 import { STORE } from '@constants';
@@ -8,8 +8,17 @@ const useNetwork = () => {
   const { data, loading } = useArcs();
 
   const {
+    [STORE.NETWORK_OPTIONS]: { value: hierarchical },
+    [STORE.IS_EDGES_VISIBLE]: { value: visible },
+  } = useStore();
+
+  const {
     [STORE.SELECTED_NODES]: { set: setSelectedNodes },
   } = useStore();
+
+  const {
+    controller: {},
+  } = useController();
 
   const setOnClickNode = useCallback(
     nodesMap => ids => setSelectedNodes(ids.map(id => nodesMap[id])),
