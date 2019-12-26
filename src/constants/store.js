@@ -10,6 +10,7 @@ const storeConstants = {
   IS_PATH_CALCULATION: 'IS_PATH_CALCULATION',
   PATH_LENGTH: 'PATH_LENGTH',
   CONTROLLER: 'CONTROLLER',
+  EDGES_FILTER: 'EDGES_FILTER',
 };
 
 export default storeConstants;

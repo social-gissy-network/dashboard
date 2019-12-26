@@ -12,3 +12,5 @@ export { default as debounce } from './debounce';
 export { toBoolean } from './string';
 
 export { default as arcGraphUtils } from './arcGraph';
+
+export { default as formToController } from './controller';

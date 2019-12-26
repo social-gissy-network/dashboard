@@ -7,6 +7,7 @@ export { default as useDebounce } from './useDebounce';
 export { default as useLocalStorage } from './useLocalStorage';
 export { default as useStore } from './useStore';
 export { default as useController } from './useController';
+export { default as useTypes } from './useTypes';
 
 // Graph
 export { default as useData } from './useData';

@@ -19,4 +19,4 @@ export const getNumberLsItem = str => {
 
 export const setLsObjectItem = (str, object) => setLsItem(str, JSON.stringify(object));
 
-export const getLsObjectItem = (str, object) => getLsItem(str, object);
+export const getLsObjectItem = (str, object) => JSON.parse(getLsItem(str, object));

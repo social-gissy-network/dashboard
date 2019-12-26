@@ -1,10 +1,10 @@
 import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
-import { useController } from '@hooks';
+import { useController, useTypes } from '@hooks';
 import { mixins } from '@styles';
 import React from 'react';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 
@@ -30,31 +30,32 @@ const InputNumber = styled(Input)`
   ${tw`w-1/2`}
 `;
 
+const SubmitButton = styled(Input)`
+  ${tw`bg-pink-500 w-full text-white font-bold`}
+`;
+
 const ADDITIONAL_ITEMS = {
   DATES_RANGE: 'datesRange',
+  EDGE_FILTER: 'EDGE_FILTER',
 };
 
 const Menu = () => {
-  const { register, watch } = useForm({
-    defaultValues: CONFIG_DEFAULT.CONTROLLER,
-    reValidateMode: 'onChange',
-    mode: 'onChange',
-  });
   const { controller, set } = useController();
-
-  set(watch());
+  const { register, handleSubmit } = useForm({ defaultValues: controller });
 
   const { [STORE.GRAPH_TYPE]: graphType } = controller;
+  const edgesTypes = useTypes();
+
+  const onSubmit = data => {
+    set(data);
+  };
 
   return (
     <Container>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Item>
           <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
-          <Select
-            defaultValue={CONFIG_DEFAULT.GRAPH_TYPE}
-            name={STORE.GRAPH_TYPE}
-            register={register}>
+          <Select name={STORE.GRAPH_TYPE} register={register}>
             {Object.values(CONFIG_GRAPH.TYPES).map(type => (
               <Select.Option key={type} value={type}>
                 {type}
@@ -64,10 +65,7 @@ const Menu = () => {
         </Item>
         <Item visible={graphType === CONFIG_GRAPH.TYPES.ARC}>
           <label htmlFor={STORE.MAP_STYLE}>Map Style</label>
-          <Select
-            defaultValue={CONFIG_DEFAULT.MAP_STYLE}
-            name={STORE.MAP_STYLE}
-            register={register}>
+          <Select name={STORE.MAP_STYLE} register={register}>
             {CONFIG_MAP.mapStyles.map(({ name, url }) => (
               <Select.Option key={name} value={url}>
                 {name}
@@ -77,13 +75,7 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={STORE.LIMIT}>Entries Limit</label>
-          <InputNumber
-            defaultValue={50}
-            name={STORE.LIMIT}
-            type="number"
-            register={register}
-            placeholder="Limit"
-          />
+          <InputNumber name={STORE.LIMIT} type="number" register={register} placeholder="Limit" />
         </Item>
         <Item visible={graphType === CONFIG_GRAPH.TYPES.NETWORK}>
           <label htmlFor={STORE.IS_HIERARCHICAL_VIEW}>Hierarchical View</label>
@@ -107,28 +99,31 @@ const Menu = () => {
           <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Dates Range</label>
           <DateRange />
         </Item>
-        {/* <Item>
-          <label htmlFor={STORE.IS_PATH_CALCULATION}>Calculate Node Paths</label>
-          <input
-            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
-            ref={register}
-            name={STORE.IS_PATH_CALCULATION}
-            type="checkbox"
-          />
-        </Item> */}
         <Item>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
           <InputNumber
-            defaultValue={CONFIG_GRAPH.PATH_LENGTH}
             name={STORE.PATH_LENGTH}
             type="number"
             register={register}
             placeholder="Length"
           />
         </Item>
+        {edgesTypes.map(type => (
+          <Item key={type}>
+            <label>{type}</label>
+            <Input
+              register={register}
+              name={`${ADDITIONAL_ITEMS.EDGE_FILTER}.${type}`}
+              placeholder="Dynamic Field"
+            />
+          </Item>
+        ))}
         <Item>
           <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
           <NodeInfo />
+        </Item>
+        <Item>
+          <SubmitButton type="submit" />
         </Item>
       </Form>
     </Container>
