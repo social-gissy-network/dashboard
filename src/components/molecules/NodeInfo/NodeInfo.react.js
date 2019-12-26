@@ -1,16 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Card } from '@components';
-import { GissyContext } from '@store';
+import { STORE } from '@constants';
+import { useStore } from '@hooks';
+import styled from 'styled-components';
+import tw from 'tailwind.macro';
+const Container = styled(Card)`
+  ${tw`max-h-screen overflow-auto`}
+  max-height: 20vh;
+`;
 
 const NodeInfo = () => {
   const {
-    NODE: { value },
-  } = useContext(GissyContext);
+    [STORE.SELECTED_NODES]: { value: nodes },
+  } = useStore();
 
   return (
-    <Card>
-      <pre>{JSON.stringify(value, null, 2)}</pre>
-    </Card>
+    <Container>
+      {nodes.map(node => (
+        <div key={node.id}>
+          <span>{node.id}</span>
+          <br />
+        </div>
+      ))}
+    </Container>
   );
 };
 

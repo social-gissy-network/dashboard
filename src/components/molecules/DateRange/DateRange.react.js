@@ -1,6 +1,5 @@
 import { Range } from '@components';
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { mixins } from '@styles';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -39,10 +38,6 @@ const DateRange = () => {
       </RangeWrapper>
     </Container>
   );
-};
-
-DateRange.propTypes = {
-  info: PropTypes.object.isRequired,
 };
 
 export default DateRange;

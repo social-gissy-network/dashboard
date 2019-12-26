@@ -24,7 +24,7 @@ Input.propTypes = {
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.string,
   placeholder: PropTypes.string,
-  register: PropTypes.func.isRequired,
+  register: PropTypes.func,
 };
 
 export default Input;

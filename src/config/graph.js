@@ -4,11 +4,12 @@ import { PALETTE } from '@styles';
 const graphConfig = {
   DEFAULT_GRAPH_TYPE: 'Arc',
   DEFAULT_LIMIT: 50,
+  DEFAULT_PATH_LENGTH: 10,
   TYPES: {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ height = window.innerHeight, hierarchical = true }) => ({
+  NETWORK: ({ height = window.innerHeight, hierarchical = true, visible = true }) => ({
     height,
     layout: {
       hierarchical: {
@@ -30,9 +31,10 @@ const graphConfig = {
       color: 'black',
       length: 500,
       width: 2,
+      hidden: !visible,
     },
     interaction: {
-      multiselect: false,
+      multiselect: true,
       hover: true,
       tooltipDelay: 0,
     },
@@ -51,6 +53,7 @@ const graphConfig = {
     getSourceColor,
     getTargetColor,
     onHover,
+    visible,
   }) =>
     new ArcLayer({
       id,
@@ -60,16 +63,17 @@ const graphConfig = {
       getSourceColor,
       getTargetColor,
       onHover,
+      visible,
       autoHighlight: true,
       widthMinPixels: 3,
       pickable: true,
     }),
-  SCATTER_LAYER: ({ ...props }) =>
+  SCATTER_LAYER: ({ opacity = 0.1, ...props }) =>
     new ScatterplotLayer({
       autoHighlight: true,
       radiusMinPixels: 10,
       pickable: true,
-      opacity: 0.1,
+      opacity,
       ...props,
     }),
 };

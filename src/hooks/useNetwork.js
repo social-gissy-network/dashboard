@@ -1,16 +1,24 @@
-import { useArcs } from '@hooks';
-import { GissyContext } from '@store';
-import { useCallback, useContext } from 'react';
+import { useData, useController } from '@hooks';
+import { useCallback } from 'react';
 import { PALETTE } from '@styles';
+import { STORE } from '@constants';
+import { createStore } from 'reusable';
 
 const useNetwork = () => {
-  const { data, loading } = useArcs();
+  const { data, loading } = useData();
 
   const {
-    NODE: { set: setNode },
-  } = useContext(GissyContext);
+    controller: {
+      [STORE.SELECTED_NODES]: { set: setSelectedNodes },
+      [STORE.IS_EDGES_VISIBLE]: visible,
+      [STORE.IS_HIERARCHICAL_VIEW]: hierarchical,
+    },
+  } = useController();
 
-  const setOnClickNode = useCallback(map => id => setNode(map[id]), [setNode]);
+  const setOnClickNode = useCallback(
+    nodesMap => ids => setSelectedNodes(ids.map(id => nodesMap[id])),
+    [setSelectedNodes],
+  );
 
   if (!loading) {
     const nodesMap = data.reduce((acc, { startNode, stopNode }) => {
@@ -30,9 +38,17 @@ const useNetwork = () => {
     const nodes = Object.values(nodesMap);
     const edges = Object.values(edgesMap);
 
-    return { data: { nodes, edges }, loading, onClickNode: setOnClickNode(nodesMap) };
+    return {
+      data: { nodes, edges },
+      loading,
+      onClickNode: setOnClickNode(nodesMap),
+      options: {
+        hierarchical,
+        visible,
+      },
+    };
   }
   return { loading };
 };
 
-export default useNetwork;
+export default createStore(useNetwork);

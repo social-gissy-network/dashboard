@@ -1,24 +1,25 @@
+import { EdgeTooltip, Loading, NodeTooltip } from '@components';
 import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { EDGE } from '@constants';
 import DeckGL from '@deck.gl/react';
 import { useArcs } from '@hooks';
-import { GissyContext } from '@store';
 import { mixins, PALETTE } from '@styles';
-import { toRGB } from '@utils';
+import { toRGB, arcGraphUtils } from '@utils';
+import { darken } from 'polished';
 import PropTypes from 'prop-types';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { StaticMap } from 'react-map-gl';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import { EdgeTooltip, Loading, NodeTooltip } from '@components';
 
-// #region Helpers
-const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
-  [longitude, latitude].map(Number);
-
-const extractData = ({ isSource = true, object }) => object[isSource ? 'startNode' : 'stopNode'];
-
-const getCursor = () => 'crosshair';
+const {
+  setOnClickNode,
+  setOnHover,
+  setOnHoverNode,
+  extractCoordinates,
+  getCursor,
+  toCoordinatesArray,
+} = arcGraphUtils;
 
 const LogoWrapper = styled.div`
   ${mixins.flexCenter}
@@ -28,41 +29,39 @@ const LogoWrapper = styled.div`
 const Reveal = styled.div`
   ${mixins.reveal}
 `;
-// #endregion
 
 const ArcGraph = () => {
   const [edgeInfo, setEdgeInfo] = useState();
   const [nodeInfo, setNodeInfo] = useState();
-  const [index, setIndex] = useState(-1);
 
   const {
-    STYLE: { value: mapStyle },
-    NODE: { set: setNode },
-  } = useContext(GissyContext);
+    data,
+    loading,
+    mapStyle,
+    visible,
+    selectedNodes: { set: setSelectedNodes, value: selectedNodes },
+  } = useArcs();
 
-  const { data, loading } = useArcs();
-
-  const onHoverEdge = useCallback(({ object: data, x, y }) => setEdgeInfo({ data, x, y }), []);
-  const onHoverNode = useCallback(
-    ({ isSource = true }) => ({ object: data, x, y, index }) => {
-      setNodeInfo({ isSource, data, x, y });
-      setIndex(index);
-    },
-    [],
-  );
-  const onClickNode = useCallback(
-    ({ isSource = true }) => ({ object, index }) => {
-      setNode(extractData({ isSource, object }));
-      setIndex(index);
-    },
-    [],
-  );
+  const onHoverEdge = useCallback(setOnHover(setEdgeInfo), []);
+  const onHoverNode = useCallback(setOnHoverNode(setNodeInfo), []);
+  const onClickNode = useCallback(setOnClickNode(setSelectedNodes), []);
 
   const layers = useMemo(
     () => [
+      CONFIG_GRAPH.SCATTER_LAYER({
+        id: 'scatter-selected-nodes',
+        data: selectedNodes,
+        getPosition: toCoordinatesArray,
+        getFillColor: toRGB(darken(0.2, PALETTE.PRIMARY)),
+        opacity: 1,
+        stroked: true,
+        lineWidthMinPixels: 2,
+        lineWidthScale: 2,
+      }),
       CONFIG_GRAPH.ARC_LAYER({
         id: 'arc-layer',
         data,
+        visible,
         onHover: onHoverEdge,
         getSourcePosition: extractCoordinates(EDGE.SOURCE),
         getTargetPosition: extractCoordinates(EDGE.TARGET),
@@ -76,7 +75,6 @@ const ArcGraph = () => {
         onClick: onClickNode({ isSource: true }),
         getPosition: extractCoordinates(EDGE.SOURCE),
         getFillColor: toRGB(PALETTE.PRIMARY),
-        highlightedObjectIndex: index,
       }),
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-target-layer',
@@ -85,10 +83,9 @@ const ArcGraph = () => {
         onHover: onHoverNode({ isSource: false }),
         getPosition: extractCoordinates(EDGE.TARGET),
         getFillColor: toRGB(PALETTE.SECONDARY),
-        highlightedObjectIndex: index,
       }),
     ],
-    [data, index],
+    [data, visible, selectedNodes],
   );
 
   return (

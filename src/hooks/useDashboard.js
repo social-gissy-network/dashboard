@@ -1,41 +1,50 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { CONFIG_DEFAULT } from '@config';
 import { useDebounce, useLocalStorage } from '@hooks';
-import { toBoolean } from '@utils';
+import { formToController } from '@utils';
+import { STORE } from '@constants';
+import isEqual from 'lodash.isequal';
 
-const { MAP_STYLE, GRAPH_TYPE, LIMIT, NETWORK_OPTIONS } = CONFIG_DEFAULT;
+const { SELECTED_NODES, TIME_RANGE, CONTROLLER, LIMIT, PATH_LENGTH } = STORE;
 
-const DEFAULT_NODE_INFO = {};
+const {
+  [TIME_RANGE]: DEFAULT_TIME_RANGE,
+  [SELECTED_NODES]: DEFAULT_SELECTED_NODES,
+  CONTROLLER: DEFAULT_CONTROLLER,
+} = CONFIG_DEFAULT;
 
 const useDashboard = () => {
-  const [graphType, setGraphType] = useState(GRAPH_TYPE);
-  const [mapStyle, setMapStyle] = useState(MAP_STYLE);
-  const [timeRange, setTimeRange] = useState([0, Infinity]);
-  const [limit, setLimit] = useState(LIMIT);
-  const [nodeInfo, setNodeInfo] = useState(DEFAULT_NODE_INFO);
-  const [networkOptions, setNetworkOptions] = useState(NETWORK_OPTIONS);
-  const limitDebounced = useDebounce(limit);
+  const [timeRange, setTimeRange] = useState(DEFAULT_TIME_RANGE);
+  const [selectedNodes, setSelectedNodes] = useState(DEFAULT_SELECTED_NODES);
+  const [controller, setController] = useState(DEFAULT_CONTROLLER);
 
-  useLocalStorage({ limit, graphType, mapStyle, networkOptions });
+  const form = useRef(DEFAULT_CONTROLLER);
 
-  const setMenu = useCallback(({ graphType, mapStyle, limit, networkOptions }) => {
-    setGraphType(graphType);
-    setMapStyle(mapStyle);
-    setLimit(Number(limit));
-    setNetworkOptions(toBoolean(networkOptions));
+  useLocalStorage({ controller });
+
+  const setFromForm = useCallback(props => {
+    if (!isEqual(form.current, props)) {
+      form.current = props;
+      setController(formToController(form.current));
+    }
   }, []);
 
-  const config = {
-    MENU: { set: setMenu },
-    GRAPH_TYPE: { value: graphType, set: setGraphType },
-    TIME: { value: timeRange, set: setTimeRange },
-    STYLE: { value: mapStyle, set: setMapStyle },
-    LIMIT: { value: limitDebounced, set: setLimit },
-    NODE: { value: nodeInfo, set: setNodeInfo },
-    NETWORK_OPTIONS: { value: networkOptions, set: setNetworkOptions },
+  const limit = useDebounce(controller[LIMIT]);
+  const length = useDebounce(controller[PATH_LENGTH]);
+
+  const debounced = {
+    ...controller,
+    [LIMIT]: limit,
+    [PATH_LENGTH]: length,
   };
 
-  return config;
+  const store = {
+    [TIME_RANGE]: { value: timeRange, set: setTimeRange },
+    [SELECTED_NODES]: { value: selectedNodes, set: setSelectedNodes },
+    [CONTROLLER]: { value: debounced, set: setFromForm },
+  };
+
+  return store;
 };
 
 export default useDashboard;

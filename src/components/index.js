@@ -20,6 +20,7 @@ export { default as DateRange } from './molecules/DateRange/DateRange.react';
 // organisms
 export { default as ArcGraph } from './organisms/ArcGraph/ArcGraph.react';
 export { default as NetworkGraph } from './organisms/NetworkGraph/NetworkGraph.react';
+export { default as Graph } from './organisms/Graph/Graph.react';
 
 // template
 export { default as Dashboard } from './templates/Dashboard/Dashboard.react';

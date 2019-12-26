@@ -1,14 +1,27 @@
-import { LOCAL_STORAGE_KEYS } from '@constants';
-import { CONFIG_MAP, CONFIG_GRAPH } from '@config';
-import { getLSItem, getNumberLSItem, toBoolean } from '@utils';
+import { LOCAL_STORAGE_KEYS, STORE } from '@constants';
+import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
+import { getLsObjectItem } from '@utils';
 
-const { GRAPH_TYPE, LIMIT, MAP_STYLE, NETWORK_OPTIONS } = LOCAL_STORAGE_KEYS;
+const controller = getLsObjectItem(LOCAL_STORAGE_KEYS.CONTROLLER);
 
-const defaultOptions = {
-  MAP_STYLE: getLSItem(MAP_STYLE) || CONFIG_MAP.DEFAULT_MAP_STYLE,
-  GRAPH_TYPE: getLSItem(GRAPH_TYPE) || CONFIG_GRAPH.DEFAULT_GRAPH_TYPE,
-  LIMIT: getNumberLSItem(LIMIT) || CONFIG_GRAPH.DEFAULT_LIMIT,
-  NETWORK_OPTIONS: toBoolean(getLSItem(NETWORK_OPTIONS)) || false,
+const DEFAULT_VALUES = {
+  [STORE.TIME_RANGE]: [0, Date.now()],
+  [STORE.SELECTED_NODES]: [],
+  [STORE.CONTROLLER]: {
+    [STORE.LIMIT]: CONFIG_GRAPH.DEFAULT_LIMIT,
+    [STORE.GRAPH_TYPE]: CONFIG_GRAPH.DEFAULT_GRAPH_TYPE,
+    [STORE.PATH_LENGTH]: CONFIG_GRAPH.DEFAULT_PATH_LENGTH,
+    [STORE.IS_HIERARCHICAL_VIEW]: false,
+    [STORE.IS_EDGES_VISIBLE]: true,
+    [STORE.MAP_STYLE]: CONFIG_MAP.DEFAULT_MAP_STYLE,
+  },
 };
 
-export default defaultOptions;
+const defaults = {
+  ...DEFAULT_VALUES,
+  [STORE.CONTROLLER]: {
+    ...controller,
+  },
+};
+
+export default defaults;
