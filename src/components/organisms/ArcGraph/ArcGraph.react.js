@@ -48,16 +48,6 @@ const ArcGraph = () => {
 
   const layers = useMemo(
     () => [
-      CONFIG_GRAPH.ARC_LAYER({
-        id: 'arc-layer',
-        data,
-        visible,
-        onHover: onHoverEdge,
-        getSourcePosition: extractCoordinates(EDGE.SOURCE),
-        getTargetPosition: extractCoordinates(EDGE.TARGET),
-        getSourceColor: toRGB(PALETTE.PRIMARY),
-        getTargetColor: toRGB(PALETTE.SECONDARY),
-      }),
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-selected-nodes',
         data: selectedNodes,
@@ -67,6 +57,16 @@ const ArcGraph = () => {
         stroked: true,
         lineWidthMinPixels: 2,
         lineWidthScale: 2,
+      }),
+      CONFIG_GRAPH.ARC_LAYER({
+        id: 'arc-layer',
+        data,
+        visible,
+        onHover: onHoverEdge,
+        getSourcePosition: extractCoordinates(EDGE.SOURCE),
+        getTargetPosition: extractCoordinates(EDGE.TARGET),
+        getSourceColor: toRGB(PALETTE.PRIMARY),
+        getTargetColor: toRGB(PALETTE.SECONDARY),
       }),
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-source-layer',

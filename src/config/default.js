@@ -8,12 +8,11 @@ const DEFAULT = {
   [STORE.GRAPH_TYPE]: CONFIG_GRAPH.DEFAULT_GRAPH_TYPE,
   [STORE.LIMIT]: CONFIG_GRAPH.DEFAULT_LIMIT,
   [STORE.TIME_RANGE]: [0, Date.now()],
+  [STORE.SELECTED_NODES]: [],
 };
 
-const { CONTROLLER } = controller;
-
 const defaultController = {
-  CONTROLLER: CONTROLLER || DEFAULT,
+  CONTROLLER: { ...DEFAULT, ...controller },
 };
 
 export default defaultController;
