@@ -1,15 +1,20 @@
 import React from 'react';
 import { SB_LABELS } from '@constants';
-import { useArcs } from '@hooks';
 import NodeTooltip from './NodeTooltip.react';
 
 export default {
   title: `${SB_LABELS.TOOLTIPS}Node`,
 };
 
-// TODO: query only the first
-export const Default = () => {
-  const { data, loading } = useArcs();
-  const [first] = data;
-  return !loading && <NodeTooltip info={{ data: first }} />;
+const data = {
+  isSource: false,
+  x: undefined,
+  y: undefined,
+  data: {
+    startNode: { name: 'source' },
+    stopNode: { name: 'target' },
+  },
 };
+
+export const Source = () => <NodeTooltip />;
+export const Target = () => <NodeTooltip info={data} />;

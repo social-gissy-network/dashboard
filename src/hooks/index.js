@@ -14,3 +14,4 @@ export { default as useData } from './useData';
 export { default as useNetwork } from './useNetwork';
 export { default as useGraphType } from './useGraphType';
 export { default as useArcs } from './useArcs';
+export { default as useSelectedNodes } from './useSelectedNodes';

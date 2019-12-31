@@ -23,6 +23,6 @@ export const getLsObjectItem = (str, object) => {
   try {
     return JSON.parse(getLsItem(str, object));
   } catch (e) {
-    return {};
+    return null;
   }
 };

@@ -7,8 +7,8 @@ const DEFAULT = {
   x: undefined,
   y: undefined,
   data: {
-    startNode: { name: 'source' },
-    stopNode: { name: 'target' },
+    startNode: { name: 'Source' },
+    stopNode: { name: 'Target' },
   },
 };
 
