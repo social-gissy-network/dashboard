@@ -9,12 +9,14 @@ const useQueryVariables = () => {
       [STORE.TIME_RANGE]: { value: timeRange },
       [STORE.LIMIT]: limit,
       [STORE.PATH_LENGTH]: length,
-      [STORE.SELECTED_NODES]: { value: nodes },
+      [STORE.SELECTED_NODES]: { value: nodesInfo },
       [STORE.EDGES_FILTER]: filters,
     },
   } = useController();
 
   const [min, max] = timeRange.map(unixToDbTime);
+
+  const nodes = nodesInfo.map(({ id }) => id);
 
   return { min, max, limit, length, nodes, filters };
 };

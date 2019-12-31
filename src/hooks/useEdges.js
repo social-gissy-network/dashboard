@@ -31,7 +31,9 @@ const useEdges = () => {
     controller: { [STORE.IS_PATH_CALCULATION]: isPathCalculation },
   } = useController();
 
-  const variables = useQueryVariables();
+  const { min, max, limit } = useQueryVariables();
+
+  const variables = { limit, min, max };
 
   const { data: fetchedData = DEFAULT, loading } = useQuery(GET_EDGES_IN_TIME_RANGE, {
     variables,
@@ -39,7 +41,6 @@ const useEdges = () => {
   });
 
   const { edges: data } = fetchedData;
-
   return { data, loading };
 };
 

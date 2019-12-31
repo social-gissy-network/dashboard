@@ -54,7 +54,10 @@ const usePaths = () => {
   });
 
   const { paths = [] } = fetchedData;
-  return { data: paths.flat(), loading };
+
+  const data = paths.flat();
+
+  return { data, loading };
 };
 
 export default createStore(usePaths);
