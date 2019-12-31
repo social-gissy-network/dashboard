@@ -36,7 +36,6 @@ const SubmitButton = styled(Input)`
 
 const ADDITIONAL_ITEMS = {
   DATES_RANGE: 'datesRange',
-  EDGE_FILTER: 'EDGE_FILTER',
 };
 
 const Menu = () => {
@@ -96,8 +95,31 @@ const Menu = () => {
           />
         </Item>
         <Item>
-          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Dates Range</label>
+          <label htmlFor={STORE.EDGES_FILTER}>Dates Range</label>
           <DateRange />
+        </Item>
+        {edgesTypes.map(type => (
+          <Item key={type}>
+            <label>{type}</label>
+            <Input
+              register={register}
+              name={`${STORE.EDGES_FILTER}.${type}`}
+              placeholder="Dynamic Field"
+            />
+          </Item>
+        ))}
+        <Item>
+          <label htmlFor={STORE.IS_PATH_CALCULATION}>Path Calculation</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
+            ref={register}
+            name={STORE.IS_PATH_CALCULATION}
+            type="checkbox"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
+          <NodeInfo />
         </Item>
         <Item>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
@@ -107,20 +129,6 @@ const Menu = () => {
             register={register}
             placeholder="Length"
           />
-        </Item>
-        {edgesTypes.map(type => (
-          <Item key={type}>
-            <label>{type}</label>
-            <Input
-              register={register}
-              name={`${ADDITIONAL_ITEMS.EDGE_FILTER}.${type}`}
-              placeholder="Dynamic Field"
-            />
-          </Item>
-        ))}
-        <Item>
-          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
-          <NodeInfo />
         </Item>
         <Item>
           <SubmitButton type="submit" />

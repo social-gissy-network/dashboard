@@ -3,16 +3,23 @@ import PropTypes from 'prop-types';
 import { Tooltip } from '@components';
 import { Text, PALETTE } from '@styles';
 
-const NodeTooltip = ({ info }) => {
+const DEFAULT = {
+  isSource: true,
+  x: undefined,
+  y: undefined,
+  data: {
+    startNode: { name: 'source' },
+    stopNode: { name: 'target' },
+  },
+};
+
+const NodeTooltip = ({ info = DEFAULT }) => {
+  const { isSource, x, y, data = DEFAULT.data } = info;
+
   const {
-    isSource = true,
-    x = undefined,
-    y = undefined,
-    data: {
-      startNode: { name: source },
-      stopNode: { name: target },
-    },
-  } = info;
+    startNode: { name: source },
+    stopNode: { name: target },
+  } = data;
 
   return (
     <Tooltip pointer={{ x, y }}>

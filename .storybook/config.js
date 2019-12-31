@@ -12,6 +12,7 @@ import ApolloClient from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
 import { useDashboard } from '../src/hooks';
 import {} from '../src/components';
+import {} from '../src/hooks';
 import { ReusableProvider } from 'reusable';
 
 const client = new ApolloClient({
