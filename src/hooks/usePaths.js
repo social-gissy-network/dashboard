@@ -5,6 +5,7 @@ import { createStore } from 'reusable';
 import { STORE } from '@constants';
 
 const DEFAULT = { paths: [] };
+const flat = (acc, path) => acc.concat(path);
 
 const GET_NODES_PATH = gql`
   query getPathsBetweenNodes(
@@ -54,9 +55,7 @@ const usePaths = () => {
   });
 
   const { paths = [] } = fetchedData;
-
-  const data = paths.flat();
-
+  const data = paths.reduce(flat, []);
   return { data, loading };
 };
 
