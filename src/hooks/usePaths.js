@@ -36,11 +36,13 @@ const GET_PATHS_BY_FILTER = gql`
 const noEmptyFilters = ([, value]) => !!value;
 
 const toGraphqlFilters = obj =>
-  Object.fromEntries(
-    Object.entries(obj)
-      .filter(noEmptyFilters)
-      .map(([key, value]) => [key, { eq: value }]),
-  );
+  obj
+    ? Object.fromEntries(
+        Object.entries(obj)
+          .filter(noEmptyFilters)
+          .map(([key, value]) => [key, { eq: value }]),
+      )
+    : {};
 
 const usePaths = () => {
   const {
