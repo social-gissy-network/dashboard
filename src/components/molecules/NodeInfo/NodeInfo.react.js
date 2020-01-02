@@ -13,17 +13,17 @@ const EMPTY = 'No Nodes Selected';
 
 const NodeInfo = () => {
   const nodes = useSelectedNodes();
+  const hasNodes = nodes.length === 0;
 
   return (
     <Container>
-      {nodes.length === 0
-        ? EMPTY
-        : nodes.map(node => (
-          <div key={node.id}>
-            <span>{node.id}</span>
-            <br />
-          </div>
-        ))}
+      {hasNodes && EMPTY}
+      {nodes.map(node => (
+        <div key={node.id}>
+          <span>{node.id}</span>
+          <br />
+        </div>
+      ))}
     </Container>
   );
 };

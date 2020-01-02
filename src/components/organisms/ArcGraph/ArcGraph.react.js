@@ -85,7 +85,7 @@ const ArcGraph = () => {
         getFillColor: toRGB(PALETTE.SECONDARY),
       }),
     ],
-    [data, visible, selectedNodes],
+    [selectedNodes, data, visible, onHoverEdge, onHoverNode, onClickNode],
   );
 
   return (
@@ -96,6 +96,7 @@ const ArcGraph = () => {
         layers={layers}
         getCursor={getCursor}>
         <StaticMap
+          key="static-map"
           reuseMaps
           mapStyle={mapStyle}
           preventStyleDiffing={true}

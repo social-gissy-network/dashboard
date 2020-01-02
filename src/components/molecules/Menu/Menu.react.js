@@ -98,6 +98,15 @@ const Menu = () => {
           <label htmlFor={STORE.EDGES_FILTER}>Dates Range</label>
           <DateRange />
         </Item>
+        <Item>
+          <label htmlFor={STORE.IS_PATH_CALCULATION}>Path Calculation</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
+            ref={register}
+            name={STORE.IS_PATH_CALCULATION}
+            type="checkbox"
+          />
+        </Item>
         {edgesTypes.map(type => (
           <Item key={type}>
             <label>{type}</label>
@@ -109,19 +118,6 @@ const Menu = () => {
           </Item>
         ))}
         <Item>
-          <label htmlFor={STORE.IS_PATH_CALCULATION}>Path Calculation</label>
-          <input
-            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
-            ref={register}
-            name={STORE.IS_PATH_CALCULATION}
-            type="checkbox"
-          />
-        </Item>
-        <Item>
-          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
-          <NodeInfo />
-        </Item>
-        <Item>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
           <InputNumber
             name={STORE.PATH_LENGTH}
@@ -131,7 +127,11 @@ const Menu = () => {
           />
         </Item>
         <Item>
-          <SubmitButton type="submit" />
+          <SubmitButton type="submit" value="Apply" />
+        </Item>
+        <Item>
+          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
+          <NodeInfo />
         </Item>
       </Form>
     </Container>

@@ -1,7 +1,8 @@
-import { useData, useController } from '@hooks';
-import { useCallback } from 'react';
-import { PALETTE } from '@styles';
 import { STORE } from '@constants';
+import { useController, useData } from '@hooks';
+import { PALETTE } from '@styles';
+import isEqual from 'lodash.isequal';
+import { useCallback } from 'react';
 import { createStore } from 'reusable';
 
 const useNetwork = () => {
@@ -16,7 +17,11 @@ const useNetwork = () => {
   } = useController();
 
   const setOnClickNode = useCallback(
-    nodesMap => ids => setSelectedNodes(ids.map(id => nodesMap[id])),
+    nodesMap => ids =>
+      setSelectedNodes(prev => {
+        const curr = ids.map(id => nodesMap[id]);
+        return isEqual(prev, curr) ? prev : curr;
+      }),
     [setSelectedNodes],
   );
 
@@ -31,7 +36,7 @@ const useNetwork = () => {
     }, {});
 
     const edgesMap = data.reduce((acc, { startNode: { id: from }, stopNode: { id: to } }) => {
-      acc[`${from}.${to}`] = { from, to };
+      acc[`${from}.${to}`] = { from, to, id: `${from}-${to}` };
       return acc;
     }, {});
 
