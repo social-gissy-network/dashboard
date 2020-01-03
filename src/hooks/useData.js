@@ -1,11 +1,11 @@
 import { STORE } from '@constants';
-import { useController, usePaths, useEdges } from '@hooks';
+import { useStore, usePaths, useEdges } from '@hooks';
 import { createStore } from 'reusable';
 
 const useData = () => {
   const {
     controller: { [STORE.IS_PATH_CALCULATION]: isPathCalculation },
-  } = useController();
+  } = useStore();
 
   const edges = useEdges();
   const paths = usePaths();

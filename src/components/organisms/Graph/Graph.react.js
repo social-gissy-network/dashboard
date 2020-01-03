@@ -1,20 +1,22 @@
-import React from 'react';
+import { ArcGraph, NetworkGraph } from '@components';
 import { CONFIG_GRAPH } from '@config';
-import { NetworkGraph, ArcGraph } from '@components';
-import { useController } from '@hooks';
 import { STORE } from '@constants';
+import { useStore } from '@hooks';
+import React from 'react';
 
-const { TYPES } = CONFIG_GRAPH;
+const {
+  TYPES: { ARC, NETWORK },
+} = CONFIG_GRAPH;
 
 const GRAPH = {
-  [TYPES.ARC]: <ArcGraph />,
-  [TYPES.NETWORK]: <NetworkGraph />,
+  [ARC]: <ArcGraph />,
+  [NETWORK]: <NetworkGraph />,
 };
 
 const Graph = () => {
   const {
     controller: { [STORE.GRAPH_TYPE]: graphType },
-  } = useController();
+  } = useStore();
 
   return <>{GRAPH[graphType]}</>;
 };

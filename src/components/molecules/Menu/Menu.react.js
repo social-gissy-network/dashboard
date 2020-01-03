@@ -1,7 +1,7 @@
 import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
-import { useController, useTypes } from '@hooks';
+import { useStore, useTypes, useGraphType } from '@hooks';
 import { mixins } from '@styles';
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -34,15 +34,11 @@ const SubmitButton = styled(Input)`
   ${tw`bg-pink-500 w-full text-white font-bold`}
 `;
 
-const ADDITIONAL_ITEMS = {
-  DATES_RANGE: 'datesRange',
-};
-
 const Menu = () => {
-  const { controller, set } = useController();
+  const { controller, setFromForm } = useStore();
   const { register, handleSubmit, setValue } = useForm({ defaultValues: controller });
 
-  const { [STORE.GRAPH_TYPE]: graphType } = controller;
+  const graphType = useGraphType();
   const edgesTypes = useTypes();
 
   const onDateChange = useCallback(value => setValue(STORE.TIME_RANGE, value), [setValue]);
@@ -57,7 +53,7 @@ const Menu = () => {
     <Container>
       <Form
         onSubmit={handleSubmit(data => {
-          set(data);
+          setFromForm(data);
         })}>
         <Item>
           <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
@@ -155,7 +151,7 @@ const Menu = () => {
           <SubmitButton type="submit" value="Apply" />
         </Item>
         <Item>
-          <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
+          <label htmlFor={STORE.SELECTED_NODES}>Selected Nodes</label>
           <NodeInfo onChange={onSelectNode} />
         </Item>
       </Form>

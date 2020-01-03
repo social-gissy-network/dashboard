@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import { useQueryVariables, useController } from '@hooks';
+import { useQueryVariables, useStore } from '@hooks';
 import gql from 'graphql-tag';
 import { createStore } from 'reusable';
 import { STORE } from '@constants';
@@ -29,7 +29,7 @@ const GET_EDGES_IN_TIME_RANGE = gql`
 const useEdges = () => {
   const {
     controller: { [STORE.IS_PATH_CALCULATION]: isPathCalculation },
-  } = useController();
+  } = useStore();
 
   const { min, max, limit } = useQueryVariables();
 

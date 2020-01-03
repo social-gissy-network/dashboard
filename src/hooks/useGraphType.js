@@ -4,9 +4,7 @@ import useStore from './useStore';
 
 const useGraphType = () => {
   const {
-    [STORE.CONTROLLER]: {
-      value: { [STORE.GRAPH_TYPE]: value },
-    },
+    controller: { [STORE.GRAPH_TYPE]: value },
   } = useStore();
 
   return value;

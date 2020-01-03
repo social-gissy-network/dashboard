@@ -12,17 +12,9 @@ const DEFAULT_CONTROLLER = {
   [STORE.TOP_NODES]: CONFIG_GRAPH.DEFAULT_TOP_NODES,
   [STORE.MAP_STYLE]: CONFIG_MAP.DEFAULT_MAP_STYLE,
   [STORE.TIME_RANGE]: [0, Date.now()],
-};
-
-const DEFAULT_VALUES = {
   [STORE.SELECTED_NODES]: [],
 };
 
-const controller = getLsObjectItem(LOCAL_STORAGE_KEYS.CONTROLLER) || DEFAULT_CONTROLLER;
+const defaultController = getLsObjectItem(LOCAL_STORAGE_KEYS.CONTROLLER) || DEFAULT_CONTROLLER;
 
-const defaults = {
-  ...DEFAULT_VALUES,
-  [STORE.CONTROLLER]: controller,
-};
-
-export default defaults;
+export default defaultController;

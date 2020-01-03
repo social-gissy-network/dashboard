@@ -1,3 +1,5 @@
+import { STORE } from '@constants';
+
 export const toCoordinatesArray = ({ latitude, longitude }) => [longitude, latitude].map(Number);
 
 export const extractCoordinates = type => ({ [type]: { latitude, longitude } }) =>
@@ -14,11 +16,22 @@ export const setOnHoverNode = action => ({ isSource = true }) => ({ object: data
 const find = target => ({ id }) => id === target;
 const remove = target => ({ id }) => id !== target;
 
+const { SELECTED_NODES } = STORE;
+
 export const setOnClickNode = action => ({ isSource = true }) => ({ object }) =>
-  action(selected => {
+  action(controller => {
     const node = extractData({ isSource, object });
     const { id: target } = node;
-    return selected.find(find(target)) ? selected.filter(remove(target)) : [...selected, node];
+    const { [SELECTED_NODES]: selected } = controller;
+
+    const isSelected = selected.find(find(target));
+    const removed = selected.filter(remove(target));
+    const added = [...selected, node];
+
+    return {
+      ...controller,
+      [SELECTED_NODES]: isSelected ? removed : added,
+    };
   });
 
 export default {
