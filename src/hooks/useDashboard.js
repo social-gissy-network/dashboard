@@ -5,16 +5,14 @@ import { formToController } from '@utils';
 import { STORE, LOCAL_STORAGE_KEYS } from '@constants';
 import isEqual from 'lodash.isequal';
 
-const { SELECTED_NODES, TIME_RANGE, CONTROLLER, LIMIT, PATH_LENGTH } = STORE;
+const { SELECTED_NODES, CONTROLLER, LIMIT, PATH_LENGTH } = STORE;
 
 const {
-  [TIME_RANGE]: DEFAULT_TIME_RANGE,
   [SELECTED_NODES]: DEFAULT_SELECTED_NODES,
   CONTROLLER: { ...DEFAULT_CONTROLLER },
 } = CONFIG_DEFAULT;
 
 const useDashboard = () => {
-  const [timeRange, setTimeRange] = useState(DEFAULT_TIME_RANGE);
   const [selectedNodes, setSelectedNodes] = useState(DEFAULT_SELECTED_NODES);
   const [controller, setController] = useState(DEFAULT_CONTROLLER);
 
@@ -39,7 +37,6 @@ const useDashboard = () => {
   };
 
   const store = {
-    [TIME_RANGE]: { value: timeRange, set: setTimeRange },
     [SELECTED_NODES]: { value: selectedNodes, set: setSelectedNodes },
     [CONTROLLER]: { value: debounced, set: setFromForm },
   };

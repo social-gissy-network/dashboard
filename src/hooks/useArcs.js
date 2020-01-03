@@ -6,7 +6,7 @@ const useArcs = () => {
   const {
     controller: {
       [STORE.MAP_STYLE]: mapStyle,
-      [STORE.IS_EDGES_VISIBLE]: visible,
+      [STORE.IS_EDGE_VISIBLE]: visible,
       [STORE.SELECTED_NODES]: selectedNodesController,
     },
   } = useController();

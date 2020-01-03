@@ -6,7 +6,7 @@ import { unixToDbTime } from '@utils';
 const useQueryVariables = () => {
   const {
     controller: {
-      [STORE.TIME_RANGE]: { value: timeRange },
+      [STORE.TIME_RANGE]: timeRange,
       [STORE.LIMIT]: limit,
       [STORE.PATH_LENGTH]: length,
       [STORE.SELECTED_NODES]: { value: nodesInfo },

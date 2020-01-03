@@ -1,7 +1,5 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import { toUnixTime } from '@utils';
-import { useController } from '@hooks';
-import { STORE } from '@constants';
 
 const GET_TIME_RANGE = graphql`
   query getTimeRange {
@@ -24,13 +22,7 @@ const useTimeRange = () => {
     },
   } = useStaticQuery(GET_TIME_RANGE);
 
-  const {
-    controller: {
-      [STORE.TIME_RANGE]: { set },
-    },
-  } = useController();
-
-  return [[MIN, MAX].map(toUnixTime), set];
+  return [[MIN, MAX].map(toUnixTime)];
 };
 
 export default useTimeRange;

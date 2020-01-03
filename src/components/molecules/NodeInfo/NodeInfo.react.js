@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card } from '@components';
 import { useSelectedNodes } from '@hooks';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import PropTypes from 'prop-types';
 
 const Container = styled(Card)`
   ${tw`max-h-screen overflow-auto`}
@@ -10,10 +11,15 @@ const Container = styled(Card)`
 `;
 
 const EMPTY = 'No Nodes Selected';
+const NOOP = () => {};
 
-const NodeInfo = () => {
-  const nodes = useSelectedNodes();
+const NodeInfo = ({ onChange = NOOP }) => {
+  const [nodes] = useSelectedNodes();
   const hasNodes = nodes.length === 0;
+
+  useEffect(() => {
+    onChange(nodes);
+  }, [nodes, onChange]);
 
   return (
     <Container>
@@ -26,6 +32,10 @@ const NodeInfo = () => {
       ))}
     </Container>
   );
+};
+
+NodeInfo.propTypes = {
+  onChange: PropTypes.func,
 };
 
 export default NodeInfo;

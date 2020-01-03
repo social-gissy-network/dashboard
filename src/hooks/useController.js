@@ -2,19 +2,16 @@ import useStore from './useStore';
 import { STORE } from '@constants';
 import { createStore } from 'reusable';
 
+const { CONTROLLER, SELECTED_NODES } = STORE;
+
 const useController = () => {
   const {
-    [STORE.CONTROLLER]: { value, set },
-    [STORE.SELECTED_NODES]: selectedNodesController,
-    [STORE.TIME_RANGE]: timeRangeController,
+    [CONTROLLER]: { value, set },
+    [SELECTED_NODES]: selectedController,
   } = useStore();
 
   const controller = {
-    controller: {
-      ...value,
-      [STORE.SELECTED_NODES]: selectedNodesController,
-      [STORE.TIME_RANGE]: timeRangeController,
-    },
+    controller: { ...value, [SELECTED_NODES]: selectedController },
     set,
   };
 

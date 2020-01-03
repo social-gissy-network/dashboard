@@ -4,11 +4,11 @@ import { STORE } from '@constants';
 const useSelectedNodes = () => {
   const {
     controller: {
-      [STORE.SELECTED_NODES]: { value: nodes },
+      [STORE.SELECTED_NODES]: { value, set },
     },
   } = useController();
 
-  return nodes;
+  return [value, set];
 };
 
 export default useSelectedNodes;

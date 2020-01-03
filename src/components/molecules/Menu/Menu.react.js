@@ -3,7 +3,7 @@ import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
 import { useController, useTypes } from '@hooks';
 import { mixins } from '@styles';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -40,14 +40,25 @@ const ADDITIONAL_ITEMS = {
 
 const Menu = () => {
   const { controller, set } = useController();
-  const { register, handleSubmit } = useForm({ defaultValues: controller });
+  const { register, handleSubmit, setValue } = useForm({ defaultValues: controller });
 
   const { [STORE.GRAPH_TYPE]: graphType } = controller;
   const edgesTypes = useTypes();
 
+  const onDateChange = useCallback(value => setValue(STORE.TIME_RANGE, value), [setValue]);
+  const onSelectNode = useCallback(value => setValue(STORE.SELECTED_NODES, value), [setValue]);
+
+  useEffect(() => {
+    register({ name: [STORE.TIME_RANGE] });
+    register({ name: [STORE.SELECTED_NODES] });
+  }, [register]);
+
   return (
     <Container>
-      <Form onSubmit={handleSubmit(set)}>
+      <Form
+        onSubmit={handleSubmit(data => {
+          set(data);
+        })}>
         <Item>
           <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
           <Select name={STORE.GRAPH_TYPE} register={register}>
@@ -82,17 +93,17 @@ const Menu = () => {
           />
         </Item>
         <Item>
-          <label htmlFor={STORE.IS_EDGES_VISIBLE}>Show Edges</label>
+          <label htmlFor={STORE.IS_EDGE_VISIBLE}>Show Edges</label>
           <input
             defaultChecked={CONFIG_DEFAULT.IS_EDGES_VISIBLE}
             ref={register}
-            name={STORE.IS_EDGES_VISIBLE}
+            name={STORE.IS_EDGE_VISIBLE}
             type="checkbox"
           />
         </Item>
         <Item>
-          <label htmlFor={STORE.EDGES_FILTER}>Dates Range</label>
-          <DateRange />
+          <label htmlFor={STORE.TIME_RANGE}>Dates Range</label>
+          <DateRange onChange={onDateChange} />
         </Item>
         <Item>
           <label htmlFor={STORE.IS_PATH_CALCULATION}>Path Calculation</label>
@@ -145,7 +156,7 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={ADDITIONAL_ITEMS.DATES_RANGE}>Selected Nodes</label>
-          <NodeInfo />
+          <NodeInfo onChange={onSelectNode} />
         </Item>
       </Form>
     </Container>

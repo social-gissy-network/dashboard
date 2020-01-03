@@ -11,7 +11,7 @@ const useNetwork = () => {
   const {
     controller: {
       [STORE.SELECTED_NODES]: { set: setSelectedNodes },
-      [STORE.IS_EDGES_VISIBLE]: visible,
+      [STORE.IS_EDGE_VISIBLE]: visible,
       [STORE.IS_HIERARCHICAL_VIEW]: hierarchical,
     },
   } = useController();
