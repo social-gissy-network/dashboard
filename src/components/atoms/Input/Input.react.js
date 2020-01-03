@@ -7,8 +7,9 @@ const Container = styled.input`
   ${mixins.box}
 `;
 
-const Input = ({ name, register, placeholder, type, defaultValue, className }) => (
+const Input = ({ name, register, placeholder, type, defaultValue, className, value }) => (
   <Container
+    value={value}
     className={className}
     type={type}
     ref={register}
@@ -19,6 +20,7 @@ const Input = ({ name, register, placeholder, type, defaultValue, className }) =
 );
 
 Input.propTypes = {
+  value: PropTypes.string,
   className: PropTypes.string,
   name: PropTypes.string,
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

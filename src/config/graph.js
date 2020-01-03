@@ -9,7 +9,12 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
-  NETWORK: ({ height = window.innerHeight, hierarchical = true, visible = true }) => ({
+  NETWORK: ({
+    height = window.innerHeight,
+    hierarchical = true,
+    visible = true,
+    physics = true,
+  }) => ({
     height,
     layout: {
       hierarchical: {
@@ -33,40 +38,32 @@ const graphConfig = {
       width: 2,
       hidden: !visible,
     },
+    autoResize: false,
+    configure: {
+      enabled: false,
+    },
     interaction: {
+      dragNodes: true,
+      dragView: true,
+      navigationButtons: false,
       multiselect: true,
       hover: true,
       tooltipDelay: 0,
     },
+    clickToUse: true,
     physics: {
-      enabled: true,
+      enabled: physics,
       barnesHut: {
-        avoidOverlap: 0,
+        avoidOverlap: physics ? 0 : 5,
       },
     },
   }),
-  ARC_LAYER: ({
-    id,
-    data,
-    getSourcePosition,
-    getTargetPosition,
-    getSourceColor,
-    getTargetColor,
-    onHover,
-    visible,
-  }) =>
+  ARC_LAYER: ({ ...props }) =>
     new ArcLayer({
-      id,
-      data,
-      getSourcePosition,
-      getTargetPosition,
-      getSourceColor,
-      getTargetColor,
-      onHover,
-      visible,
       autoHighlight: true,
       widthMinPixels: 3,
       pickable: true,
+      ...props,
     }),
   SCATTER_LAYER: ({ opacity = 0.1, ...props }) =>
     new ScatterplotLayer({

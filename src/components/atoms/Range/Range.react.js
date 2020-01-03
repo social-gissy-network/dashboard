@@ -19,7 +19,7 @@ const Range = ({ initial = INITIAL, onChange: controlledChange = NOOP, onFinalCh
 
   useEffect(() => {
     controlledChange(values);
-  }, [values]);
+  }, [controlledChange, values]);
 
   return (
     <ReactRange

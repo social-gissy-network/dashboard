@@ -7,21 +7,14 @@ import { STORE } from '@constants';
 const DEFAULT = { paths: [] };
 const flat = (acc, path) => acc.concat(path);
 
-const GET_NODES_PATH = gql`
-  query getPathsBetweenNodes(
+const GET_PATHS_BY_FILTER = gql`
+  query getPathsByFilter(
     $limit: Int!
     $length: Int!
-    $min: String!
-    $max: String!
     $nodes: [String]
-    $bikeID: String
+    $filters: EdgeFilterParameter
   ) {
-    paths: Paths(
-      limit: $limit
-      length: $length
-      startNodeIDs: $nodes
-      filter: { bikeID: { eq: $bikeID }, startTime: { gt: $min, lt: $max } }
-    ) {
+    paths: Paths(limit: $limit, length: $length, startNodeIDs: $nodes, filter: $filters) {
       id
       startTime
       startNode {
@@ -40,16 +33,34 @@ const GET_NODES_PATH = gql`
   }
 `;
 
+const noEmptyFilters = ([, value]) => !!value;
+
+const toGraphqlFilters = obj =>
+  obj
+    ? Object.fromEntries(
+        Object.entries(obj)
+          .filter(noEmptyFilters)
+          .map(([key, value]) => [key, { eq: value }]),
+      )
+    : {};
+
 const usePaths = () => {
   const {
     controller: { [STORE.IS_PATH_CALCULATION]: isPathCalculation },
   } = useController();
 
-  const { min, max, limit, length, nodes, filters } = useQueryVariables();
+  // const { min, max, limit, length, nodes, filters } = useQueryVariables();
+  const { limit, length, nodes, filters } = useQueryVariables();
 
-  const variables = { limit, length, nodes, min, max, ...filters };
+  const variables = {
+    limit,
+    length,
+    nodes,
+    // filters: { startTime: { gt: min, lt: max }, ...filters },
+    filters: toGraphqlFilters(filters),
+  };
 
-  const { data: fetchedData = DEFAULT, loading } = useQuery(GET_NODES_PATH, {
+  const { data: fetchedData = DEFAULT, loading } = useQuery(GET_PATHS_BY_FILTER, {
     variables,
     skip: !isPathCalculation,
   });
