@@ -8,10 +8,11 @@ const { CONTROLLER } = STORE;
 const useStore = () => {
   const {
     [CONTROLLER]: { value, set },
+    submit,
     setFromForm,
   } = useContext(GissyContext);
 
-  return { controller: value, set, setFromForm };
+  return { controller: value, submit, set, setFromForm };
 };
 
 export default createStore(useStore);

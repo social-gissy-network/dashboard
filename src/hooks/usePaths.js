@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/react-hooks';
-import { useQueryVariables, useStore } from '@hooks';
+import { useQueryVariables } from '@hooks';
 import gql from 'graphql-tag';
-import { createStore } from 'reusable';
-import { STORE } from '@constants';
+import { useEffect, useState } from 'react';
 
 const DEFAULT = { paths: [] };
 const flat = (acc, path) => acc.concat(path);
@@ -44,13 +43,11 @@ const toGraphqlFilters = obj =>
       )
     : {};
 
-const usePaths = () => {
-  const {
-    controller: { [STORE.IS_PATH_CALCULATION]: isPathCalculation },
-  } = useStore();
-
+const usePaths = ({ skip }) => {
   // const { min, max, limit, length, nodes, filters } = useQueryVariables();
   const { limit, length, nodes, filters } = useQueryVariables();
+
+  const [data, setData] = useState([]);
 
   const variables = {
     limit,
@@ -62,12 +59,18 @@ const usePaths = () => {
 
   const { data: fetchedData = DEFAULT, loading } = useQuery(GET_PATHS_BY_FILTER, {
     variables,
-    skip: !isPathCalculation,
+    skip,
   });
 
-  const { paths = [] } = fetchedData;
-  const data = paths.reduce(flat, []);
+  useEffect(() => {
+    if (!skip && !loading) {
+      const { paths = [] } = fetchedData;
+      const data = paths.reduce(flat, []);
+      setData(data);
+    }
+  }, [fetchedData, loading, skip]);
+
   return { data, loading };
 };
 
-export default createStore(usePaths);
+export default usePaths;

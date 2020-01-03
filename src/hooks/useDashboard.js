@@ -9,6 +9,7 @@ const { CONTROLLER } = STORE;
 
 const useDashboard = () => {
   const [controller, setController] = useState(CONFIG_DEFAULT);
+  const [isSubmit, setSubmit] = useState(true);
 
   const form = useRef(CONFIG_DEFAULT);
 
@@ -18,11 +19,13 @@ const useDashboard = () => {
     if (!isEqual(form.current, props)) {
       form.current = props;
       setController(formToController(form.current));
+      setSubmit(true);
     }
   }, []);
 
   const store = {
     [CONTROLLER]: { value: controller, set: setController },
+    submit: { value: isSubmit, set: setSubmit },
     setFromForm,
   };
 
