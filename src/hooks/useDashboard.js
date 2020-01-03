@@ -2,7 +2,7 @@ import { useState, useCallback, useRef } from 'react';
 import { CONFIG_DEFAULT } from '@config';
 import { useDebounce, useLocalStorage } from '@hooks';
 import { formToController } from '@utils';
-import { STORE } from '@constants';
+import { STORE, LOCAL_STORAGE_KEYS } from '@constants';
 import isEqual from 'lodash.isequal';
 
 const { SELECTED_NODES, TIME_RANGE, CONTROLLER, LIMIT, PATH_LENGTH } = STORE;
@@ -20,7 +20,7 @@ const useDashboard = () => {
 
   const form = useRef(DEFAULT_CONTROLLER);
 
-  useLocalStorage({ controller });
+  useLocalStorage({ value: controller, key: LOCAL_STORAGE_KEYS.CONTROLLER });
 
   const setFromForm = useCallback(props => {
     if (!isEqual(form.current, props)) {

@@ -5,6 +5,7 @@ const graphConfig = {
   DEFAULT_GRAPH_TYPE: 'Arc',
   DEFAULT_LIMIT: 50,
   DEFAULT_PATH_LENGTH: 10,
+  DEFAULT_TOP_NODES: 2,
   TYPES: {
     ARC: 'Arc',
     NETWORK: 'Network',

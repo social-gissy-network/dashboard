@@ -26,7 +26,7 @@ const Item = styled.div`
   ${tw`w-full px-1 m-1`}
 `;
 
-const InputNumber = styled(Input)`
+const InputHalf = styled(Input)`
   ${tw`w-1/2`}
 `;
 
@@ -45,13 +45,9 @@ const Menu = () => {
   const { [STORE.GRAPH_TYPE]: graphType } = controller;
   const edgesTypes = useTypes();
 
-  const onSubmit = data => {
-    set(data);
-  };
-
   return (
     <Container>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(set)}>
         <Item>
           <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
           <Select name={STORE.GRAPH_TYPE} register={register}>
@@ -74,7 +70,7 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={STORE.LIMIT}>Entries Limit</label>
-          <InputNumber name={STORE.LIMIT} type="number" register={register} placeholder="Limit" />
+          <InputHalf name={STORE.LIMIT} type="number" register={register} placeholder="Limit" />
         </Item>
         <Item visible={graphType === CONFIG_GRAPH.TYPES.NETWORK}>
           <label htmlFor={STORE.IS_HIERARCHICAL_VIEW}>Hierarchical View</label>
@@ -119,11 +115,29 @@ const Menu = () => {
         ))}
         <Item>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
-          <InputNumber
+          <InputHalf
             name={STORE.PATH_LENGTH}
-            type="number"
             register={register}
-            placeholder="Length"
+            type="number"
+            placeholder="Insert Length"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={STORE.IS_TOP_NODES}>Top Nodes Calculation</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.IS_TOP_NODES}
+            ref={register}
+            name={STORE.IS_TOP_NODES}
+            type="checkbox"
+          />
+        </Item>
+        <Item>
+          <label htmlFor={STORE.TOP_NODES}>Top N Nodes</label>
+          <InputHalf
+            register={register}
+            name={STORE.TOP_NODES}
+            type="number"
+            placeholder="Insert Number"
           />
         </Item>
         <Item>
