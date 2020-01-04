@@ -1,18 +1,18 @@
 import { STORE } from '@constants';
-import { useController } from '@hooks';
+import { useStore } from '@hooks';
 import { createStore } from 'reusable';
 import { unixToDbTime } from '@utils';
 
 const useQueryVariables = () => {
   const {
     controller: {
-      [STORE.TIME_RANGE]: { value: timeRange },
+      [STORE.TIME_RANGE]: timeRange,
       [STORE.LIMIT]: limit,
       [STORE.PATH_LENGTH]: length,
-      [STORE.SELECTED_NODES]: { value: nodesInfo },
+      [STORE.SELECTED_NODES]: nodesInfo,
       [STORE.EDGES_FILTER]: filters,
     },
-  } = useController();
+  } = useStore();
 
   const [min, max] = timeRange.map(unixToDbTime);
 

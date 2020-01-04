@@ -39,18 +39,18 @@ const ArcGraph = () => {
     loading,
     mapStyle,
     visible,
-    selectedNodes: { set: setSelectedNodes, value: selectedNodes },
+    selectedNodes: { value: selected, set: setSelected },
   } = useArcs();
 
   const onHoverEdge = useCallback(setOnHover(setEdgeInfo), []);
   const onHoverNode = useCallback(setOnHoverNode(setNodeInfo), []);
-  const onClickNode = useCallback(setOnClickNode(setSelectedNodes), []);
+  const onClickNode = useCallback(setOnClickNode(setSelected), []);
 
   const layers = useMemo(
     () => [
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-selected-nodes',
-        data: selectedNodes,
+        data: selected,
         getPosition: toCoordinatesArray,
         getFillColor: toRGB(darken(0.2, PALETTE.PRIMARY)),
         opacity: 1,
@@ -85,7 +85,7 @@ const ArcGraph = () => {
         getFillColor: toRGB(PALETTE.SECONDARY),
       }),
     ],
-    [selectedNodes, data, visible, onHoverEdge, onHoverNode, onClickNode],
+    [selected, data, visible, onHoverEdge, onHoverNode, onClickNode],
   );
 
   return (

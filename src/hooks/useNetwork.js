@@ -1,28 +1,28 @@
 import { STORE } from '@constants';
-import { useController, useData } from '@hooks';
+import { useStore, useData } from '@hooks';
 import { PALETTE } from '@styles';
 import isEqual from 'lodash.isequal';
 import { useCallback } from 'react';
 import { createStore } from 'reusable';
 
+const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES } = STORE;
+
 const useNetwork = () => {
   const { data, loading } = useData();
 
   const {
-    controller: {
-      [STORE.SELECTED_NODES]: { set: setSelectedNodes },
-      [STORE.IS_EDGES_VISIBLE]: visible,
-      [STORE.IS_HIERARCHICAL_VIEW]: hierarchical,
-    },
-  } = useController();
+    controller: { [IS_EDGE_VISIBLE]: visible, [IS_HIERARCHICAL_VIEW]: hierarchical },
+    set,
+  } = useStore();
 
   const setOnClickNode = useCallback(
     nodesMap => ids =>
-      setSelectedNodes(prev => {
+      set(controller => {
+        const { [SELECTED_NODES]: prev } = controller;
         const curr = ids.map(id => nodesMap[id]);
-        return isEqual(prev, curr) ? prev : curr;
+        return { ...controller, [SELECTED_NODES]: isEqual(prev, curr) ? prev : curr };
       }),
-    [setSelectedNodes],
+    [set],
   );
 
   if (!loading) {

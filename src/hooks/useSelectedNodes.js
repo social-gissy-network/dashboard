@@ -1,14 +1,12 @@
-import { useController } from '@hooks';
+import { useStore } from '@hooks';
 import { STORE } from '@constants';
 
 const useSelectedNodes = () => {
   const {
-    controller: {
-      [STORE.SELECTED_NODES]: { value: nodes },
-    },
-  } = useController();
+    controller: { [STORE.SELECTED_NODES]: value },
+  } = useStore();
 
-  return nodes;
+  return [value];
 };
 
 export default useSelectedNodes;

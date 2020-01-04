@@ -15,7 +15,7 @@ export const Default = () => {
     <>
       <pre>{JSON.stringify(value, null, 2)}</pre>
       <Container>
-        <Range onFinalChange={setValue} />
+        <Range onChange={setValue} />
       </Container>
     </>
   );

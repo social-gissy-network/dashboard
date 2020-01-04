@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
+import 'rc-slider/assets/index.css';
+import RcRange from 'rc-slider/lib/Range';
 import React, { useEffect, useState } from 'react';
-import { Range as ReactRange } from 'react-range';
-import Thumb from './Thumb.react';
-import renderTrack from './renderTrack.react';
 
 const STEP = 0.1;
 const INITIAL = [0, 100];
@@ -15,22 +14,22 @@ const Range = ({ initial = INITIAL, onChange: controlledChange = NOOP, onFinalCh
     onFinalChange(values);
   }, []);
 
-  const [MIN, MAX] = initial;
-
   useEffect(() => {
     controlledChange(values);
   }, [controlledChange, values]);
 
+  const [min, max] = initial;
+
   return (
-    <ReactRange
+    <RcRange
+      defaultValue={initial}
+      min={min}
+      max={max}
+      allowCross={false}
+      value={values}
       step={STEP}
-      min={MIN}
-      max={MAX}
-      values={values}
       onChange={setValues}
-      onFinalChange={onFinalChange}
-      renderTrack={renderTrack({ values, MIN, MAX })}
-      renderThumb={Thumb}
+      onAfterChange={onFinalChange}
     />
   );
 };
