@@ -1,7 +1,7 @@
 import { Tooltip } from '@components';
-import React from 'react';
+import { PALETTE, Text } from '@styles';
 import PropTypes from 'prop-types';
-import { Text, PALETTE } from '@styles';
+import React from 'react';
 
 const DEFAULT = {
   x: undefined,

@@ -1,5 +1,5 @@
-import React from 'react';
 import { SB_LABELS } from '@constants';
+import React from 'react';
 import NodeTooltip from './NodeTooltip.react';
 
 export default {
@@ -11,10 +11,10 @@ const data = {
   x: undefined,
   y: undefined,
   data: {
-    startNode: { name: 'source' },
-    stopNode: { name: 'target' },
+    id: 54,
+    name: 'Node',
   },
 };
 
-export const Source = () => <NodeTooltip />;
+export const Source = () => <NodeTooltip info={{ ...data, isSource: true }} />;
 export const Target = () => <NodeTooltip info={data} />;

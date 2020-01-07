@@ -1,17 +1,24 @@
 import { STORE } from '@constants';
-import { useStore, useData } from '@hooks';
+import { useData, useStore } from '@hooks';
 import { PALETTE } from '@styles';
 import isEqual from 'lodash.isequal';
 import { useCallback } from 'react';
 import { createStore } from 'reusable';
 
-const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES } = STORE;
+const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES, IS_PHYSICS_ENABLED } = STORE;
+
+const setGetNodeInfo = nodesMap => id => nodesMap[id];
+const setGetEdgeInfo = edgesMap => id => edgesMap[id];
 
 const useNetwork = () => {
   const { data, loading } = useData();
 
   const {
-    controller: { [IS_EDGE_VISIBLE]: visible, [IS_HIERARCHICAL_VIEW]: hierarchical },
+    controller: {
+      [IS_EDGE_VISIBLE]: visible,
+      [IS_HIERARCHICAL_VIEW]: hierarchical,
+      [IS_PHYSICS_ENABLED]: physics,
+    },
     set,
   } = useStore();
 
@@ -36,7 +43,7 @@ const useNetwork = () => {
     }, {});
 
     const edgesMap = data.reduce((acc, { startNode: { id: from }, stopNode: { id: to } }) => {
-      acc[`${from}.${to}`] = { from, to, id: `${from}-${to}` };
+      acc[`${from}-${to}`] = { from, to, id: `${from}-${to}` };
       return acc;
     }, {});
 
@@ -47,9 +54,12 @@ const useNetwork = () => {
       data: { nodes, edges },
       loading,
       onClickNode: setOnClickNode(nodesMap),
+      getNodeInfo: setGetNodeInfo(nodesMap),
+      getEdgeInfo: setGetEdgeInfo(edgesMap),
       options: {
         hierarchical,
         visible,
+        physics,
       },
     };
   }

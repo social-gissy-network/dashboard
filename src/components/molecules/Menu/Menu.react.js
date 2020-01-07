@@ -1,7 +1,7 @@
 import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { STORE } from '@constants';
-import { useStore, useTypes, useGraphType } from '@hooks';
+import { useGraphType, useStore, useTypes } from '@hooks';
 import { mixins } from '@styles';
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -85,6 +85,15 @@ const Menu = () => {
             defaultChecked={CONFIG_DEFAULT.NETWORK_OPTIONS}
             ref={register}
             name={STORE.IS_HIERARCHICAL_VIEW}
+            type="checkbox"
+          />
+        </Item>
+        <Item visible={graphType === CONFIG_GRAPH.TYPES.NETWORK}>
+          <label htmlFor={STORE.IS_PHYSICS_ENABLED}>Graph Physics</label>
+          <input
+            defaultChecked={CONFIG_DEFAULT.IS_PHYSICS_ENABLED}
+            ref={register}
+            name={STORE.IS_PHYSICS_ENABLED}
             type="checkbox"
           />
         </Item>

@@ -1,9 +1,9 @@
-import { Loading } from '@components';
+import { EdgeTooltip, Loading, NodeTooltip } from '@components';
 import { CONFIG_GRAPH } from '@config';
 import { useNetwork } from '@hooks';
 import { mixins } from '@styles';
 import isEqual from 'lodash.isequal';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import VisNetwork from 'react-graph-vis';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -22,7 +22,16 @@ const MemoGraph = memo(
 const { NETWORK } = CONFIG_GRAPH;
 
 const NetworkGraph = () => {
-  const { data, loading, onClickNode, options: storeOptions } = useNetwork();
+  const {
+    data,
+    loading,
+    onClickNode,
+    options: storeOptions,
+    getNodeInfo,
+    getEdgeInfo,
+  } = useNetwork();
+  const [edgeInfo, setEdgeInfo] = useState();
+  const [nodeInfo, setNodeInfo] = useState();
 
   const events = useMemo(
     () => ({
@@ -30,8 +39,23 @@ const NetworkGraph = () => {
         const { nodes } = event;
         onClickNode(nodes);
       },
+      hoverNode: ({ event: { clientX: x, clientY: y }, node }) => {
+        /* eslint-disable no-unused-vars */
+        const { __typename, color, label, ...data } = getNodeInfo(node);
+        setNodeInfo({ x, y, data });
+      },
+      blurNode: () => setNodeInfo(undefined),
+      hoverEdge: ({ event: { clientX: x, clientY: y }, edge }) => {
+        const { from, to } = getEdgeInfo(edge);
+        const data = {
+          startNode: getNodeInfo(from),
+          stopNode: getNodeInfo(to),
+        };
+        setEdgeInfo({ x, y, data });
+      },
+      blurEdge: () => setEdgeInfo(undefined),
     }),
-    [onClickNode],
+    [getEdgeInfo, getNodeInfo, onClickNode],
   );
 
   const options = useMemo(() => NETWORK({ height: `${window.innerHeight}px`, ...storeOptions }), [
@@ -40,6 +64,8 @@ const NetworkGraph = () => {
 
   return (
     <Container>
+      {edgeInfo && <EdgeTooltip info={edgeInfo} />}
+      {nodeInfo && <NodeTooltip info={nodeInfo} />}
       {loading ? <Loading /> : <MemoGraph graph={data} options={options} events={events} />}
     </Container>
   );
