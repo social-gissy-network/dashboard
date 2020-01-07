@@ -1,17 +1,21 @@
 import { STORE } from '@constants';
-import { useStore, useData } from '@hooks';
+import { useData, useStore } from '@hooks';
 import { PALETTE } from '@styles';
 import isEqual from 'lodash.isequal';
 import { useCallback } from 'react';
 import { createStore } from 'reusable';
 
-const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES } = STORE;
+const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES, IS_PHYSICS_ENABLED } = STORE;
 
 const useNetwork = () => {
   const { data, loading } = useData();
 
   const {
-    controller: { [IS_EDGE_VISIBLE]: visible, [IS_HIERARCHICAL_VIEW]: hierarchical },
+    controller: {
+      [IS_EDGE_VISIBLE]: visible,
+      [IS_HIERARCHICAL_VIEW]: hierarchical,
+      [IS_PHYSICS_ENABLED]: physics,
+    },
     set,
   } = useStore();
 
@@ -50,6 +54,7 @@ const useNetwork = () => {
       options: {
         hierarchical,
         visible,
+        physics,
       },
     };
   }
