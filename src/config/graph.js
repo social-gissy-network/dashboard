@@ -1,4 +1,4 @@
-import { ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
+import { ArcLayer, ScatterplotLayer } from '@deck.gl/layers';
 import { PALETTE } from '@styles';
 
 const graphConfig = {
@@ -10,6 +10,7 @@ const graphConfig = {
     ARC: 'Arc',
     NETWORK: 'Network',
   },
+  // https://visjs.github.io/vis-network/docs/network/
   NETWORK: ({
     height = window.innerHeight,
     hierarchical = true,
@@ -49,13 +50,13 @@ const graphConfig = {
       navigationButtons: false,
       multiselect: true,
       hover: true,
-      tooltipDelay: 0,
+      tooltipDelay: 2,
     },
     clickToUse: true,
     physics: {
       enabled: physics,
       barnesHut: {
-        avoidOverlap: physics ? 0 : 5,
+        avoidOverlap: physics ? 0 : 0.5,
       },
     },
   }),

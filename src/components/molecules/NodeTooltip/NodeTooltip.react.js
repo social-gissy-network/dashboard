@@ -1,31 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Tooltip } from '@components';
-import { Text, PALETTE } from '@styles';
+import { Text } from '@styles';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const DEFAULT = {
-  isSource: true,
   x: undefined,
   y: undefined,
-  data: {
-    startNode: { name: 'source' },
-    stopNode: { name: 'target' },
-  },
+  data: {},
 };
 
 const NodeTooltip = ({ info = DEFAULT }) => {
-  const { isSource, x, y, data = DEFAULT.data } = info;
-
-  const {
-    startNode: { name: source },
-    stopNode: { name: target },
-  } = data;
+  const { x, y, data = DEFAULT.data } = info;
 
   return (
     <Tooltip pointer={{ x, y }}>
-      <span>{`${isSource ? `Source` : `Target`}: `} </span>
-      <Text color={isSource ? PALETTE.PRIMARY : PALETTE.SECONDARY}>
-        {isSource ? source : target}
+      <Text>
+        {Object.entries(data).map(([key, value]) => (
+          <div key={key}>
+            <Text strong>{`${key}: `}</Text>
+            <Text>{`${value}`}</Text>
+          </div>
+        ))}
       </Text>
     </Tooltip>
   );

@@ -10,8 +10,18 @@ const extractData = ({ isSource = true, object }) => object[isSource ? 'startNod
 export const getCursor = () => 'crosshair';
 
 export const setOnHover = action => ({ object: data, x, y }) => action({ data, x, y });
-export const setOnHoverNode = action => ({ isSource = true }) => ({ object: data, x, y }) =>
-  action({ isSource, data, x, y });
+export const setOnHoverNode = action => ({ isSource = true }) => ({ object: data, x, y }) => {
+  /* eslint-disable no-unused-vars */
+  if (data) {
+    const {
+      startNode: { __typename: _s, ...source },
+      stopNode: { __typename: _t, ...target },
+    } = data;
+    action({ isSource, data: isSource ? source : target, x, y });
+  } else {
+    action(undefined);
+  }
+};
 
 const find = target => ({ id }) => id === target;
 const remove = target => ({ id }) => id !== target;

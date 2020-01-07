@@ -7,6 +7,9 @@ import { createStore } from 'reusable';
 
 const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES, IS_PHYSICS_ENABLED } = STORE;
 
+const setGetNodeInfo = nodesMap => id => nodesMap[id];
+const setGetEdgeInfo = edgesMap => id => edgesMap[id];
+
 const useNetwork = () => {
   const { data, loading } = useData();
 
@@ -40,7 +43,7 @@ const useNetwork = () => {
     }, {});
 
     const edgesMap = data.reduce((acc, { startNode: { id: from }, stopNode: { id: to } }) => {
-      acc[`${from}.${to}`] = { from, to, id: `${from}-${to}` };
+      acc[`${from}-${to}`] = { from, to, id: `${from}-${to}` };
       return acc;
     }, {});
 
@@ -51,6 +54,8 @@ const useNetwork = () => {
       data: { nodes, edges },
       loading,
       onClickNode: setOnClickNode(nodesMap),
+      getNodeInfo: setGetNodeInfo(nodesMap),
+      getEdgeInfo: setGetEdgeInfo(edgesMap),
       options: {
         hierarchical,
         visible,
