@@ -44,8 +44,7 @@ const toGraphqlFilters = obj =>
     : {};
 
 const usePaths = ({ skip }) => {
-  // const { min, max, limit, length, nodes, filters } = useQueryVariables();
-  const { limit, length, nodes, filters } = useQueryVariables();
+  const { min, max, limit, length, nodes, filters } = useQueryVariables();
 
   const [data, setData] = useState([]);
 
@@ -53,8 +52,7 @@ const usePaths = ({ skip }) => {
     limit,
     length,
     nodes,
-    // filters: { startTime: { gt: min, lt: max }, ...filters },
-    filters: toGraphqlFilters(filters),
+    filters: { ...toGraphqlFilters(filters), startTime: { gt: min, lt: max } },
   };
 
   const { data: fetchedData = DEFAULT, loading } = useQuery(GET_PATHS_BY_FILTER, {
