@@ -14,6 +14,7 @@ const storeConstants = {
   SELECTED_NODES: 'SELECTED_NODES',
   TIME_RANGE: 'TIME_RANGE',
   TOP_NODES: 'TOP_NODES',
+  MODE: 'MODE',
 };
 
 export default storeConstants;

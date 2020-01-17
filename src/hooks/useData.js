@@ -1,15 +1,18 @@
+import { MODES } from '@config';
 import { STORE } from '@constants';
 import { useEdges, usePaths, useStore } from '@hooks';
 import { useEffect } from 'react';
 import { createStore } from 'reusable';
 
-const { IS_PATH_CALCULATION } = STORE;
+const { MODE } = STORE;
 
 const useData = () => {
   const {
-    controller: { [IS_PATH_CALCULATION]: isPathCalculation },
+    controller: { [MODE]: mode },
     submit: { value: isSubmit, set },
   } = useStore();
+
+  const isPathCalculation = mode === MODES.path;
 
   const edges = useEdges({ skip: isPathCalculation });
   const paths = usePaths({ skip: !isSubmit || !isPathCalculation });

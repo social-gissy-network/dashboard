@@ -1,6 +1,8 @@
-import { CONFIG_GRAPH, CONFIG_MAP } from '@config';
 import { LOCAL_STORAGE_KEYS, STORE } from '@constants';
 import { getLsObjectItem } from '@utils';
+import CONFIG_GRAPH from './graph';
+import CONFIG_MAP from './map';
+import { MODES } from './menu';
 
 const DEFAULT_CONTROLLER = {
   [STORE.GRAPH_TYPE]: CONFIG_GRAPH.DEFAULT_GRAPH_TYPE,
@@ -15,6 +17,7 @@ const DEFAULT_CONTROLLER = {
   [STORE.SELECTED_NODES]: [],
   [STORE.TIME_RANGE]: [0, Date.now()],
   [STORE.TOP_NODES]: CONFIG_GRAPH.DEFAULT_TOP_NODES,
+  [STORE.MODE]: MODES.normal,
 };
 
 const defaultController = getLsObjectItem(LOCAL_STORAGE_KEYS.CONTROLLER) || DEFAULT_CONTROLLER;
