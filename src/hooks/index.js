@@ -6,6 +6,7 @@ export { default as useEdges } from './useEdges'; // Graph Helpers
 export { default as useGraphType } from './useGraphType'; // Graph Helpers
 export { default as useLocalStorage } from './useLocalStorage'; // Utils
 export { default as useMode } from './useMode'; // Dashboard
+export { default as useMostConnected } from './useMostConnected'; // Graph Helpers
 export { default as useNetwork } from './useNetwork'; // Graph
 export { default as usePaths } from './usePaths'; // Graph Helpers
 export { default as useQueryVariables } from './useQueryVariables'; // Utils

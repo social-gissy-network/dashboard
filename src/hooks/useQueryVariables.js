@@ -1,7 +1,7 @@
 import { STORE } from '@constants';
 import { useStore } from '@hooks';
-import { createStore } from 'reusable';
 import { unixToDbTime } from '@utils';
+import { createStore } from 'reusable';
 
 const useQueryVariables = () => {
   const {
@@ -11,6 +11,7 @@ const useQueryVariables = () => {
       [STORE.PATH_LENGTH]: length,
       [STORE.SELECTED_NODES]: nodesInfo,
       [STORE.EDGES_FILTER]: filters,
+      [STORE.PATH_LIMIT]: pathLimit,
     },
   } = useStore();
 
@@ -18,7 +19,7 @@ const useQueryVariables = () => {
 
   const nodes = nodesInfo.map(({ id }) => id);
 
-  return { min, max, limit, length, nodes, filters };
+  return { min, max, limit, pathLimit, length, nodes, filters };
 };
 
 export default createStore(useQueryVariables);

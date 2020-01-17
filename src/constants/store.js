@@ -15,6 +15,7 @@ const storeConstants = {
   TIME_RANGE: 'TIME_RANGE',
   TOP_NODES: 'TOP_NODES',
   MODE: 'MODE',
+  PATH_LIMIT: 'PATH_LIMIT',
 };
 
 export default storeConstants;

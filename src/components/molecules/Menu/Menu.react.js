@@ -116,22 +116,13 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={STORE.MODE}>Mode</label>
-          <Select name={STORE.MODE} onChange={onSetMode}>
+          <Select name={STORE.MODE} onChange={onSetMode} register={register}>
             {CONFIG_MENU.modes.map(mode => (
               <Select.Option key={mode} value={mode}>
                 {mode}
               </Select.Option>
             ))}
           </Select>
-        </Item>
-        <Item>
-          <label htmlFor={STORE.IS_PATH_CALCULATION}>Path Calculation</label>
-          <input
-            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
-            ref={register}
-            name={STORE.IS_PATH_CALCULATION}
-            type="checkbox"
-          />
         </Item>
         {edgesTypes.map(type => (
           <Item key={type}>
@@ -143,6 +134,15 @@ const Menu = () => {
             />
           </Item>
         ))}
+        <Item visible={mode !== MODES.normal}>
+          <label htmlFor={STORE.PATH_LIMIT}>Path Limit</label>
+          <InputHalf
+            name={STORE.PATH_LIMIT}
+            register={register}
+            type="number"
+            placeholder="Insert Limit"
+          />
+        </Item>
         <Item visible={mode !== MODES.normal}>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
           <InputHalf
