@@ -55,10 +55,7 @@ const Menu = () => {
 
   return (
     <Container>
-      <Form
-        onSubmit={handleSubmit(data => {
-          setFromForm(data);
-        })}>
+      <Form onSubmit={handleSubmit(setFromForm)}>
         <Item>
           <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
           <Select name={STORE.GRAPH_TYPE} register={register}>
@@ -135,21 +132,21 @@ const Menu = () => {
           </Item>
         ))}
         <Item visible={mode !== MODES.normal}>
-          <label htmlFor={STORE.PATH_LIMIT}>Path Limit</label>
-          <InputHalf
-            name={STORE.PATH_LIMIT}
-            register={register}
-            type="number"
-            placeholder="Insert Limit"
-          />
-        </Item>
-        <Item visible={mode !== MODES.normal}>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
           <InputHalf
             name={STORE.PATH_LENGTH}
             register={register}
             type="number"
             placeholder="Insert Length"
+          />
+        </Item>
+        <Item visible={mode === MODES.mostConnected}>
+          <label htmlFor={STORE.PATH_LIMIT}>Path Limit</label>
+          <InputHalf
+            name={STORE.PATH_LIMIT}
+            register={register}
+            type="number"
+            placeholder="Insert Limit"
           />
         </Item>
         <Item>

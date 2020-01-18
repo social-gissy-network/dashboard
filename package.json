@@ -64,7 +64,7 @@
     "react-hook-form": "^4.4.1",
     "react-map-gl": "^5.1.6",
     "reusable": "^1.0.0-alpha.12",
-    "styled-components": "^5.0.0-rc.2",
+    "styled-components": "^5.0.0",
     "use-http": "^0.2.4"
   },
   "devDependencies": {
