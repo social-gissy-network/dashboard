@@ -30,8 +30,8 @@ const Tags = styled.div`
 const NOOP = () => {};
 
 const DateRange = ({ onChange = NOOP }) => {
-  const [initial] = useTimeRange();
-  const [range, setRange] = useState([initial]);
+  const initial = useTimeRange();
+  const [range, setRange] = useState(initial);
 
   const isFirstLoad = useRef(true);
 

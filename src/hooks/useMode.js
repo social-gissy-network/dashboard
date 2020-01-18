@@ -1,5 +1,4 @@
 import { STORE } from '@constants';
-import { createStore } from 'reusable';
 import useStore from './useStore';
 
 const useMode = () => {
@@ -10,4 +9,4 @@ const useMode = () => {
   return value;
 };
 
-export default createStore(useMode);
+export default useMode;

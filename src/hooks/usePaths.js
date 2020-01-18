@@ -12,9 +12,9 @@ const GET_PATHS_BY_FILTER = gql`
     $limit: Int!
     $length: Int!
     $nodes: [String]
-    $filters: EdgeFilterParameter
+    $filter: EdgeFilterParameter
   ) {
-    paths: Paths(limit: $limit, length: $length, startNodeIDs: $nodes, filter: $filters) {
+    paths: Paths(limit: $limit, length: $length, startNodeIDs: $nodes, filter: $filter) {
       id
       startTime
       startNode {
@@ -42,7 +42,7 @@ const usePaths = ({ skip }) => {
     limit,
     length,
     nodes,
-    filters: { ...toGraphqlFilters(filters), startTime: { gt: min, lt: max } },
+    filter: { ...toGraphqlFilters(filters), startTime: { gt: min, lt: max } },
   };
 
   const { data: fetchedData = DEFAULT, loading } = useQuery(GET_PATHS_BY_FILTER, {

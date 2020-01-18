@@ -1,28 +1,12 @@
-import { graphql, useStaticQuery } from 'gatsby';
-import { toUnixTime } from '@utils';
-
-const GET_TIME_RANGE = graphql`
-  query getTimeRange {
-    gissy {
-      first: Edges(limit: 1, sort: { startTime: ASC }) {
-        startTime
-      }
-      last: Edges(limit: 1, sort: { startTime: DESC }) {
-        startTime
-      }
-    }
-  }
-`;
+import { STORE } from '@constants';
+import useStore from './useStore';
 
 const useTimeRange = () => {
   const {
-    gissy: {
-      first: [{ startTime: MIN }],
-      last: [{ startTime: MAX }],
-    },
-  } = useStaticQuery(GET_TIME_RANGE);
+    controller: { [STORE.TIME_RANGE]: value },
+  } = useStore();
 
-  return [[MIN, MAX].map(toUnixTime)];
+  return value;
 };
 
 export default useTimeRange;
