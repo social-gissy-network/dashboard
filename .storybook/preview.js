@@ -1,19 +1,16 @@
-import React from 'react';
-
-import { configure, addParameters, addDecorator } from '@storybook/react';
-import { create } from '@storybook/theming';
-
-import '../src/styles/globals.css';
-import GlobalStyle from '../src/styles/GlobalStyle.styles';
-import GissyContext from '../src/store/GissyContext';
-
 import { ApolloProvider } from '@apollo/react-hooks';
+import { addDecorator, addParameters, configure } from '@storybook/react';
+import { create } from '@storybook/theming';
 import ApolloClient from 'apollo-boost';
 import fetch from 'isomorphic-fetch';
-import { useDashboard } from '../src/hooks';
-import {} from '../src/components';
-import {} from '../src/hooks';
+import React from 'react';
 import { ReusableProvider } from 'reusable';
+import {} from '../src/components';
+import {} from '../src/config';
+import { useDashboard } from '../src/hooks';
+import GissyContext from '../src/store/GissyContext';
+import '../src/styles/globals.css';
+import GlobalStyle from '../src/styles/GlobalStyle.styles';
 
 const client = new ApolloClient({
   uri: `https://gissy-graphql.herokuapp.com/`,
@@ -24,14 +21,14 @@ const Wrapper = ({ children }) => {
   const store = useDashboard();
 
   return (
-    <ApolloProvider client={client}>
-      <GissyContext.Provider value={store}>
-        <ReusableProvider>
-          <GlobalStyle />
-          {children}
-        </ReusableProvider>
-      </GissyContext.Provider>
-    </ApolloProvider>
+    <>
+      <GlobalStyle />
+      <ApolloProvider client={client}>
+        <GissyContext.Provider value={store}>
+          <ReusableProvider>{children}</ReusableProvider>
+        </GissyContext.Provider>
+      </ApolloProvider>
+    </>
   );
 };
 addDecorator(S => (

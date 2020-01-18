@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { DEFAULT_TYPES_URL } from '@config';
 import { GRAPHQL_TYPES } from '@constants';
-import useFetch from 'use-http';
+import { useEffect, useState } from 'react';
 import { createStore } from 'reusable';
+import useFetch from 'use-http';
 
-const TYPES_URL = `https://gissy-graphql.herokuapp.com/types`;
+const TYPES_URL = process.env.TYPES_URL || DEFAULT_TYPES_URL;
 const defaultFields = ['startTime', 'stopTime'];
 
 const fetchOptions = {

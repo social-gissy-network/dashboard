@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/react-hooks';
 import { useQueryVariables } from '@hooks';
+import { toGraphqlFilters } from '@utils';
 import gql from 'graphql-tag';
 
 const DEFAULT = { edges: [] };
 
 const GET_EDGES_IN_TIME_RANGE = gql`
-  query getEdgesInTimeRange($min: String!, $max: String!, $limit: Int!) {
-    edges: Edges(filter: { startTime: { gt: $min, lt: $max } }, limit: $limit) {
+  query getEdgesInTimeRange($limit: Int!, $filter: EdgeFilterParameter) {
+    edges: Edges(filter: $filter, limit: $limit) {
       id
       startNode {
         id
@@ -25,9 +26,12 @@ const GET_EDGES_IN_TIME_RANGE = gql`
 `;
 
 const useEdges = ({ skip }) => {
-  const { min, max, limit } = useQueryVariables();
+  const { min, max, limit, filters } = useQueryVariables();
 
-  const variables = { limit, min, max };
+  const variables = {
+    limit,
+    filter: { ...toGraphqlFilters(filters), startTime: { gt: min, lt: max } },
+  };
 
   const { data: fetchedData = DEFAULT, loading } = useQuery(GET_EDGES_IN_TIME_RANGE, {
     variables,

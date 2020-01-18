@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { IconSelectArrow } from '@icons';
 import PropTypes from 'prop-types';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
-import { IconSelectArrow } from '@icons';
 
 const Container = tw.div`inline-block relative`;
 
@@ -19,9 +19,9 @@ const IconContainer = styled.div`
   }
 `;
 
-const Select = ({ children, name, register, defaultValue }) => (
+const Select = ({ children, name, register, defaultValue, onChange }) => (
   <Container>
-    <SelectStyled defaultValue={defaultValue} ref={register} name={name}>
+    <SelectStyled defaultValue={defaultValue} ref={register} name={name} onChange={onChange}>
       {children}
     </SelectStyled>
     <IconContainer>
@@ -46,6 +46,7 @@ Option.propTypes = {
 Select.propTypes = {
   children: PropTypes.node.isRequired,
   register: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   name: PropTypes.string,
   defaultValue: PropTypes.string,
 };

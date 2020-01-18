@@ -1,14 +1,16 @@
 import { CONFIG_DEFAULT } from '@config';
 import { LOCAL_STORAGE_KEYS, STORE } from '@constants';
-import { useLocalStorage } from '@hooks';
 import { formToController } from '@utils';
 import isEqual from 'lodash.isequal';
 import { useCallback, useRef, useState } from 'react';
+import useLocalStorage from './useLocalStorage';
+import useStaticTimeRange from './useStaticTimeRange';
 
 const { CONTROLLER } = STORE;
 
 const useDashboard = () => {
-  const [controller, setController] = useState(CONFIG_DEFAULT);
+  const time = useStaticTimeRange();
+  const [controller, setController] = useState({ ...CONFIG_DEFAULT, [STORE.TIME_RANGE]: time });
   const [isSubmit, setSubmit] = useState(true);
 
   const form = useRef(CONFIG_DEFAULT);

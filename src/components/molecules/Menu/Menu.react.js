@@ -1,9 +1,9 @@
 import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
-import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP } from '@config';
+import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP, CONFIG_MENU, MODES } from '@config';
 import { STORE } from '@constants';
 import { useGraphType, useStore, useTypes } from '@hooks';
 import { mixins } from '@styles';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -38,6 +38,10 @@ const Menu = () => {
   const { controller, setFromForm } = useStore();
   const { register, handleSubmit, setValue } = useForm({ defaultValues: controller });
 
+  const [mode, setMode] = useState(CONFIG_DEFAULT[STORE.MODE]);
+
+  const onSetMode = useCallback(({ target: { value } }) => setMode(value), []);
+
   const graphType = useGraphType();
   const edgesTypes = useTypes();
 
@@ -51,10 +55,7 @@ const Menu = () => {
 
   return (
     <Container>
-      <Form
-        onSubmit={handleSubmit(data => {
-          setFromForm(data);
-        })}>
+      <Form onSubmit={handleSubmit(setFromForm)}>
         <Item>
           <label htmlFor={STORE.GRAPH_TYPE}>Graph Type</label>
           <Select name={STORE.GRAPH_TYPE} register={register}>
@@ -111,13 +112,14 @@ const Menu = () => {
           <DateRange onChange={onDateChange} />
         </Item>
         <Item>
-          <label htmlFor={STORE.IS_PATH_CALCULATION}>Path Calculation</label>
-          <input
-            defaultChecked={CONFIG_DEFAULT.IS_PATH_CALCULATION}
-            ref={register}
-            name={STORE.IS_PATH_CALCULATION}
-            type="checkbox"
-          />
+          <label htmlFor={STORE.MODE}>Mode</label>
+          <Select name={STORE.MODE} onChange={onSetMode} register={register}>
+            {CONFIG_MENU.modes.map(mode => (
+              <Select.Option key={mode} value={mode}>
+                {mode}
+              </Select.Option>
+            ))}
+          </Select>
         </Item>
         {edgesTypes.map(type => (
           <Item key={type}>
@@ -129,7 +131,7 @@ const Menu = () => {
             />
           </Item>
         ))}
-        <Item>
+        <Item visible={mode !== MODES.normal}>
           <label htmlFor={STORE.PATH_LENGTH}>Path Length</label>
           <InputHalf
             name={STORE.PATH_LENGTH}
@@ -138,28 +140,19 @@ const Menu = () => {
             placeholder="Insert Length"
           />
         </Item>
-        <Item>
-          <label htmlFor={STORE.IS_TOP_NODES}>Top Nodes Calculation</label>
-          <input
-            defaultChecked={CONFIG_DEFAULT.IS_TOP_NODES}
-            ref={register}
-            name={STORE.IS_TOP_NODES}
-            type="checkbox"
-          />
-        </Item>
-        <Item>
-          <label htmlFor={STORE.TOP_NODES}>Top N Nodes</label>
+        <Item visible={mode === MODES.mostConnected}>
+          <label htmlFor={STORE.PATH_LIMIT}>Path Limit</label>
           <InputHalf
+            name={STORE.PATH_LIMIT}
             register={register}
-            name={STORE.TOP_NODES}
             type="number"
-            placeholder="Insert Number"
+            placeholder="Insert Limit"
           />
         </Item>
         <Item>
           <SubmitButton type="submit" value="Apply" />
         </Item>
-        <Item>
+        <Item visible={mode === MODES.path}>
           <label htmlFor={STORE.SELECTED_NODES}>Selected Nodes</label>
           <NodeInfo onChange={onSelectNode} />
         </Item>

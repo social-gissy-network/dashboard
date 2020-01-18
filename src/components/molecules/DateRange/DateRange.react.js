@@ -3,7 +3,7 @@ import { useTimeRange } from '@hooks';
 import { mixins } from '@styles';
 import { unixTimeToDate } from '@utils';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 
@@ -30,12 +30,21 @@ const Tags = styled.div`
 const NOOP = () => {};
 
 const DateRange = ({ onChange = NOOP }) => {
-  const [initial] = useTimeRange();
-  const [range, setRange] = useState([initial]);
+  const initial = useTimeRange();
+  const [range, setRange] = useState(initial);
+
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    onChange(range);
-  }, [onChange, range]);
+    if (isFirstLoad.current) {
+      setTimeout(() => {
+        onChange(range);
+      }, 1000);
+      isFirstLoad.current = false;
+    } else {
+      onChange(range);
+    }
+  }, [range, onChange]);
 
   const [left, right] = range;
 
