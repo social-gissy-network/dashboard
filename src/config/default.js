@@ -20,4 +20,7 @@ const DEFAULT_CONTROLLER = {
 
 const defaultController = getLsObjectItem(LOCAL_STORAGE_KEYS.CONTROLLER) || DEFAULT_CONTROLLER;
 
+export const DEFAULT_TYPES_URL = `https://gissy-graphql.herokuapp.com/`;
+export const DEFAULT_SERVER_URL = `https://gissy-graphql.herokuapp.com/`;
+
 export default defaultController;
