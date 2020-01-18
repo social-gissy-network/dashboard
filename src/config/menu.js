@@ -1,7 +1,7 @@
 const MODES = {
   normal: 'Normal',
   path: 'Path',
-  topN: 'Most Connected',
+  mostConnected: 'Most Connected',
 };
 
 const CONFIG_MENU = {

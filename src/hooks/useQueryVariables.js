@@ -1,7 +1,6 @@
 import { STORE } from '@constants';
 import { useStore } from '@hooks';
 import { unixToDbTime } from '@utils';
-import { createStore } from 'reusable';
 
 const useQueryVariables = () => {
   const {
@@ -22,4 +21,4 @@ const useQueryVariables = () => {
   return { min, max, limit, pathLimit, length, nodes, filters };
 };
 
-export default createStore(useQueryVariables);
+export default useQueryVariables;

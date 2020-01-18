@@ -4,7 +4,7 @@ import { toGraphqlFilters } from '@utils';
 import gql from 'graphql-tag';
 import { useEffect, useState } from 'react';
 
-const DEFAULT = { edges: [] };
+const DEFAULT = { mostConnected: [] };
 const flat = (acc, path) => acc.concat(path);
 
 const GET_MOST_CONNECTED = gql`
@@ -14,7 +14,7 @@ const GET_MOST_CONNECTED = gql`
     $length: Int!
     $filters: EdgeFilterParameter
   ) {
-    edges: MostConnected(
+    mostConnected: MostConnected(
       nodesLimit: $limit
       pathsLimit: $pathLimit
       pathLength: $length
@@ -56,8 +56,8 @@ const useMostConnected = ({ skip }) => {
 
   useEffect(() => {
     if (!skip && !loading) {
-      const { edges = [] } = fetchedData;
-      const data = edges.reduce(flat, []);
+      const { mostConnected = [] } = fetchedData;
+      const data = mostConnected.reduce(flat, []);
       setData(data);
     }
   }, [fetchedData, loading, skip]);

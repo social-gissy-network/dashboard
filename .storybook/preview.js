@@ -21,14 +21,14 @@ const Wrapper = ({ children }) => {
   const store = useDashboard();
 
   return (
-    <ApolloProvider client={client}>
-      <GissyContext.Provider value={store}>
-        <ReusableProvider>
-          <GlobalStyle />
-          {children}
-        </ReusableProvider>
-      </GissyContext.Provider>
-    </ApolloProvider>
+    <>
+      <GlobalStyle />
+      <ApolloProvider client={client}>
+        <GissyContext.Provider value={store}>
+          <ReusableProvider>{children}</ReusableProvider>
+        </GissyContext.Provider>
+      </ApolloProvider>
+    </>
   );
 };
 addDecorator(S => (

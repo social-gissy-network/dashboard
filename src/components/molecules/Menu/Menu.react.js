@@ -152,15 +152,6 @@ const Menu = () => {
             placeholder="Insert Length"
           />
         </Item>
-        <Item visible={mode === MODES.topN}>
-          <label htmlFor={STORE.TOP_NODES}>Top N Nodes</label>
-          <InputHalf
-            register={register}
-            name={STORE.TOP_NODES}
-            type="number"
-            placeholder="Insert Number"
-          />
-        </Item>
         <Item>
           <SubmitButton type="submit" value="Apply" />
         </Item>
