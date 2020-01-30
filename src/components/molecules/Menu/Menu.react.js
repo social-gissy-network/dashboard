@@ -34,6 +34,8 @@ const SubmitButton = styled(Input)`
   ${tw`bg-pink-500 w-full text-white font-bold`}
 `;
 
+const { TIME_RANGE, SELECTED_NODES } = STORE;
+
 const Menu = () => {
   const { controller, setFromForm } = useStore();
   const { register, handleSubmit, setValue } = useForm({ defaultValues: controller });
@@ -45,12 +47,12 @@ const Menu = () => {
   const graphType = useGraphType();
   const edgesTypes = useTypes();
 
-  const onDateChange = useCallback(value => setValue(STORE.TIME_RANGE, value), [setValue]);
-  const onSelectNode = useCallback(value => setValue(STORE.SELECTED_NODES, value), [setValue]);
+  const onDateChange = useCallback(value => setValue(TIME_RANGE, value), [setValue]);
+  const onSelectNode = useCallback(value => setValue(SELECTED_NODES, value), [setValue]);
 
   useEffect(() => {
-    register({ name: [STORE.TIME_RANGE] });
-    register({ name: [STORE.SELECTED_NODES] });
+    register({ name: [TIME_RANGE] });
+    register({ name: [SELECTED_NODES] });
   }, [register]);
 
   return (
@@ -154,7 +156,7 @@ const Menu = () => {
         </Item>
         <Item visible={mode === MODES.path}>
           <label htmlFor={STORE.SELECTED_NODES}>Selected Nodes</label>
-          <NodeInfo onChange={onSelectNode} />
+          <NodeInfo onChange={onSelectNode} onClear={() => onSelectNode([])} />
         </Item>
       </Form>
     </Container>

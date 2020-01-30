@@ -4,7 +4,7 @@ import { EDGE } from '@constants';
 import DeckGL from '@deck.gl/react';
 import { useArcs } from '@hooks';
 import { mixins, PALETTE } from '@styles';
-import { toRGB, arcGraphUtils } from '@utils';
+import { arcGraphUtils, toRGB } from '@utils';
 import { darken } from 'polished';
 import PropTypes from 'prop-types';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -38,8 +38,8 @@ const ArcGraph = () => {
     data,
     loading,
     mapStyle,
-    visible,
-    selectedNodes: { value: selected, set: setSelected },
+    isEdgeVisible,
+    selectedNodes: { value: selected, set: setSelected, visible: isSelectedVisible },
   } = useArcs();
 
   const onHoverEdge = useCallback(setOnHover(setEdgeInfo), []);
@@ -51,6 +51,7 @@ const ArcGraph = () => {
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-selected-nodes',
         data: selected,
+        visible: isSelectedVisible,
         getPosition: toCoordinatesArray,
         getFillColor: toRGB(darken(0.2, PALETTE.PRIMARY)),
         opacity: 1,
@@ -61,7 +62,7 @@ const ArcGraph = () => {
       CONFIG_GRAPH.ARC_LAYER({
         id: 'arc-layer',
         data,
-        visible,
+        visible: isEdgeVisible,
         onHover: onHoverEdge,
         getSourcePosition: extractCoordinates(EDGE.SOURCE),
         getTargetPosition: extractCoordinates(EDGE.TARGET),
@@ -79,13 +80,13 @@ const ArcGraph = () => {
       CONFIG_GRAPH.SCATTER_LAYER({
         id: 'scatter-target-layer',
         data,
-        onClick: onClickNode({ isSource: false }),
         onHover: onHoverNode({ isSource: false }),
+        onClick: onClickNode({ isSource: false }),
         getPosition: extractCoordinates(EDGE.TARGET),
         getFillColor: toRGB(PALETTE.SECONDARY),
       }),
     ],
-    [selected, data, visible, onHoverEdge, onHoverNode, onClickNode],
+    [selected, isSelectedVisible, data, isEdgeVisible, onHoverEdge, onHoverNode, onClickNode],
   );
 
   return (
