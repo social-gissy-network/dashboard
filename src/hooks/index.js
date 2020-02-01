@@ -13,5 +13,6 @@ export { default as useQueryVariables } from './useQueryVariables'; // Utils
 export { default as useSelectedNodes } from './useSelectedNodes'; // Graph Helpers
 export { default as useStaticTimeRange } from './useStaticTimeRange'; // Dashboard
 export { default as useStore } from './useStore'; // Utils
+export { default as useSubmit } from './useSubmit'; // Utils
 export { default as useTimeRange } from './useTimeRange'; // Utils
 export { default as useTypes } from './useTypes'; // Utils

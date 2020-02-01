@@ -1,18 +1,14 @@
 import { MODES } from '@config';
-import { STORE } from '@constants';
 import { useEffect } from 'react';
 import useEdges from './useEdges';
+import useMode from './useMode';
 import useMostConnected from './useMostConnected';
 import usePaths from './usePaths';
-import useStore from './useStore';
-
-const { MODE } = STORE;
+import useSubmit from './useSubmit';
 
 const useData = () => {
-  const {
-    controller: { [MODE]: mode },
-    submit: { value: isSubmit, set },
-  } = useStore();
+  const mode = useMode();
+  const { value: isSubmit, set } = useSubmit();
 
   const edges = useEdges({ skip: mode !== MODES.normal });
   const paths = usePaths({ skip: !isSubmit || mode !== MODES.path });

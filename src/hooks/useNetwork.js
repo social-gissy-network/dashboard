@@ -1,8 +1,9 @@
 import { STORE } from '@constants';
-import { useData, useStore } from '@hooks';
 import { PALETTE } from '@styles';
 import isEqual from 'lodash.isequal';
 import { useCallback } from 'react';
+import useData from './useData';
+import useStore from './useStore';
 
 const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES, IS_PHYSICS_ENABLED } = STORE;
 
