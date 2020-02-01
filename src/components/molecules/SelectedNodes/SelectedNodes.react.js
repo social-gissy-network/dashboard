@@ -1,4 +1,4 @@
-import { Card, IconButton } from '@components';
+import { Card } from '@components';
 import { useSelectedNodes } from '@hooks';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
@@ -13,7 +13,7 @@ const Container = styled(Card)`
 const EMPTY = 'No Nodes Selected';
 const NOOP = () => {};
 
-const NodeInfo = ({ onChange = NOOP, onClear = NOOP }) => {
+const SelectedNodes = ({ onChange = NOOP }) => {
   const [nodes] = useSelectedNodes();
   const hasNodes = nodes.length === 0;
 
@@ -32,20 +32,20 @@ const NodeInfo = ({ onChange = NOOP, onClear = NOOP }) => {
 
   return (
     <Container>
+      {hasNodes && EMPTY}
       {nodes.map(node => (
         <div key={node.id}>
           <span>{node.id}</span>
           <br />
         </div>
       ))}
-      <IconButton onClick={onClear}>{hasNodes ? EMPTY : `Clear`}</IconButton>
     </Container>
   );
 };
 
-NodeInfo.propTypes = {
+SelectedNodes.propTypes = {
   onChange: PropTypes.func,
   onClear: PropTypes.func,
 };
 
-export default NodeInfo;
+export default SelectedNodes;

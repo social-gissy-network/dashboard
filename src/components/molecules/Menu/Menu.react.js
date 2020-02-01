@@ -1,4 +1,4 @@
-import { Card, DateRange, IconButton, Input, NodeInfo, Select } from '@components';
+import { Card, DateRange, IconButton, Input, Select, SelectedNodes } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP, CONFIG_MENU, MODES } from '@config';
 import { STORE } from '@constants';
 import { useGraphType, useStore, useTypes } from '@hooks';
@@ -154,9 +154,9 @@ const Menu = () => {
         <Item>
           <SubmitButton type="submit" value="Apply" />
         </Item>
-        <Item visible={mode === MODES.path}>
+        <Item>
           <label htmlFor={STORE.SELECTED_NODES}>Selected Nodes</label>
-          <NodeInfo onChange={onSelectNode} onClear={() => onSelectNode([])} />
+          <SelectedNodes onChange={onSelectNode} />
         </Item>
       </Form>
     </Container>

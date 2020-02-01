@@ -1,10 +1,10 @@
-import React from 'react';
 import { IconLogo } from '@icons';
+import React from 'react';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
 
 const Container = styled.div`
-  ${tw`w-1/6`}
+  ${tw`w-1/12`}
   animation: blink 5s ease-in infinite;
   @keyframes blink {
     0% {

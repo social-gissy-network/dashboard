@@ -3,7 +3,6 @@ import { useData, useStore } from '@hooks';
 import { PALETTE } from '@styles';
 import isEqual from 'lodash.isequal';
 import { useCallback } from 'react';
-import { createStore } from 'reusable';
 
 const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES, IS_PHYSICS_ENABLED } = STORE;
 
@@ -37,15 +36,23 @@ const useNetwork = () => {
       const { name: nameStart } = startNode;
       const { name: nameStop } = stopNode;
 
-      acc[startNode.id] = { label: nameStart, ...startNode };
-      acc[stopNode.id] = { label: nameStop, ...stopNode, color: PALETTE.SECONDARY };
+      acc[startNode.id] = { label: nameStart, isSource: true, ...startNode };
+      acc[stopNode.id] = {
+        label: nameStop,
+        isSource: false,
+        ...stopNode,
+        color: PALETTE.SECONDARY,
+      };
       return acc;
     }, {});
 
-    const edgesMap = data.reduce((acc, { startNode: { id: from }, stopNode: { id: to } }) => {
-      acc[`${from}-${to}`] = { from, to, id: `${from}-${to}` };
-      return acc;
-    }, {});
+    const edgesMap = data.reduce(
+      (acc, { id, startNode: { id: from }, stopNode: { id: to }, ...rest }) => {
+        acc[id] = { from, to, id, ...rest };
+        return acc;
+      },
+      {},
+    );
 
     const nodes = Object.values(nodesMap);
     const edges = Object.values(edgesMap);
@@ -66,4 +73,4 @@ const useNetwork = () => {
   return { loading };
 };
 
-export default createStore(useNetwork);
+export default useNetwork;

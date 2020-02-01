@@ -9,6 +9,12 @@ const GET_EDGES_IN_TIME_RANGE = gql`
   query getEdgesInTimeRange($limit: Int!, $filter: EdgeFilterParameter) {
     edges: Edges(filter: $filter, limit: $limit) {
       id
+      bikeID
+      userType
+      birthYear
+      gender
+      startTime
+      stopTime
       startNode {
         id
         name

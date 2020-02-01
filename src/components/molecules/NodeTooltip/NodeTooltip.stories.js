@@ -7,7 +7,7 @@ export default {
 };
 
 const data = {
-  isSource: false,
+  isSource: true,
   x: undefined,
   y: undefined,
   data: {
@@ -16,5 +16,5 @@ const data = {
   },
 };
 
-export const Source = () => <NodeTooltip info={{ ...data, isSource: true }} />;
-export const Target = () => <NodeTooltip info={data} />;
+export const Source = () => <NodeTooltip info={data} />;
+export const Target = () => <NodeTooltip info={{ ...data, isSource: false }} />;

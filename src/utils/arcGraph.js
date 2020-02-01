@@ -10,6 +10,7 @@ const extractData = ({ isSource = true, object }) => object[isSource ? 'startNod
 export const getCursor = () => 'crosshair';
 
 export const setOnHover = action => ({ object: data, x, y }) => action({ data, x, y });
+
 export const setOnHoverNode = action => ({ isSource = true }) => ({ object: data, x, y }) => {
   /* eslint-disable no-unused-vars */
   if (data) {

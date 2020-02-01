@@ -30,6 +30,7 @@ const NetworkGraph = () => {
     getNodeInfo,
     getEdgeInfo,
   } = useNetwork();
+
   const [edgeInfo, setEdgeInfo] = useState();
   const [nodeInfo, setNodeInfo] = useState();
 
@@ -41,15 +42,16 @@ const NetworkGraph = () => {
       },
       hoverNode: ({ event: { clientX: x, clientY: y }, node }) => {
         /* eslint-disable no-unused-vars */
-        const { __typename, color, label, ...data } = getNodeInfo(node);
-        setNodeInfo({ x, y, data });
+        const { __typename, color, label, isSource, ...data } = getNodeInfo(node);
+        setNodeInfo({ x, y, data, isSource });
       },
       blurNode: () => setNodeInfo(undefined),
       hoverEdge: ({ event: { clientX: x, clientY: y }, edge }) => {
-        const { from, to } = getEdgeInfo(edge);
+        const { from, to, ...rest } = getEdgeInfo(edge);
         const data = {
           startNode: getNodeInfo(from),
           stopNode: getNodeInfo(to),
+          ...rest,
         };
         setEdgeInfo({ x, y, data });
       },
@@ -70,5 +72,4 @@ const NetworkGraph = () => {
     </Container>
   );
 };
-
 export default memo(NetworkGraph);
