@@ -1,1 +1,1 @@
-export { default as GissyContext, store } from './GissyContext';
+export { default as GissyContext } from './GissyContext';
