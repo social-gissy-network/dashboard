@@ -21,6 +21,12 @@ const GET_MOST_CONNECTED = gql`
       filter: $filters
     ) {
       id
+      startTime
+      stopTime
+      bikeID
+      userType
+      birthYear
+      gender
       startNode {
         id
         name

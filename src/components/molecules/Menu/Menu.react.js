@@ -37,7 +37,7 @@ const SubmitButton = styled(Input)`
 const { TIME_RANGE, SELECTED_NODES } = STORE;
 
 const Menu = () => {
-  const { controller, setFromForm } = useStore();
+  const { controller, setFromForm, set } = useStore();
   const { register, handleSubmit, setValue } = useForm({ defaultValues: controller });
 
   const [mode, setMode] = useState(CONFIG_DEFAULT[STORE.MODE]);
@@ -49,6 +49,11 @@ const Menu = () => {
 
   const onDateChange = useCallback(value => setValue(TIME_RANGE, value), [setValue]);
   const onSelectNode = useCallback(value => setValue(SELECTED_NODES, value), [setValue]);
+
+  const onClear = () => {
+    setValue(SELECTED_NODES, []);
+    set(controller => ({ ...controller, [SELECTED_NODES]: [] }));
+  };
 
   useEffect(() => {
     register({ name: [TIME_RANGE] });
@@ -156,7 +161,7 @@ const Menu = () => {
         </Item>
         <Item>
           <label htmlFor={STORE.SELECTED_NODES}>Selected Nodes</label>
-          <SelectedNodes onChange={onSelectNode} />
+          <SelectedNodes onChange={onSelectNode} onClear={onClear} />
         </Item>
       </Form>
     </Container>

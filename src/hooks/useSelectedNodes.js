@@ -6,7 +6,7 @@ const useSelectedNodes = () => {
     controller: { [STORE.SELECTED_NODES]: value },
   } = useStore();
 
-  return [value];
+  return value;
 };
 
 export default useSelectedNodes;

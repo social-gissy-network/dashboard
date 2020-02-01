@@ -17,6 +17,12 @@ const GET_PATHS_BY_FILTER = gql`
     paths: Paths(limit: $limit, length: $length, startNodeIDs: $nodes, filter: $filter) {
       id
       startTime
+      startTime
+      stopTime
+      bikeID
+      userType
+      birthYear
+      gender
       startNode {
         id
         name
