@@ -4,13 +4,11 @@ import { formToController } from '@utils';
 import isEqual from 'lodash.isequal';
 import { useCallback, useRef, useState } from 'react';
 import useLocalStorage from './useLocalStorage';
-import useStaticTimeRange from './useStaticTimeRange';
 
-const { CONTROLLER, SELECTED_NODES, MODE, TIME_RANGE } = STORE;
+const { CONTROLLER, SELECTED_NODES, MODE } = STORE;
 
 const useDashboard = () => {
-  const time = useStaticTimeRange();
-  const [controller, setController] = useState({ ...CONFIG_DEFAULT, [TIME_RANGE]: time });
+  const [controller, setController] = useState({ ...CONFIG_DEFAULT });
   const [isSubmit, setSubmit] = useState(true);
 
   const form = useRef(CONFIG_DEFAULT);

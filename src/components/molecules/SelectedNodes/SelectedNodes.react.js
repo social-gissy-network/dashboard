@@ -19,7 +19,7 @@ const SmallButton = styled(IconButton)`
 const NOOP = () => {};
 
 const SelectedNodes = ({ onChange = NOOP, onClear = NOOP }) => {
-  const nodes = useSelectedNodes();
+  const { value: nodes } = useSelectedNodes();
   const hasNodes = nodes.length !== 0;
 
   const isFirstLoad = useRef(true);

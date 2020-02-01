@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-tailwind-styled-components-storybook-starter",
-  "description": "A bare-bones Tailwind CSS + Styled-Components + Storybook starter for Gatsby",
+  "name": "gissy-dashboard",
+  "description": "Dashboard for Gissy Core",
   "version": "1.0.0",
   "author": "Dennis Vash <dennisvash@gmail.com>",
   "license": "MIT",

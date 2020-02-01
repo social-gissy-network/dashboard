@@ -1,5 +1,5 @@
 import { Range } from '@components';
-import { useTimeRange } from '@hooks';
+import { useStaticTimeRange } from '@hooks';
 import { mixins } from '@styles';
 import { unixTimeToDate } from '@utils';
 import PropTypes from 'prop-types';
@@ -30,7 +30,7 @@ const Tags = styled.div`
 const NOOP = () => {};
 
 const DateRange = ({ onChange = NOOP }) => {
-  const initial = useTimeRange();
+  const initial = useStaticTimeRange();
   const [range, setRange] = useState(initial);
 
   const isFirstLoad = useRef(true);

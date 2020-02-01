@@ -36,7 +36,7 @@ const Dashboard = () => {
           <Menu />
         </FixedLeftTop>
         <FixedTopRight>
-          <Button href={CONFIG_SERVER.url} target="_blank">
+          <Button href={CONFIG_SERVER.url} target="_blank" rel="noopener">
             <IconGraphql />
             <span>Playground</span>
           </Button>

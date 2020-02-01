@@ -1,12 +1,17 @@
 import { STORE } from '@constants';
 import useStore from './useStore';
 
+const { MODE } = STORE;
+
 const useMode = () => {
   const {
-    controller: { [STORE.MODE]: value },
+    controller: { [MODE]: value },
+    set,
   } = useStore();
 
-  return value;
+  const setMode = mode => set(controller => ({ ...controller, [MODE]: mode }));
+
+  return { value, set: setMode };
 };
 
 export default useMode;

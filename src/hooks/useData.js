@@ -7,7 +7,7 @@ import usePaths from './usePaths';
 import useSubmit from './useSubmit';
 
 const useData = () => {
-  const mode = useMode();
+  const { value: mode } = useMode();
   const { value: isSubmit, set } = useSubmit();
 
   const edges = useEdges({ skip: mode !== MODES.normal });

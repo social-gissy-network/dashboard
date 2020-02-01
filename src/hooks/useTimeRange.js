@@ -1,9 +1,11 @@
 import { STORE } from '@constants';
 import useStore from './useStore';
 
+const { TIME_RANGE } = STORE;
+
 const useTimeRange = () => {
   const {
-    controller: { [STORE.TIME_RANGE]: value },
+    controller: { [TIME_RANGE]: value },
   } = useStore();
 
   return value;

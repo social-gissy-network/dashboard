@@ -1,9 +1,9 @@
 import { Card, DateRange, IconButton, Input, Select, SelectedNodes } from '@components';
 import { CONFIG_DEFAULT, CONFIG_GRAPH, CONFIG_MAP, CONFIG_MENU, MODES } from '@config';
 import { STORE } from '@constants';
-import { useGraphType, useStore, useTypes } from '@hooks';
+import { useGraphType, useMode, useSelectedNodes, useStore, useTypes } from '@hooks';
 import { mixins } from '@styles';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
@@ -31,18 +31,19 @@ const InputHalf = styled(Input)`
 `;
 
 const SubmitButton = styled(Input)`
-  ${tw`bg-pink-500 w-full text-white font-bold`}
+  ${tw`bg-pink-500 w-full text-white font-bold cursor-pointer`}
 `;
 
 const { TIME_RANGE, SELECTED_NODES } = STORE;
 
 const Menu = () => {
-  const { controller, setFromForm, set } = useStore();
+  const { controller, setFromForm } = useStore();
   const { register, handleSubmit, setValue } = useForm({ defaultValues: controller });
 
-  const [mode, setMode] = useState(CONFIG_DEFAULT[STORE.MODE]);
+  const { value: mode, set: setMode } = useMode();
+  const { set: setSelectedNodes } = useSelectedNodes();
 
-  const onSetMode = useCallback(({ target: { value } }) => setMode(value), []);
+  const onSetMode = useCallback(({ target: { value } }) => setMode(value), [setMode]);
 
   const graphType = useGraphType();
   const edgesTypes = useTypes();
@@ -52,7 +53,7 @@ const Menu = () => {
 
   const onClear = () => {
     setValue(SELECTED_NODES, []);
-    set(controller => ({ ...controller, [SELECTED_NODES]: [] }));
+    setSelectedNodes([]);
   };
 
   useEffect(() => {

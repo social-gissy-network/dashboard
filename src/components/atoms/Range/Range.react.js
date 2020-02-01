@@ -1,3 +1,4 @@
+import { NOOP } from '@constants';
 import PropTypes from 'prop-types';
 import 'rc-slider/assets/index.css';
 import RcRange from 'rc-slider/lib/Range';
@@ -5,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 
 const STEP = 0.1;
 const INITIAL = [0, 100];
-const NOOP = () => {};
 
 const Range = ({ initial = INITIAL, onChange: controlledChange = NOOP, onFinalChange = NOOP }) => {
   const [values, setValues] = useState(initial);
