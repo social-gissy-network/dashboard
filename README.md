@@ -7,18 +7,12 @@
 
 </h1>
 
-Web based UI dashboard for the [core-library](https://github.com/social-gissy-network/core).
+Web based UI dashboard for the [core](https://github.com/social-gissy-network/core) library.
 
-- [Docs](https://docs.gissy.now.sh/)
-- [Demo](https://gissy-dashboard.netlify.com/)
+- [Gissy Docs](https://gissy-docs.netlify.com/readme)
+- [Developer Manual](https://gissy-docs.netlify.com/developer-manual/readme)
+
+## Demos
+
+- [Gatsby Site](https://gissy-dashboard.netlify.com/)
 - [Storybook](https://gissy-dashboard-storybook.netlify.com/)
-
-## Development
-
-```sh
-# UI
-yarn start
-
-# Components
-yarn storybook
-```
