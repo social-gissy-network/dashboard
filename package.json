@@ -14,10 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/denvash/gatsby-styled-tailwind-storybook-starter"
+    "url": "https://github.com/social-gissy-network/dashboard"
   },
   "bugs": {
-    "url": "https://github.com/denvash/gatsby-styled-tailwind-storybook-starter/issues"
+    "url": "https://github.com/social-gissy-network/dashboard/issues"
   },
   "husky": {
     "hooks": {
