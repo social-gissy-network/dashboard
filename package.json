@@ -39,7 +39,7 @@
     "start": "yarn develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \"",
-    "storybook": "NODE_ENV=production start-storybook -p 6006",
+    "storybook": "NODE_ENV=test start-storybook -p 6006",
     "build-storybook": "yarn build; NODE_PATH=src/ NODE_ENV=production build-storybook -s public --quiet"
   },
   "dependencies": {

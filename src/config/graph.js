@@ -39,6 +39,9 @@ const graphConfig = {
       length: 500,
       width: 2,
       hidden: !visible,
+      smooth: {
+        enabled: false,
+      },
     },
     autoResize: false,
     configure: {
@@ -58,6 +61,7 @@ const graphConfig = {
       barnesHut: {
         avoidOverlap: physics ? 0 : 0.5,
       },
+      solver: hierarchical ? 'hierarchicalRepulsion' : 'barnesHut',
     },
   }),
   ARC_LAYER: ({ ...props }) =>

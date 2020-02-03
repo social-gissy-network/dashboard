@@ -3,9 +3,9 @@ import { PALETTE } from '@styles';
 import isEqual from 'lodash.isequal';
 import { useCallback } from 'react';
 import useData from './useData';
-import useStore from './useStore';
+import useNetworkOptions from './useNetworkOptions';
 
-const { IS_EDGE_VISIBLE, IS_HIERARCHICAL_VIEW, SELECTED_NODES, IS_PHYSICS_ENABLED } = STORE;
+const { SELECTED_NODES } = STORE;
 
 const setGetNodeInfo = nodesMap => id => nodesMap[id];
 const setGetEdgeInfo = edgesMap => id => edgesMap[id];
@@ -13,14 +13,7 @@ const setGetEdgeInfo = edgesMap => id => edgesMap[id];
 const useNetwork = () => {
   const { data, loading } = useData();
 
-  const {
-    controller: {
-      [IS_EDGE_VISIBLE]: visible,
-      [IS_HIERARCHICAL_VIEW]: hierarchical,
-      [IS_PHYSICS_ENABLED]: physics,
-    },
-    set,
-  } = useStore();
+  const { visible, hierarchical, physics, set } = useNetworkOptions();
 
   const setOnClickNode = useCallback(
     nodesMap => ids =>

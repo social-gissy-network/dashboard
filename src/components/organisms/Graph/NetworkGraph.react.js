@@ -14,10 +14,18 @@ const Container = styled.div`
   background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
 `;
 
-const MemoGraph = memo(
-  VisNetwork,
-  ({ graph: a, options: opA }, { graph: b, options: opB }) => isEqual(a, b) && opA === opB,
-);
+const areEqual = ({ graph: a, options: opA }, { graph: b, options: opB }) => {
+  if (
+    opA.layout.hierarchical.enabled === opB.layout.hierarchical.enabled &&
+    opA.physics.enabled === opB.physics.enabled &&
+    opA.edges.hidden === opB.edges.hidden
+  ) {
+    return isEqual(a, b);
+  }
+  return isEqual(a, b) && opA === opB;
+};
+
+const MemoGraph = memo(VisNetwork, areEqual);
 
 const { NETWORK } = CONFIG_GRAPH;
 
@@ -66,9 +74,9 @@ const NetworkGraph = () => {
 
   return (
     <Container>
+      {loading ? <Loading /> : <MemoGraph graph={data} options={options} events={events} />}
       {edgeInfo && <EdgeTooltip info={edgeInfo} />}
       {nodeInfo && <NodeTooltip info={nodeInfo} />}
-      {loading ? <Loading /> : <MemoGraph graph={data} options={options} events={events} />}
     </Container>
   );
 };
